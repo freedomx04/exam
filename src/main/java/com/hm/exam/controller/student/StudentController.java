@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hm.exam.common.result.Code;
 import com.hm.exam.common.result.Result;
 import com.hm.exam.common.result.ResultInfo;
+import com.hm.exam.common.utils.CiphersUtils;
 import com.hm.exam.entity.student.GroupEntity;
 import com.hm.exam.entity.student.StudentEntity;
 import com.hm.exam.service.student.GroupService;
@@ -36,7 +37,7 @@ public class StudentController {
 		try {
 			Date now = new Date();
 			GroupEntity group = groupService.findOne(groupId);
-			StudentEntity student = new StudentEntity(group, username, name, password, now, now);
+			StudentEntity student = new StudentEntity(group, username, CiphersUtils.getInstance().MD5Password(password), name, now, now);
 			studentService.save(student);
 			return new Result(Code.SUCCESS.value(), "created");
 		} catch (Exception e) {
@@ -46,8 +47,14 @@ public class StudentController {
 	}
 	
 	@RequestMapping(value = "/api/student/update", method = RequestMethod.POST)
-	public Result update(Long studentId, Long groupId, String username, String name) {
+	public Result update(Long studentId, Long groupId, String name) {
 		try {
+			GroupEntity group = groupService.findOne(groupId);
+			StudentEntity student = studentService.findOne(studentId);
+			student.setGroup(group);
+			student.setName(name);
+			student.setUpdateTime(new Date());
+			studentService.save(student);
 			return new Result(Code.SUCCESS.value(), "updated");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);

@@ -24,9 +24,6 @@
 		background-color: #f5f5f5; 
 		padding: 0 0 0 10px;
 	}
-	.body-question-add .btn-operate button {
-		min-width: 100px;
-	}
 	.body-question-add .spinner input {
 		width: 100px;
 	}

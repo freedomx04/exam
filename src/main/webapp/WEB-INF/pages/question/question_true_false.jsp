@@ -20,9 +20,6 @@
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/toastr/toastr.min.css">
 	
 	<style type="text/css">
-	.body-question-add .btn-operate button {
-		min-width: 100px;
-	}
 	.body-question-add .spinner input {
 		width: 100px;
 	}

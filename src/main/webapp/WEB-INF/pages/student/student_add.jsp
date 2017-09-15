@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/include/preload.jsp"%>
+<%@ include file="/WEB-INF/include/password.jsp"%>
 
 <!DOCTYPE html>
 <html>
@@ -13,10 +14,10 @@
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/animate/animate.min.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/sweetalert/sweetalert.css">
+	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/bootstrapValidator/css/bootstrapValidator.min.css">
 	
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/hplus/style.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/local/common.css">
-	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/toastr/toastr.min.css">
 	
 </head>
 
@@ -29,8 +30,8 @@
 				<form class="form-horizontal" role="form" autocomplete="off">
 					<div class="hr-line-dashed"></div>
 					<div class="form-group">
-						<label for="groupId" class="col-sm-2 control-label">分组</label>
-                        <div class="col-sm-4">
+						<label for="groupId" class="col-sm-3 control-label"><i class="form-required">*</i>分组</label>
+                        <div class="col-sm-5">
                         	<select class="form-control" name="groupId" required>
                         		<c:forEach var="group" items="${groupList}">
                         			<option value="${group.id}">${group.name}</option>
@@ -39,9 +40,48 @@
                         </div>
 					</div>
 					
+					<div class="form-group">
+						<label for="username" class="col-sm-3 control-label"><i class="form-required">*</i>用户名</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="username" placeholder="只能包含英文、数字、下划线等字符" value="${student.username}" required>
+                        </div>
+					</div>
+					
+					<div class="form-group form-hide">
+						<label for="password" class="col-sm-3 control-label"><i class="form-required">*</i>密码</label>
+						<div class="col-sm-5">
+							<input type="password" id="password" class="form-control" name="password" placeholder="6-16个字符,请使用字母加数字或者符号" required>
+						</div>
+					</div>
+					<div class="form-group form-hide">
+						<label for="" class="col-sm-3 control-label" style="font-weight: normal; color: #999;">密码强度</label>
+						<div class="col-sm-5">
+							<div id="level" class="pw-strength">
+								<div class="pw-bar"></div>
+								<div class="pw-bar-on"></div>
+								<div class="pw-txt">
+									<span>弱</span><span>中</span><span>强</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group form-hide">
+						<label for="confirm-password" class="col-sm-3 control-label"><i class="form-required">*</i>确认密码</label>
+						<div class="col-sm-5">
+							<input type="password" class="form-control" name="confirmPassword" required>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="name" class="col-sm-3 control-label"><i class="form-required">*</i>姓名</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="name" value="${student.name}" required>
+                        </div>
+					</div>
+					
 					<div class="hr-line-dashed"></div>
 					<div class="form-group btn-operate">
-                        <div class="col-sm-8 col-sm-offset-2">
+                        <div class="col-sm-8 col-sm-offset-3">
                         	<c:if test="${method == 'add'}">
                             	<button type="button" class="btn btn-primary btn-student-add-continue">保存并继续</button>
                             	<button type="button" class="btn btn-primary btn-student-add">保存</button>
@@ -63,6 +103,8 @@
 	<script type="text/javascript" src="${ctx}/local/common.js"></script>
 	
 	<script type="text/javascript" src="${ctx}/plugins/sweetalert/sweetalert.min.js"></script>
+	<script type="text/javascript" src="${ctx}/plugins/bootstrapValidator/js/bootstrapValidator.min.js"></script>
+	<script type="text/javascript" src="${ctx}/plugins/bootstrapValidator/js/language/zh_CN.js"></script>
     <script type="text/javascript" src="${ctx}/plugins/toastr/toastr.min.js"></script>
     
     <script type="text/javascript">
@@ -71,181 +113,116 @@
 		var $page = $('.body-student-add');
 		var $form = $page.find('form');
 		var method = '${method}';
-		var type = 1;
-		var arr = ['A', 'B', 'C', 'D', 'E', 'F'];
 		
-		if (method == 'edit') {
-			$page.find('select[name="groupId"]').val(${student.group.id});
-		}
+		// password
+		strength($page.find('#password'), $page.find('#level'));
+		
+		$k.util.bsValidator($form, {
+			fields: {
+				username: {
+	            	 validators: {
+	           	 		regexp: {
+	           	 			regexp: /^[a-zA-Z0-9_\.]+$/,
+	     	                message: '用户名只能包含英文、数字、下划线等字符'
+  	                    }
+  	                 }
+  	             },
+ 	             password: {
+ 	                 validators: {
+ 	                     identical: {
+ 	                         field: 'confirmPassword',
+ 	                         message: '两次输入密码不一致'
+ 	                     },
+ 	                 	 stringLength: {
+ 	                         min: 6,
+ 	                         max: 16,
+ 	                         message: '密码长度必须在6到16之间'
+ 	                     }
+ 	                 }
+ 	             },
+ 	             confirmPassword: {
+ 	             	validators: {
+ 	                	identical: {
+ 	                    	field: 'password',
+ 	                        message: '两次输入密码不一致'
+ 	                    },
+ 	                  	stringLength: {
+							min: 6,
+							max: 16,
+							message: '密码长度必须在6到16之间'
+						}
+ 	                }
+ 	            }
+			}
+		});
 		
 		$page
-		.on('click', '.btn-option-add', function() {
-			var $last = $page.find('.option').last();
-			var seq = $last.attr('seq');
-			var next = parseInt(seq) + 1;
-			var option = arr[next];
-			
-			if (next == (arr.length - 1)) {
-				$(this).addClass('hide');
-			}
-			
-			var $row = $(this).closest('.form-group');
-			var $option = 
-				'<div class="form-group">' + 
-					'<label for="" class="col-sm-2 control-label">选项' + option + '</label>' +
-					'<div class="col-sm-7">' + 
-						'<div class="input-group">' +
-							'<input type="text" class="form-control option" name="option' + option + '" seq="' + next + '">' + 
-							'<div class="input-group-addon">' + 
-								'<div class="radio radio-success radio-info radio-inline">' +
-									'<input type="radio" name="answer" id="' + option + '" value="' + option + '">' +
-									'<label for="' + option + '">正确答案</label>' + 
-								'</div>' +
-							'</div>' +
-						'</div>' +
-					'</div>' +
-					'<div class="col-sm-1" style="padding-left: 0;">' +
-						'<button type="button" class="btn btn-white btn-option-delete" title="删除选项">' +
-							'<i class="fa fa-trash-o"></i>' +
-						'</button>' +
-					'</div>' +
-				'</div>';
-			$row.before($option); 
-		})
-		.on('click', '.btn-option-delete', function() {
-			$(this).closest('.form-group').remove();
-			
-			var $btnAdd = $page.find('.btn-option-add');
-			if ($btnAdd.hasClass('hide')) {
-				$btnAdd.removeClass('hide');
-			}
-		})
 		.on('click', '.btn-student-add-continue', function() {
-			if (validate()) {
-				var formData = new FormData($form[0]); 
-				formData.append('type', type);
-				
+			var validator = $form.data('bootstrapValidator');
+			validator.validate();
+			
+			if (validator.isValid()) {
+				var formData = new FormData($form[0]);
 				$.ajax({
 					url: '${ctx}/api/student/create',
 					type: 'post',
 					data: formData,
-	        		processData: false,
-	                contentType: false,
-	                cache: false, 
-	                success: function(ret) {
-	                	if (ret.code == 0) {
-                    		swal({
+					processData: false,
+					contentType: false,
+					cache: false,
+					success: function(ret) {
+						if (ret.code == 0) {
+							swal({
                                 title: '',
                                 text: '操作成功',
                                 type: 'success'
                             }, function() {
-                                window.location.href = './studentAdd?type=' + type + '&method=add';
+                                window.location.href = '${ctx}/studentAdd?method=add';
                             });
-                    	} else {
-                    		swal('', ret.msg, 'error');
-                    	}
-	                },
-	                error: function(err) {}
+						} else {
+							swal('', ret.msg, 'error');
+						}
+					},
+					error: function(ret) {}
 				});
 			}
 		})
 		.on('click', '.btn-student-add', function() {
-			if (validate()) {
-				var formData = new FormData($form[0]); 
-				formData.append('type', type);
-				
+			var validator = $form.data('bootstrapValidator');
+			validator.validate();
+			
+			if (validator.isValid()) {
+				var formData = new FormData($form[0]);
 				$.ajax({
 					url: '${ctx}/api/student/create',
 					type: 'post',
 					data: formData,
-	        		processData: false,
-	                contentType: false,
-	                cache: false, 
-	                success: function(ret) {
-	                	if (ret.code == 0) {
-                    		swal({
+					processData: false,
+					contentType: false,
+					cache: false,
+					success: function(ret) {
+						if (ret.code == 0) {
+							swal({
                                 title: '',
                                 text: '操作成功',
                                 type: 'success'
                             }, function() {
-                                window.location.href = './studentList';
+                                window.location.href = '${ctx}/studentList';
                             });
-                    	} else {
-                    		swal('', ret.msg, 'error');
-                    	}
-	                },
-	                error: function(err) {}
+						} else {
+							swal('', ret.msg, 'error');
+						}
+					},
+					error: function(ret) {}
 				});
 			}
 		})
 		.on('click', '.btn-student-edit', function() {
-			if (validate()) {
-				var formData = new FormData($form[0]); 
-				formData.append('studentId', '${student.id}');
-				
-				$.ajax({
-					url: '${ctx}/api/student/update',
-					type: 'post',
-					data: formData,
-	        		processData: false,
-	                contentType: false,
-	                cache: false, 
-	                success: function(ret) {
-	                	if (ret.code == 0) {
-                    		swal({
-                                title: '',
-                                text: '操作成功',
-                                type: 'success'
-                            }, function() {
-                                window.location.href = './studentList';
-                            });
-                    	} else {
-                    		swal('', ret.msg, 'error');
-                    	}
-	                },
-	                error: function(err) {}
-				});
-			}
+			
 		})
 		.on('click', '.btn-student-cancel', function() {
 			window.location.href = '${ctx}/studentList';
-		})
-		.on('click', '.spinner .btn:first-of-type', function() {  
-			var score = $page.find('.spinner input').val();
-			$page.find('.spinner input').val(parseInt(score, 10) + 1);  
-		})
-		.on('click', '.spinner .btn:last-of-type', function() {  
-			var score = $page.find('.spinner input').val();
-			if (score == 0) {
-				$page.find('.spinner input').val(0);
-			} else {
-				$page.find('.spinner input').val(parseInt(score, 10) - 1);  
-			}
-		}); 
-		
-		// 表单验证
-		function validate() {
-			var result = true;
-			
-			if ($form.find('textarea[name="title"]').val() == '') {
-				toastr['error']('请填写题干！');
-				return false;
-			}
-			
-			if ($form.find('input[name="answer"]:checked').val() == undefined) {
-				toastr['error']('请勾选正确答案！');
-				return false;
-			}
-			
-			$.each($form.find('.option'), function(k, option) {
-				if ($(option).val() == '') {
-					toastr['error']('请填写选项！');
-					result = false;
-					return false;
-				}
-			});
-			return result;
-		}
+		});
 		
 	})( jQuery );
 	</script>

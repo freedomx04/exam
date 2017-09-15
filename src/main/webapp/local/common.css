@@ -175,6 +175,10 @@ a:HOVER {
   left: 4px;  
 } 
 
+.btn-operate button {
+	min-width: 100px;
+}
+
 .help-block {
 	display: block;
 	margin-top: 5px;

@@ -73,8 +73,20 @@
 				field: 'state',
 				checkbox: true
 			}, {
+				field: 'username',
+				title: '用户名',
+				align: 'center'
+			}, {
 				field: 'name',
-				title: '考生名称',
+				title: '姓名',
+				align: 'center'
+			}, {
+				field: 'group',
+				title: '分组',
+				align: 'center',
+				formatter: function(value, row, index) {
+					return value.name;
+				}
 			}, {
 				title: '操作',
 				align: 'center',

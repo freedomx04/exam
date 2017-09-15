@@ -42,12 +42,12 @@ public class StudentEntity extends BaseEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	public StudentEntity(GroupEntity group, String username, String name, String password, Date createTime, Date updateTime) {
+	public StudentEntity(GroupEntity group, String username, String password, String name, Date createTime, Date updateTime) {
 		super();
 		this.group = group;
 		this.username = username;
-		this.name = name;
 		this.password = password;
+		this.name = name;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
 	}

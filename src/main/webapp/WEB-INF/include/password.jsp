@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 
 <head>
-
 	<style type="text/css">
 	.pw-strength {
 		clear: both;
@@ -56,7 +55,6 @@
 	<script type="text/javascript" src="${ctx}/plugins/jquery/2.1.4/jquery.min.js"></script>
 
 	<script type="text/javascript">
-		
 	function strength($input, $level) {
 		$input.keyup(function () { 
 			var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g"); 
@@ -94,7 +92,6 @@
 			return true; 
 		}); 
 	}
-	
 	</script>
 
 </head>
