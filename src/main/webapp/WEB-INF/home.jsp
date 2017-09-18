@@ -89,6 +89,14 @@
 					</li>
 					<li>
 						<a href="#">
+							<i class="fa fa-users fa-fw"></i><span class="nav-label">视频</span><span class="fa arrow"></span>
+						</a>
+						<ul class="nav nav-second-level">
+							<li><a class="J_menuItem" href="video">插入视频</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">
 							<i class="fa fa-user fa-fw"></i><span class="nav-label">个人中心</span><span class="fa arrow"></span>
 						</a>
 						<ul class="nav nav-second-level">

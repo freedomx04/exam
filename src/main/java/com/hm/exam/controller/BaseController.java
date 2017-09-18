@@ -21,4 +21,8 @@ public class BaseController {
 		return "home";
 	}
 	
+	@RequestMapping(value = "/video")
+	String video() {
+		return "pages/video";
+	}
 }
