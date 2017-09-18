@@ -1,12 +1,21 @@
 package com.hm.exam.controller.question;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -113,9 +122,21 @@ public class QuestionController {
 	}
 
 	@RequestMapping(value = "/api/question/list")
-	public Result list() {
+	public Result list(Long libraryId, Integer type) {
 		try {
-			List<QuestionEntity> list = questionService.list();
+			List<QuestionEntity> list = new ArrayList<>();
+			if (libraryId != 0 && type != 0) {
+				LibraryEntity library = libraryService.findOne(libraryId);
+				list = questionService.listByLibraryAndType(library, type);
+			} else if (libraryId != 0) {
+				LibraryEntity library = libraryService.findOne(libraryId);
+				list = questionService.listByLibrary(library);
+			} else if (type != 0) {
+				list = questionService.listByType(type);
+			} else {
+				list = questionService.list();
+			}
+			
 			return new ResultInfo(Code.SUCCESS.value(), "ok", list);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -144,6 +165,32 @@ public class QuestionController {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
 		}
+	}
+	
+	@Autowired
+	HttpServletRequest request;
+	
+	@RequestMapping(value = "/api/question/template")
+	public ResponseEntity<InputStreamResource> template() {
+		try {
+			String root = request.getSession().getServletContext().getRealPath("/");
+			File file = new File(root + "/resource/question-template.xlsx");
+			String fileName = "试题导入模板.xlsx";
+			
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+            headers.add("Content-Disposition",
+                            String.format("attachment; filename=\"%s\"", new String(fileName.getBytes("UTF-8"), "ISO8859-1")));
+            headers.add("Pragma", "no-cache");
+            headers.add("Expires", "0");
+            
+            return ResponseEntity.ok().headers(headers).contentLength(file.length())
+                            .contentType(MediaType.parseMediaType("application/octet-stream"))
+                            .body(new InputStreamResource(new FileInputStream(file)));
+		} catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return null;
+        }
 	}
 
 }

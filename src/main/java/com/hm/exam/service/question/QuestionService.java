@@ -24,5 +24,9 @@ public interface QuestionService {
 	Integer countByLibrary(LibraryEntity library);
 	
 	List<QuestionEntity> listByLibrary(LibraryEntity library);
+	
+	List<QuestionEntity> listByType(Integer type);
+	
+	List<QuestionEntity> listByLibraryAndType(LibraryEntity library, Integer type);
 
 }

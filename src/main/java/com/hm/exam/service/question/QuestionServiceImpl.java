@@ -58,4 +58,14 @@ public class QuestionServiceImpl implements QuestionService {
 		return questionRepository.findByLibraryOrderByUpdateTimeDesc(library);
 	}
 
+	@Override
+	public List<QuestionEntity> listByType(Integer type) {
+		return questionRepository.findByTypeOrderByUpdateTimeDesc(type);
+	}
+
+	@Override
+	public List<QuestionEntity> listByLibraryAndType(LibraryEntity library, Integer type) {
+		return questionRepository.findByLibraryAndTypeOrderByUpdateTimeDesc(library, type);
+	}
+
 }

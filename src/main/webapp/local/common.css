@@ -138,6 +138,34 @@ a:HOVER {
 	border-color: #36964d;
 }
 
+/** btn-blue */
+.btn-blue {
+	background-color: #4B8DF8;
+	border-color: #4B8DF8;
+	color: #FFF
+}
+
+.btn-blue.active, .btn-blue:active, .btn-blue:focus,
+	.btn-blue:hover, .open .dropdown-toggle.btn-blue {
+	background-color: #2977f7;
+	border-color: #2977f7;
+	color: #FFF
+}
+
+.btn-blue.active, .btn-blue:active, .open .dropdown-toggle.btn-blue {
+	background-image: none
+}
+
+.btn-blue.active[disabled], .btn-blue.disabled, .btn-blue.disabled.active,
+	.btn-blue.disabled:active, .btn-blue.disabled:focus, .btn-blue.disabled:hover,
+	.btn-blue[disabled], .btn-blue[disabled]:active, .btn-blue[disabled]:focus,
+	.btn-blue[disabled]:hover, fieldset[disabled] .btn-blue, fieldset[disabled] .btn-blue.active,
+	fieldset[disabled] .btn-blue:active, fieldset[disabled] .btn-blue,
+	fieldset[disabled] .btn-blue:hover {
+	background-color: #2977f7;
+	border-color: #2977f7;
+}
+
 /** number spinner */
 .spinner {  
   width: 100px;  

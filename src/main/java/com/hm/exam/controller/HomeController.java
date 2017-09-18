@@ -40,7 +40,9 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/questionList")
-	String questionList() {
+	String questionList(ModelMap modelMap) {
+		List<LibraryEntity> libraryList = libraryService.list();
+		modelMap.addAttribute("libraryList", libraryList);
 		return "pages/question/question_list";
 	}
 	

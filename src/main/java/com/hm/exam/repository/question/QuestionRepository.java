@@ -17,6 +17,10 @@ public interface QuestionRepository extends PagingAndSortingRepository<QuestionE
 	
 	List<QuestionEntity> findByLibraryOrderByUpdateTimeDesc(LibraryEntity library);
 	
+	List<QuestionEntity> findByTypeOrderByUpdateTimeDesc(Integer type);
+	
+	List<QuestionEntity> findByLibraryAndTypeOrderByUpdateTimeDesc(LibraryEntity library, Integer type);
+	
 	List<QuestionEntity> findByOrderByUpdateTimeDesc();
 	
 	Page<QuestionEntity> findByOrderByUpdateTimeDesc(Pageable pageable);
