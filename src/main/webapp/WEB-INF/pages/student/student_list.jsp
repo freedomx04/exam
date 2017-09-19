@@ -74,7 +74,7 @@
 				checkbox: true
 			}, {
 				field: 'username',
-				title: '用户名',
+				title: '考号',
 				align: 'center'
 			}, {
 				field: 'name',

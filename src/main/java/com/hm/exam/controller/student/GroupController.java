@@ -16,6 +16,7 @@ import com.hm.exam.common.result.Result;
 import com.hm.exam.common.result.ResultInfo;
 import com.hm.exam.entity.student.GroupEntity;
 import com.hm.exam.service.student.GroupService;
+import com.hm.exam.service.student.StudentService;
 
 @RestController
 public class GroupController {
@@ -24,6 +25,9 @@ public class GroupController {
 	
 	@Autowired
 	GroupService groupService;
+	
+	@Autowired
+	StudentService studentService;
 	
 	@RequestMapping(value = "/api/group/create", method = RequestMethod.POST)
 	public Result create(String name) {
@@ -106,10 +110,10 @@ public class GroupController {
 	public Result list() {
 		try {
 			List<GroupEntity> list = groupService.list();
-/*			for (GroupEntity group: list) {
-				Integer count = questionService.countByLibraryId(group.getId());
+			for (GroupEntity group: list) {
+				Integer count = studentService.countByGroup(group);
 				group.setCount(count);
-			}*/
+			}
 			
 			return new ResultInfo(Code.SUCCESS.value(), "ok", list);
 		} catch (Exception e) {
