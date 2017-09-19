@@ -11,6 +11,8 @@ public interface StudentService {
 
 	StudentEntity findOne(Long studentId);
 	
+	StudentEntity findByUsername(String username);
+	
 	void save(StudentEntity student);
 	
 	void delete(Long studentId);

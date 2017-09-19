@@ -2,11 +2,15 @@ package com.hm.exam.controller.student;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +29,7 @@ import com.hm.exam.common.result.Code;
 import com.hm.exam.common.result.Result;
 import com.hm.exam.common.result.ResultInfo;
 import com.hm.exam.common.utils.CiphersUtils;
+import com.hm.exam.common.utils.ExcelUtil;
 import com.hm.exam.entity.student.GroupEntity;
 import com.hm.exam.entity.student.StudentEntity;
 import com.hm.exam.service.student.GroupService;
@@ -111,9 +116,15 @@ public class StudentController {
 	}
 	
 	@RequestMapping(value = "/api/student/list")
-	public Result list() {
+	public Result list(Long groupId) {
 		try {
-			List<StudentEntity> list = studentService.list();
+			List<StudentEntity> list = new ArrayList<>();
+			if (groupId != 0) {
+				GroupEntity group = groupService.findOne(groupId);
+				list = studentService.listByGroup(group);
+			} else {
+				list = studentService.list();
+			}
 			return new ResultInfo(Code.SUCCESS.value(), "ok", list);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -173,11 +184,47 @@ public class StudentController {
 	@RequestMapping(value = "/api/student/import")
 	public Result import2(MultipartFile file) {
 		try {
+			// 检查文件
+            ExcelUtil.checkFile(file);
+            Workbook workbook = ExcelUtil.getWorkBook(file);
+            Sheet sheet = workbook.getSheetAt(0);
 			
 			// 成功导入考生数目标识
             int success = 0;
+            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            	Row row = sheet.getRow(i);
+            	if (row == null) {
+            		continue;
+            	}
+            	
+            	String groupName = ExcelUtil.getCellValue(row.getCell(0));
+            	GroupEntity group = groupService.findByName(groupName);
+            	if (group == null) {
+            		Date now = new Date();
+            		group = new GroupEntity(groupName, now, now);
+            		groupService.save(group);
+            	}
+            	
+            	String username = ExcelUtil.getCellValue(row.getCell(1));
+            	StudentEntity student = studentService.findByUsername(username);
+            	String password = ExcelUtil.getCellValue(row.getCell(2));
+            	String name = ExcelUtil.getCellValue(row.getCell(3));
+            			
+            	if (student == null) {
+            		Date now = new Date();
+            		student = new StudentEntity(group, username, CiphersUtils.getInstance().MD5Password(password), name, now, now);
+            		studentService.save(student);
+            	} else {
+            		student.setGroup(group);
+            		student.setPassword(CiphersUtils.getInstance().MD5Password(password));
+            		student.setName(name);
+            		student.setUpdateTime(new Date());
+            		studentService.save(student);
+            	}
+            	success++;
+            }
 			
-			return new Result(Code.SUCCESS.value(), "成功导入" + success + "个试题");
+			return new Result(Code.SUCCESS.value(), "成功导入" + success + "个考生");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
             return new Result(Code.ERROR.value(), e.getMessage());

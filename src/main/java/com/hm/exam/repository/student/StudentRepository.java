@@ -11,6 +11,8 @@ public interface StudentRepository extends PagingAndSortingRepository<StudentEnt
 	
 	Iterable<StudentEntity> findByIdIn(List<Long> studentIdList);
 	
+	StudentEntity findByUsername(String username);
+	
 	Integer countByGroup(GroupEntity group);
 	
 	List<StudentEntity> findByGroup(GroupEntity group);

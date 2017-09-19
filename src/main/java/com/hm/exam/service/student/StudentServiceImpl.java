@@ -21,6 +21,11 @@ public class StudentServiceImpl implements StudentService {
 	public StudentEntity findOne(Long studentId) {
 		return studentRepository.findOne(studentId);
 	}
+	
+	@Override
+	public StudentEntity findByUsername(String username) {
+		return studentRepository.findByUsername(username);
+	}
 
 	@Override
 	public void save(StudentEntity student) {

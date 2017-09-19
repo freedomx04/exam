@@ -85,7 +85,9 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "studentList") 
-	String studentList() {
+	String studentList(ModelMap modelMap) {
+		List<GroupEntity> groupList = groupService.list();
+		modelMap.addAttribute("groupList", groupList);
 		return "pages/student/student_list";
 	}
 	

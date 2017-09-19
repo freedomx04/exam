@@ -41,7 +41,7 @@
 					</div>
 					
 					<div class="form-group">
-						<label for="username" class="col-sm-3 control-label"><i class="form-required">*</i>用户名</label>
+						<label for="username" class="col-sm-3 control-label"><i class="form-required">*</i>考号</label>
                         <div class="col-sm-5">
                             <input type="text" class="form-control" name="username" placeholder="只能包含英文、数字、下划线等字符" value="${student.username}" required>
                         </div>

@@ -40,7 +40,7 @@
 		 					</ul>
 						</div>
 	 					
-	 					<button type="button" class="btn btn-primary btn-question-add" data-toggle="modal" data-target="#modal-question-import-dialog">
+	 					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-question-import-dialog">
 	 						<i class="fa fa-upload fa-fw"></i>导入试题
 	 					</button>
 	 					<button type="button" class="btn btn-white btn-question-delete-batch" disabled='disabled'>
@@ -164,6 +164,7 @@
 		var $page = $('.body-question-list');
 		var $dialog = $page.find('#modal-question-dialog');
 		var $importDialog = $page.find('#modal-question-import-dialog');
+		
 		var $table;
 		var libraryId = 0;
 		var type = 0;
