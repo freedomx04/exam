@@ -66,7 +66,7 @@
 						<ul class="nav nav-second-level">
 							<li><a class="J_menuItem" href="libraryList">题库列表</a></li>
 							<li><a class="J_menuItem" href="questionList">试题列表</a></li>
-							<li><a class="J_menuItem" href="questionAnalysis">题库分析</a></li>
+							<!-- <li><a class="J_menuItem" href="questionAnalysis">题库分析</a></li> -->
 						</ul>
 					</li>
 					<li>
@@ -188,6 +188,7 @@
 	}); */
 	
 	function open(menu) {
+		debugger;
 		$page.find('a[href="' + menu + '"]').trigger('click');
 	}
 	

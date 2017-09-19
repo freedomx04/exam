@@ -31,9 +31,6 @@
  					<button type="button" class="btn btn-primary btn-group-add" data-toggle="modal" data-target="#modal-group-dialog">
  						<i class="fa fa-plus fa-fw"></i>新增分组
  					</button>
- 					<button type="button" class="btn btn-white btn-group-delete-batch" disabled='disabled'>
- 						<i class="fa fa-trash-o fa-fw"></i>批量删除
- 					</button>
  					<button type="button" class="btn btn-white btn-group-refresh">
  						<i class="fa fa-refresh fa-fw"></i>刷新
  					</button>
@@ -219,9 +216,6 @@
 		.on('click', '.btn-group-add', function() {
 			$dialog.find('.modal-title strong').text('新增分组');
 			$dialog.data('method', 'add');
-		})
-		.on('click', '.btn-group-delete-batch', function() {
-			
 		})
 		.on('click', '.btn-group-refresh', function() {
 			$table.bootstrapTable('refresh');

@@ -31,9 +31,6 @@
  					<button type="button" class="btn btn-primary btn-library-add" data-toggle="modal" data-target="#modal-library-dialog">
  						<i class="fa fa-plus fa-fw"></i>新增题库
  					</button>
- 					<button type="button" class="btn btn-white btn-library-delete-batch" disabled='disabled'>
- 						<i class="fa fa-trash-o fa-fw"></i>批量删除
- 					</button>
  					<button type="button" class="btn btn-white btn-library-refresh">
  						<i class="fa fa-refresh fa-fw"></i>刷新
  					</button>
@@ -104,6 +101,15 @@
 			}, {
 				field: 'name',
 				title: '题库名称',
+				/* formatter: function(value, row, index) {
+					return '<a class="btn-library-detail">' + value + '</a>';
+				},
+				events: window.operateEvents = {
+					'click .btn-library-detail': function(e, value, row, index) {
+						e.stopPropagation();
+						window.parent.open('questionList');
+					}
+				} */
 			}, {
 				field: 'count',
 				title: '试题',
@@ -133,9 +139,13 @@
 					},
 					'click .btn-library-delete': function(e, value, row, index) {
 						e.stopPropagation();
+						var text = '您确定要删除所选择的题库吗?';
+						if (row.count > 0) {
+							text = '选择的题库将被删除，题库中包含的试题将会移动至系统默认题库。您确定要删除所选择的题库吗?';
+						}
 						swal({
             				title: '',
-            				text: '您确定要删除所选择的题库吗?',
+            				text: text,
             				type: 'warning',
             				showCancelButton: true,
                             cancelButtonText: '取消',
@@ -219,9 +229,6 @@
 		.on('click', '.btn-library-add', function() {
 			$dialog.find('.modal-title strong').text('新增题库');
 			$dialog.data('method', 'add');
-		})
-		.on('click', '.btn-library-delete-batch', function() {
-			
 		})
 		.on('click', '.btn-library-refresh', function() {
 			$table.bootstrapTable('refresh');

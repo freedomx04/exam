@@ -15,6 +15,7 @@ import com.hm.exam.common.result.Code;
 import com.hm.exam.common.result.Result;
 import com.hm.exam.common.result.ResultInfo;
 import com.hm.exam.entity.question.LibraryEntity;
+import com.hm.exam.entity.question.QuestionEntity;
 import com.hm.exam.service.question.LibraryService;
 import com.hm.exam.service.question.QuestionService;
 
@@ -70,6 +71,13 @@ public class LibraryController {
 	@RequestMapping(value = "/api/library/delete")
 	public Result delete(Long libraryId) {
 		try {
+			LibraryEntity library = libraryService.findOne(libraryId);
+			List<QuestionEntity> questionList = questionService.listByLibrary(library);
+			for (QuestionEntity question: questionList) {
+				LibraryEntity defaultLibrary = libraryService.findByName("默认题库");
+				question.setLibrary(defaultLibrary);
+				questionService.save(question);
+			}
 			libraryService.delete(libraryId);
 			return new Result(Code.SUCCESS.value(), "deleted");
 		} catch (Exception e) {
@@ -114,7 +122,6 @@ public class LibraryController {
 				Integer count = questionService.countByLibrary(library);
 				library.setCount(count);
 			}
-			
 			return new ResultInfo(Code.SUCCESS.value(), "ok", list);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);

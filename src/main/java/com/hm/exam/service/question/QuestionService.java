@@ -28,5 +28,7 @@ public interface QuestionService {
 	List<QuestionEntity> listByType(Integer type);
 	
 	List<QuestionEntity> listByLibraryAndType(LibraryEntity library, Integer type);
+	
+	Integer getType(String typeStr);
 
 }

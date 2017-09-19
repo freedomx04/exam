@@ -8,6 +8,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +23,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.hm.exam.common.result.Code;
 import com.hm.exam.common.result.Result;
 import com.hm.exam.common.result.ResultInfo;
+import com.hm.exam.common.utils.ExcelUtil;
 import com.hm.exam.entity.question.LibraryEntity;
 import com.hm.exam.entity.question.QuestionEntity;
 import com.hm.exam.service.question.LibraryService;
@@ -136,7 +141,7 @@ public class QuestionController {
 			} else {
 				list = questionService.list();
 			}
-			
+
 			return new ResultInfo(Code.SUCCESS.value(), "ok", list);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -154,7 +159,7 @@ public class QuestionController {
 			return new Result(Code.ERROR.value(), e.getMessage());
 		}
 	}
-	
+
 	@RequestMapping(value = "/api/question/listByLibrary")
 	public Result listByLibrary(Long libraryId) {
 		try {
@@ -166,31 +171,84 @@ public class QuestionController {
 			return new Result(Code.ERROR.value(), e.getMessage());
 		}
 	}
-	
+
 	@Autowired
 	HttpServletRequest request;
-	
+
 	@RequestMapping(value = "/api/question/template")
 	public ResponseEntity<InputStreamResource> template() {
 		try {
 			String root = request.getSession().getServletContext().getRealPath("/");
 			File file = new File(root + "/resource/question-template.xlsx");
 			String fileName = "试题导入模板.xlsx";
-			
+
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-            headers.add("Content-Disposition",
-                            String.format("attachment; filename=\"%s\"", new String(fileName.getBytes("UTF-8"), "ISO8859-1")));
-            headers.add("Pragma", "no-cache");
-            headers.add("Expires", "0");
-            
-            return ResponseEntity.ok().headers(headers).contentLength(file.length())
-                            .contentType(MediaType.parseMediaType("application/octet-stream"))
-                            .body(new InputStreamResource(new FileInputStream(file)));
+			headers.add("Content-Disposition",
+					String.format("attachment; filename=\"%s\"", new String(fileName.getBytes("UTF-8"), "ISO8859-1")));
+			headers.add("Pragma", "no-cache");
+			headers.add("Expires", "0");
+
+			return ResponseEntity.ok().headers(headers).contentLength(file.length())
+					.contentType(MediaType.parseMediaType("application/octet-stream"))
+					.body(new InputStreamResource(new FileInputStream(file)));
 		} catch (Exception e) {
-            log.error(e.getMessage(), e);
-            return null;
-        }
+			log.error(e.getMessage(), e);
+			return null;
+		}
+	}
+
+	@RequestMapping(value = "/api/question/import")
+	public Result import2(MultipartFile file) {
+		try {
+			// 检查文件
+			ExcelUtil.checkFile(file);
+			Workbook workbook = ExcelUtil.getWorkBook(file);
+			Sheet sheet = workbook.getSheetAt(0);
+			
+			// 成功导入试题数目标识
+			int success = 0;
+			for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+				Row row = sheet.getRow(i);
+				if (row == null) {
+					continue;
+				}
+
+				String libraryName = ExcelUtil.getCellValue(row.getCell(0));
+				LibraryEntity library = libraryService.findByName(libraryName);
+				if (library == null) {
+					Date now = new Date();
+					library = new LibraryEntity(libraryName, now, now);
+					libraryService.save(library);
+				}
+
+				String title = ExcelUtil.getCellValue(row.getCell(1));
+				String typeStr = ExcelUtil.getCellValue(row.getCell(2));
+				Integer type = questionService.getType(typeStr);
+
+				String optionA = ExcelUtil.getCellValue(row.getCell(3));
+				String optionB = ExcelUtil.getCellValue(row.getCell(4));
+				String optionC = ExcelUtil.getCellValue(row.getCell(5));
+				String optionD = ExcelUtil.getCellValue(row.getCell(6));
+				String optionE = ExcelUtil.getCellValue(row.getCell(7));
+				String optionF = ExcelUtil.getCellValue(row.getCell(8));
+
+				String answer = ExcelUtil.getCellValue(row.getCell(9));
+				String analysis = ExcelUtil.getCellValue(row.getCell(10));
+				Integer score = Integer.parseInt(ExcelUtil.getCellValue(row.getCell(11)));
+
+				Date now = new Date();
+				QuestionEntity question = new QuestionEntity(library, type, title, optionA, optionB, optionC, optionD,
+						optionE, optionF, answer, analysis, score, now, now);
+				questionService.save(question);
+				success++;
+			}
+
+			return new Result(Code.SUCCESS.value(), "成功导入" + success + "个试题");
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return new Result(Code.ERROR.value(), e.getMessage());
+		}
 	}
 
 }

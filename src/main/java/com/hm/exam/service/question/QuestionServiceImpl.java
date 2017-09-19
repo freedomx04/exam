@@ -68,4 +68,18 @@ public class QuestionServiceImpl implements QuestionService {
 		return questionRepository.findByLibraryAndTypeOrderByUpdateTimeDesc(library, type);
 	}
 
+	@Override
+	public Integer getType(String typeStr) {
+		Integer type = 0;
+		
+		switch (typeStr) {
+		case "单选题":		type = 1;	break;
+		case "多选题":		type = 2;	break;
+		case "判断题":		type = 3;	break;
+		default:		type = 0;	break;
+		}
+		
+		return type;
+	}
+
 }

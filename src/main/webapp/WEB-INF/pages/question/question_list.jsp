@@ -17,6 +17,7 @@
 	
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/hplus/style.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/local/common.css">
+	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/toastr/toastr.min.css">
 	
 </head>
 
@@ -52,13 +53,13 @@
 					
 					<div class="col-sm-6 text-right">
 						<select class="form-control" id="question-library" name="library" style="width: 200px; display: inline-block;">
-							<option value="0">-所有题库-</option>
+							<option value="0">所有题库</option>
 							<c:forEach var="library" items="${libraryList}">
 								<option value="${library.id}">${library.name}</option>
 							</c:forEach>
 						</select>
 						<select class="form-control" id="question-type" name="type" style="width: 200px; display: inline-block;">
-							<option value="0">-所有题型-</option>
+							<option value="0">所有题型</option>
 							<option value="1">单选题</option>
 							<option value="2">多选题</option>
 							<option value="3">判断题</option>
@@ -135,6 +136,7 @@
     				</div>
     				<div>
     					<h2>2.导入试题</h2>
+    					<input id="import-file-input" type="file" style="display:none">
     					<button type="button" class="btn btn-primary btn-question-import">
 	 						<i class="fa fa-upload fa-fw"></i>选择文件并上传
 	 					</button>
@@ -155,11 +157,13 @@
 	<script type="text/javascript" src="${ctx}/plugins/sweetalert/sweetalert.min.js"></script>
 	<script type="text/javascript" src="${ctx}/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 	<script type="text/javascript" src="${ctx}/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+	<script type="text/javascript" src="${ctx}/plugins/toastr/toastr.min.js"></script>
 	
 	<script type="text/javascript">
 		
 		var $page = $('.body-question-list');
 		var $dialog = $page.find('#modal-question-dialog');
+		var $importDialog = $page.find('#modal-question-import-dialog');
 		var $table;
 		var libraryId = 0;
 		var type = 0;
@@ -186,56 +190,13 @@
 					}
 				}, {
 					field: 'title',
-					title: '题干'
-				}, {
-					field: 'library',
-					title: '题库',
-					align: 'center',
-					width: '150',
+					title: '题干',
 					formatter: function(value, row, index) {
-						return value.name;
-					}
-				}, {
-					field: 'type',
-					title: '题型',
-					align: 'center',
-					width: '100',
-					formatter: function(value, row, index) {
-						var type;
-						switch (value) {
-						case 1:		
-							type = '<span class="ques-type ques-single">单选题</span>';
-							break;
-						case 2:		
-							type = '<span class="ques-type ques-multiple">多选题</span>';
-							break;
-						case 3:		
-							type = '<span class="ques-type ques-boolean">判断题</span>';
-							break;
-						}
-						return type;
-					}
-				}, {
-					field: 'score',
-					title: '分数',
-					align: 'center',
-					width: '50'
-				}, {
-					title: '操作',
-					align: 'center',
-					width: '140',
-					formatter: function(value, row, index) {
-						if (row.editable == 0) {
-							var $detail = '<a class="btn-question-detail a-operate">查看</a>';
-							var $edit = '<a class="btn-question-edit a-operate">编辑</a>';
-							var $delete = '<a class="btn-question-delete a-operate">删除</a>';
-							return $detail + $edit + $delete;
-						} 
+						return '<a class="question-detail">' + value + '</a>';
 					},
 					events: window.operateEvents = {
-						'click .btn-question-detail': function(e, value, row, index) {
+						'click .question-detail': function(e, value, row, index) {
 							e.stopPropagation();
-							
 							// 试题类型
 							$dialog.find('.ques-type').removeClass('ques-single ques-multiple ques-boolean');
 							switch (row.type) {
@@ -272,13 +233,57 @@
 								}
 								$dialog.find('.ques-answer').text(row.answer);
 							}
-							
 							$dialog.find('.ques-title').text(row.title);
 							$dialog.find('.ques-score').text(row.score);
 							$dialog.find('.ques-analysis').text(row.analysis);
-							
 							$dialog.modal('show');
-						},
+						}
+					}
+				}, {
+					field: 'library',
+					title: '题库',
+					align: 'center',
+					width: '150',
+					formatter: function(value, row, index) {
+						return value.name;
+					}
+				}, {
+					field: 'type',
+					title: '题型',
+					align: 'center',
+					width: '100',
+					formatter: function(value, row, index) {
+						var type;
+						switch (value) {
+						case 1:		
+							type = '<span class="ques-type ques-single">单选题</span>';
+							break;
+						case 2:		
+							type = '<span class="ques-type ques-multiple">多选题</span>';
+							break;
+						case 3:		
+							type = '<span class="ques-type ques-boolean">判断题</span>';
+							break;
+						}
+						return type;
+					}
+				}, {
+					field: 'score',
+					title: '分数',
+					align: 'center',
+					width: '50'
+				}, {
+					title: '操作',
+					align: 'center',
+					width: '100',
+					formatter: function(value, row, index) {
+						if (row.editable == 0) {
+							var $edit = '<a class="btn-question-edit a-operate">编辑</a>';
+							var $delete = '<a class="btn-question-delete a-operate">删除</a>';
+							return $edit + $delete;
+						} 
+					},
+					events: window.operateEvents = {
 						'click .btn-question-edit': function(e, value, row, index) {
 							e.stopPropagation();
 							window.location.href = './questionAdd?method=edit&questionId=' + row.id;
@@ -333,6 +338,34 @@
 		})
 		.on('click', '.btn-question-template', function() {
 			window.location.href = '${ctx}/api/question/template';
+		})
+		.on('click', '.btn-question-import', function() {
+			$page.find('#import-file-input').click();
+		})
+		.on('change', '#import-file-input', function() {
+			$importDialog.modal('hide');
+			
+			var formData = new FormData();
+			formData.append('file', this.files[0]);
+			
+			$.ajax({
+				url: '${ctx}/api/question/import',
+				type: 'post',
+				data: formData,
+                enctype : 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(ret) {
+                	if (ret.code == 0) {
+                		toastr['success'](ret.msg);
+                		$table.bootstrapTable('refresh'); 
+                	} else {
+                		toastr['error'](ret.msg);
+                	}
+                },
+                error: function(err) {}
+			});
 		})
 		.on('click', '.btn-question-delete-batch', function() {
 			swal({
