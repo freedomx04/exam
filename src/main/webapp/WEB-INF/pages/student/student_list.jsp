@@ -77,6 +77,10 @@
     				</div>
     				<div>
     					<h2>2.导入考生</h2>
+    					<ul>
+    						<li>考号是唯一的，如果导入的考生考号重复，则会覆盖该考生信息</li>
+    						<li>分组，考号，密码和姓名为必填字段，密码至少6个字符</li>
+    					</ul>
     					<input id="import-file-input" type="file" style="display:none">
     					<button type="button" class="btn btn-primary btn-student-import">
 	 						<i class="fa fa-upload fa-fw"></i>选择文件并上传
