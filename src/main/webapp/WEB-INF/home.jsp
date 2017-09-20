@@ -89,6 +89,17 @@
 					</li>
 					<li>
 						<a href="#">
+							<i class="fa fa-edit fa-fw"></i><span class="nav-label">模拟考试</span><span class="fa arrow"></span>
+						</a>
+						<ul class="nav nav-second-level">
+							<li><a class="J_menuItem" href="practiceOrder">顺序练习</a></li>
+							<li><a class="J_menuItem" href="practiceRandom">随机练习</a></li>
+							<li><a class="J_menuItem" href="practiceLibrary">题库练习</a></li>
+							<li><a class="J_menuItem" href="practiceType">题型练习</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">
 							<i class="fa fa-users fa-fw"></i><span class="nav-label">视频</span><span class="fa arrow"></span>
 						</a>
 						<ul class="nav nav-second-level">

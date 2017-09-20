@@ -1,5 +1,6 @@
 package com.hm.exam.service.question;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -30,5 +31,7 @@ public interface QuestionService {
 	List<QuestionEntity> listByLibraryAndType(LibraryEntity library, Integer type);
 	
 	Integer getType(String typeStr);
+	
+	List<BigInteger> listId();
 
 }

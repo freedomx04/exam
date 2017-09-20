@@ -1,9 +1,11 @@
 package com.hm.exam.repository.question;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.hm.exam.entity.question.LibraryEntity;
@@ -24,5 +26,8 @@ public interface QuestionRepository extends PagingAndSortingRepository<QuestionE
 	List<QuestionEntity> findByOrderByUpdateTimeDesc();
 	
 	Page<QuestionEntity> findByOrderByUpdateTimeDesc(Pageable pageable);
+	
+	@Query(value = "select id from question_question", nativeQuery = true)
+	List<BigInteger> listId();
 
 }

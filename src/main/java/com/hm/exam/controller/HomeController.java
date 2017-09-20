@@ -1,5 +1,7 @@
 package com.hm.exam.controller;
 
+import java.math.BigInteger;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,6 +108,32 @@ public class HomeController {
 		}
 		
 		return "pages/student/student_add";
+	}
+	
+	// 模拟考试
+	@RequestMapping(value = "practiceOrder")
+	String practiceOrder(ModelMap modelMap) {
+		List<BigInteger> idList = questionService.listId();
+		modelMap.addAttribute("idList", idList);
+		return "pages/practice/practice_order";
+	}
+	
+	@RequestMapping(value = "practiceRandom")
+	String practiceRandom(ModelMap modelMap) {
+		List<BigInteger> ids = questionService.listId();
+		Collections.shuffle(ids);
+		modelMap.addAttribute("ids", ids);
+		return "pages/practice/practice_random";
+	}
+	
+	@RequestMapping(value = "practiceLibrary")
+	String practiceLibrary(ModelMap modelMap) {
+		return "pages/practice/practice_library";
+	}
+	
+	@RequestMapping(value = "practiceType")
+	String practiceType(ModelMap modelMap) {
+		return "pages/practice/practice_type";
 	}
 	
 }

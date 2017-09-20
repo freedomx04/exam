@@ -1,5 +1,6 @@
 package com.hm.exam.service.question;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +81,11 @@ public class QuestionServiceImpl implements QuestionService {
 		}
 		
 		return type;
+	}
+
+	@Override
+	public List<BigInteger> listId() {
+		return questionRepository.listId();
 	}
 
 }
