@@ -34,6 +34,8 @@ public interface QuestionService {
 	
 	Integer getType(String typeStr);
 	
+	String getTitle(Integer type);
+	
 	/**
 	 * 获取id列表
 	 */

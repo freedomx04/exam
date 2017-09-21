@@ -87,6 +87,20 @@ public class QuestionServiceImpl implements QuestionService {
 		
 		return type;
 	}
+	
+	@Override
+	public String getTitle(Integer type) {
+		String title = "";
+		
+		switch (type) {
+		case 1:		title = "单选题";		break;
+		case 2:		title = "多选题";		break;
+		case 3:		title = "判断题";		break;
+		default:	break;
+		}
+		
+		return title;
+	}
 
 	@Override
 	public List<BigInteger> listId() {

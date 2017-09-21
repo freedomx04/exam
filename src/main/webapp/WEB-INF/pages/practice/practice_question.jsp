@@ -34,7 +34,11 @@
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content">
-				<h2 class="page-title">${title}</h2>
+				<h2 class="page-title" style="display: inline;">${title}<small style="margin-left: 20px;">${subTitle}</small></h2>
+				
+				<c:if test="${not empty subTitle}">
+					<a href="javascript:;" class="btn-practice-back" style="margin-left: 20px;">重新选择</a>
+				</c:if>
 				
 				<div class="hr-line-dashed"></div>
 				<div class="row">
@@ -99,6 +103,9 @@
 		enableBtn();
 		
 		$page
+		.on('click', '.btn-practice-back', function() {
+			window.history.back();
+		})
 		.on('click', 'input[name="single"]', function() {
 			$page.find('input[name="single"]').attr('disabled', 'disabled');
 			

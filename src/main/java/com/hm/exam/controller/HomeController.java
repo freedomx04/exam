@@ -120,8 +120,12 @@ public class HomeController {
 		List<BigInteger> idList = new ArrayList<BigInteger>();
 		if (libraryId != null) {
 			idList = questionService.listIdByLibraryId(libraryId);
+			LibraryEntity library = libraryService.findOne(libraryId);
+			modelMap.addAttribute("subTitle", "题库：" + library.getName());
 		} else if (type != null) {
 			idList = questionService.listIdByType(type);
+			String subTitle = questionService.getTitle(type);
+			modelMap.addAttribute("subTitle", "题型：" + subTitle);
 		} else {	
 			idList = questionService.listId();
 		}
@@ -136,8 +140,12 @@ public class HomeController {
 		List<BigInteger> idList = new ArrayList<>();
 		if (libraryId != null) {
 			idList = questionService.listIdByLibraryId(libraryId);
+			LibraryEntity library = libraryService.findOne(libraryId);
+			modelMap.addAttribute("subTitle", "题库：" + library.getName());
 		} else if (type != null) {
 			idList = questionService.listIdByType(type);
+			String subTitle = questionService.getTitle(type);
+			modelMap.addAttribute("subTitle", "题型：" + subTitle);
 		} else {
 			idList = questionService.listId();
 		}
@@ -163,19 +171,7 @@ public class HomeController {
 		List<TypeEntity> typeList = new ArrayList<>();
 		for (Integer type: types) {
 			Integer count = questionService.countByType(type);
-			
-			String name = "";
-			switch(type) {
-			case 1:
-				name = "选择题";
-				break;
-			case 2:
-				name = "多选题";
-				break;
-			case 3:
-				name = "判断题";
-				break;
-			}
+			String name = questionService.getTitle(type);
 			TypeEntity typeObj = new TypeEntity(type, name, count);
 			typeList.add(typeObj);
 		}
