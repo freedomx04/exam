@@ -19,26 +19,26 @@
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/toastr/toastr.min.css">
        
    	<style type="text/css">
-   	.body-practice-order .ques-options li {
+   	.body-practice-question .ques-options li {
    		height: 36px;
    		font-size: 16px;
    	}
-   	.body-practice-order .btn {
+   	.body-practice-question .btn {
    		width: 100px;
    	}
    	</style> 
         
 </head>
 
-<body class="gray-bg body-practice-order">
+<body class="gray-bg body-practice-question">
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content">
-				<h2 class="page-title">顺序练习</h2>
+				<h2 class="page-title">${title}</h2>
 				
 				<div class="hr-line-dashed"></div>
 				<div class="row">
-					<div class="col-sm-8">
+					<div class="col-sm-12">
 						<span class="ques-type"></span>
 						<span class="ques-seq" style="font-size: 20px; margin-left: 10px;"></span>
 						<span class="ques-title" style="font-size: 20px;"></span>
@@ -61,7 +61,7 @@
 				<div class="hr-line-dashed" style="margin-top: 50px;"></div>
 				<div class="row">
 					<div class="col-sm-11 ques-control" style="padding-left: 70px;">
-						<button type="button" class="btn btn-primary btn-question-prev" disabled>上一题</button>
+						<button type="button" class="btn btn-primary btn-question-prev">上一题</button>
 						<button type="button" class="btn btn-primary btn-question-next">下一题</button>
 						
 						<span style="padding-left: 50px;">共</span><span class="question-size" style="padding: 0 10px;">123</span>题,&nbsp;
@@ -84,7 +84,7 @@
 
 	<script type="text/javascript">
 	
-		var $page = $('.body-practice-order');
+		var $page = $('.body-practice-question');
 		var idList = '${idList}';
 		idList = idList.replace('[', '').replace(']', '');
 		var ids = idList.split(',');
@@ -96,6 +96,7 @@
 		$page.find('.question-size').text(ids.length);
 		// 第一题
 		getQuestion(ids[0]);
+		enableBtn();
 		
 		$page
 		.on('click', 'input[name="single"]', function() {
@@ -168,7 +169,7 @@
 		.on('click', '.btn-question-prev', function() {
 			seq--;
 			getQuestion(ids[seq].trim());
-			enableBtn()
+			enableBtn();
 		})
 		.on('click', '.btn-question-next', function() {
 			seq++;
@@ -184,11 +185,15 @@
 			} else {
 				seq = Number(num - 1);
 				getQuestion(ids[seq]);
+				enableBtn();
 			}
 		});
 		
 		function enableBtn() {
-			if (seq == 0) {
+			if (seq == 0 && seq == (ids.length - 1)) {
+				$page.find('.btn-question-prev').attr('disabled', 'disabled');
+				$page.find('.btn-question-next').attr('disabled', 'disabled');
+			} else if (seq == 0) {
 				$page.find('.btn-question-prev').attr('disabled', 'disabled');
 				$page.find('.btn-question-next').removeAttr('disabled');
 			} else if (seq == (ids.length - 1)) {

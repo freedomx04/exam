@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 
 import com.hm.exam.entity.question.LibraryEntity;
 import com.hm.exam.entity.question.QuestionEntity;
@@ -16,6 +17,8 @@ public interface QuestionRepository extends PagingAndSortingRepository<QuestionE
 	Iterable<QuestionEntity> findByIdIn(List<Long> questionIdList);
 	
 	Integer countByLibrary(LibraryEntity library);
+	
+	Integer countByType(Integer type);
 	
 	List<QuestionEntity> findByLibraryOrderByUpdateTimeDesc(LibraryEntity library);
 	
@@ -29,5 +32,11 @@ public interface QuestionRepository extends PagingAndSortingRepository<QuestionE
 	
 	@Query(value = "select id from question_question", nativeQuery = true)
 	List<BigInteger> listId();
+	
+	@Query(value = "select id from question_question where library_id = :libraryId", nativeQuery = true)
+	List<BigInteger> listIdByLibraryId(@Param("libraryId") Long libraryId);
+	
+	@Query(value = "select id from question_question where type = :type", nativeQuery = true)
+	List<BigInteger> listIdByType(@Param("type") Integer type);
 
 }

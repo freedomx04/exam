@@ -53,6 +53,11 @@ public class QuestionServiceImpl implements QuestionService {
 	public Integer countByLibrary(LibraryEntity library) {
 		return questionRepository.countByLibrary(library);
 	}
+	
+	@Override
+	public Integer countByType(Integer type) {
+		return questionRepository.countByType(type);
+	}
 
 	@Override
 	public List<QuestionEntity> listByLibrary(LibraryEntity library) {
@@ -86,6 +91,16 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	public List<BigInteger> listId() {
 		return questionRepository.listId();
+	}
+
+	@Override
+	public List<BigInteger> listIdByLibraryId(Long libraryId) {
+		return questionRepository.listIdByLibraryId(libraryId);
+	}
+
+	@Override
+	public List<BigInteger> listIdByType(Integer type) {
+		return questionRepository.listIdByType(type);
 	}
 
 }

@@ -24,6 +24,8 @@ public interface QuestionService {
 	
 	Integer countByLibrary(LibraryEntity library);
 	
+	Integer countByType(Integer type);
+	
 	List<QuestionEntity> listByLibrary(LibraryEntity library);
 	
 	List<QuestionEntity> listByType(Integer type);
@@ -32,6 +34,13 @@ public interface QuestionService {
 	
 	Integer getType(String typeStr);
 	
+	/**
+	 * 获取id列表
+	 */
 	List<BigInteger> listId();
+	
+	List<BigInteger> listIdByLibraryId(Long libraryId);
+	
+	List<BigInteger> listIdByType(Integer type);
 
 }
