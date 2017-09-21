@@ -55,6 +55,11 @@
 						<div class="col-sm-7">
 							<textarea class="form-control" name="title" style="resize: none; height: 150px;">${question.title}</textarea>
 						</div>
+						<div class="col-sm-1" style="padding-left: 0;">
+							<button type="button" class="btn btn-white btn-image-add" title="插入图片">
+								<i class="fa fa-file-image-o"></i>
+							</button>
+						</div>
 					</div>
 					
 					<div class="form-group">
@@ -256,6 +261,9 @@
 		}
 		
 		$page
+		.on('click', '.btn-image-add', function() {
+			
+		})
 		.on('click', '.btn-option-add', function() {
 			var $last = $page.find('.option').last();
 			var seq = $last.attr('seq');

@@ -9,6 +9,5 @@ import com.hm.exam.entity.BaseEntity;
 @Table(name = "authority_user")
 public class UserEntity extends BaseEntity {
 	
-	private String username;
 
 }

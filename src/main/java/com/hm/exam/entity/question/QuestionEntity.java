@@ -38,10 +38,15 @@ public class QuestionEntity extends BaseEntity {
 	private Integer type = QuestionType.SINGLE_CHOICE;
 	
 	/**
-	 * 试题
+	 * 试题题干
 	 */
 	@Column(length = 2000)
 	private String title;
+	
+	/**
+	 * 试题图片
+	 */
+	private String imagePath;
 	
 	/**
 	 * 答案选项
@@ -74,12 +79,13 @@ public class QuestionEntity extends BaseEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	public QuestionEntity(LibraryEntity library, Integer type, String title, String optionA, String optionB, String optionC, String optionD,
+	public QuestionEntity(LibraryEntity library, Integer type, String title, String imagePath, String optionA, String optionB, String optionC, String optionD,
 			String optionE, String optionF, String answer, String analysis, Integer score, Date createTime, Date updateTime) {
 		super();
 		this.library = library;
 		this.type = type;
 		this.title = title;
+		this.imagePath = imagePath;
 		this.optionA = optionA;
 		this.optionB = optionB;
 		this.optionC = optionC;
@@ -115,6 +121,14 @@ public class QuestionEntity extends BaseEntity {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 
 	public String getOptionA() {

@@ -46,12 +46,12 @@ public class QuestionController {
 	LibraryService libraryService;
 
 	@RequestMapping(value = "/api/question/create", method = RequestMethod.POST)
-	public Result create(Long libraryId, Integer type, String title, String optionA, String optionB, String optionC,
+	public Result create(Long libraryId, Integer type, String title, String imagePath, String optionA, String optionB, String optionC,
 			String optionD, String optionE, String optionF, String answer, String analysis, Integer score) {
 		try {
 			Date now = new Date();
 			LibraryEntity library = libraryService.findOne(libraryId);
-			QuestionEntity question = new QuestionEntity(library, type, title, optionA, optionB, optionC, optionD,
+			QuestionEntity question = new QuestionEntity(library, type, title, imagePath, optionA, optionB, optionC, optionD,
 					optionE, optionF, answer, analysis, score, now, now);
 			questionService.save(question);
 			return new Result(Code.SUCCESS.value(), "created");
@@ -238,7 +238,7 @@ public class QuestionController {
 				Integer score = Integer.parseInt(ExcelUtil.getCellValue(row.getCell(11)));
 
 				Date now = new Date();
-				QuestionEntity question = new QuestionEntity(library, type, title, optionA, optionB, optionC, optionD,
+				QuestionEntity question = new QuestionEntity(library, type, title, null, optionA, optionB, optionC, optionD,
 						optionE, optionF, answer, analysis, score, now, now);
 				questionService.save(question);
 				success++;

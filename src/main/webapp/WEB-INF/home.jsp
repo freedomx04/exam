@@ -89,7 +89,7 @@
 					</li>
 					<li>
 						<a href="#">
-							<i class="fa fa-edit fa-fw"></i><span class="nav-label">模拟考试</span><span class="fa arrow"></span>
+							<i class="fa fa-edit fa-fw"></i><span class="nav-label">模拟练习</span><span class="fa arrow"></span>
 						</a>
 						<ul class="nav nav-second-level">
 							<li><a class="J_menuItem" href="practiceOrder">顺序练习</a></li>
