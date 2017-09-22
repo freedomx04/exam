@@ -222,7 +222,7 @@
 		});
 	
 		$page
-		.on('hidden.bs.modal', '#modal-area-dialog', function() {
+		.on('hidden.bs.modal', '#modal-library-dialog', function() {
             $form.bootstrapValidator('resetForm', true);
             $(this).removeData('bs.modal');
         }) 

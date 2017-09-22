@@ -27,6 +27,9 @@
 	.body-question-add .spinner input {
 		width: 100px;
 	}
+	.body-question-add .image-title:HOVER {
+		cursor: pointer;
+	}
 	</style>
 	
 </head>
@@ -55,13 +58,24 @@
 						<div class="col-sm-7">
 							<textarea class="form-control" name="title" style="resize: none; height: 150px;">${question.title}</textarea>
 						</div>
+						<div class="col-sm-3" style="padding-left: 0;">
+							<input class="input-title-image" type="file" style="display:none" 
+								accept="image/jpg, image/jpeg, image/webp, image/bmp, image/png, image/svg, image/gif">
+							<c:if test="${method == 'add' || empty question.imagePath}">
+								<button type="button" class="btn btn-white btn-image-add" data-toggle="tooltip" data-placement="top" title="插入图片">
+									<i class="fa fa-file-image-o"></i>
+								</button>
+							</c:if>
+							<img class="image-title hide" src="${ctx}${question.imagePath}" style="max-width: 100%; max-height: 100%;" 
+								data-toggle="tooltip" data-placement="top" title="点击修改图片">
+						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="optionA" class="col-sm-2 control-label">选项A</label>
 						<div class="col-sm-7">
 							<div class="input-group">
-								<input type="text" class="form-control option" name="optionA" seq="0" value="${question.optionA}">
+								<input type="text" class="form-control option" name="optionA" data-seq="0" value="${question.optionA}">
 								<div class="input-group-addon">
 									<div class="checkbox checkbox-success checkbox-inline">
 										<input type="checkbox" name="answer" id="A" value="A">
@@ -76,7 +90,7 @@
 						<label for="optionB" class="col-sm-2 control-label">选项B</label>
 						<div class="col-sm-7">
 							<div class="input-group">
-								<input type="text" class="form-control option" name="optionB" seq="1" value="${question.optionB}">
+								<input type="text" class="form-control option" name="optionB" data-seq="1" value="${question.optionB}">
 								<div class="input-group-addon">
 									<div class="checkbox checkbox-success checkbox-inline">
 										<input type="checkbox" name="answer" id="B" value="B">
@@ -92,7 +106,7 @@
 						<label for="optionC" class="col-sm-2 control-label">选项C</label>
 						<div class="col-sm-7">
 							<div class="input-group">
-								<input type="text" class="form-control option" name="optionC" seq="2" value="${question.optionC}">
+								<input type="text" class="form-control option" name="optionC" data-seq="2" value="${question.optionC}">
 								<div class="input-group-addon">
 									<div class="checkbox checkbox-success checkbox-inline">
 										<input type="checkbox" name="answer" id="C" value="C">
@@ -102,7 +116,7 @@
 							</div>
 						</div>
 						<div class="col-sm-1" style="padding-left: 0;">
-							<button type="button" class="btn btn-white btn-option-delete" title="删除选项">
+							<button type="button" class="btn btn-white btn-option-delete" data-toggle="tooltip" data-placement="top" title="删除选项">
 								<i class="fa fa-trash-o"></i>
 							</button>
 						</div>
@@ -114,7 +128,7 @@
 						<label for="optionD" class="col-sm-2 control-label">选项D</label>
 						<div class="col-sm-7">
 							<div class="input-group">
-								<input type="text" class="form-control option" name="optionD" seq="3" value="${question.optionD}">
+								<input type="text" class="form-control option" name="optionD" data-seq="3" value="${question.optionD}">
 								<div class="input-group-addon">
 									<div class="checkbox checkbox-success checkbox-inline">
 										<input type="checkbox" name="answer" id="D" value="D">
@@ -124,7 +138,7 @@
 							</div>
 						</div>
 						<div class="col-sm-1" style="padding-left: 0;">
-							<button type="button" class="btn btn-white btn-option-delete" title="删除选项">
+							<button type="button" class="btn btn-white btn-option-delete" data-toggle="tooltip" data-placement="top" title="删除选项">
 								<i class="fa fa-trash-o"></i>
 							</button>
 						</div>
@@ -136,7 +150,7 @@
 						<label for="optionE" class="col-sm-2 control-label">选项E</label>
 						<div class="col-sm-7">
 							<div class="input-group">
-								<input type="text" class="form-control option" name="optionE" seq="4" value="${question.optionE}">
+								<input type="text" class="form-control option" name="optionE" data-seq="4" value="${question.optionE}">
 								<div class="input-group-addon">
 									<div class="checkbox checkbox-success checkbox-inline">
 										<input type="checkbox" name="answer" id="E" value="E">
@@ -146,7 +160,7 @@
 							</div>
 						</div>
 						<div class="col-sm-1" style="padding-left: 0;">
-							<button type="button" class="btn btn-white btn-option-delete" title="删除选项">
+							<button type="button" class="btn btn-white btn-option-delete" data-toggle="tooltip" data-placement="top" title="删除选项">
 								<i class="fa fa-trash-o"></i>
 							</button>
 						</div>
@@ -158,7 +172,7 @@
 						<label for="optionF" class="col-sm-2 control-label">选项F</label>
 						<div class="col-sm-7">
 							<div class="input-group">
-								<input type="text" class="form-control option" name="optionF" seq="5" value="${question.optionF}">
+								<input type="text" class="form-control option" name="optionF" data-seq="5" value="${question.optionF}">
 								<div class="input-group-addon">
 									<div class="checkbox checkbox-success checkbox-inline">
 										<input type="checkbox" name="answer" id="F" value="F">
@@ -168,7 +182,7 @@
 							</div>
 						</div>
 						<div class="col-sm-1" style="padding-left: 0;">
-							<button type="button" class="btn btn-white btn-option-delete" title="删除选项">
+							<button type="button" class="btn btn-white btn-option-delete" data-toggle="tooltip" data-placement="top" title="删除选项">
 								<i class="fa fa-trash-o"></i>
 							</button>
 						</div>
@@ -245,8 +259,13 @@
 		var type = 2;
 		var arr = ['A', 'B', 'C', 'D', 'E', 'F'];
 		
+		// tooltip
+		$page.find('[data-toggle="tooltip"]').tooltip();
+		
 		if (method == 'edit') {
 			$page.find('select[name="libraryId"]').val(${question.library.id});
+			$page.find('.image-title').removeClass('hide');
+			
 			var answer = '${question.answer}';
 			var answers = answer.split(',');
 			$.each(answers, function(k, val) {
@@ -260,9 +279,40 @@
 		}
 		
 		$page
+		.on('click', '.btn-image-add', function() {
+			$page.find('.input-title-image').click();
+		})
+		.on('click', '.image-title', function() {
+			$page.find('.input-title-image').click();
+		})
+		.on('change', '.input-title-image', function() {
+			var formData = new FormData();
+			formData.append('imageFile', this.files[0]);
+			
+			$.ajax({
+				url: '${ctx}/api/uploadImage',
+				type: 'post',
+				data: formData,
+				enctype : 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(ret) {
+                	if (ret.code == 0) {
+                		var imagePath = ret.data;
+                		$page.find('.btn-image-add').addClass('hide');
+                		$page.find('.image-title')
+                			.removeClass('hide')
+                			.attr('src', '${ctx}' + imagePath)
+                			.data('imagePath', imagePath);
+                	}
+                },
+                error: function(err) {}
+			});
+		})
 		.on('click', '.btn-option-add', function() {
 			var $last = $page.find('.option').last();
-			var seq = $last.attr('seq');
+			var seq = $last.data('seq');
 			var next = parseInt(seq) + 1;
 			var option = arr[next];
 			
@@ -276,7 +326,7 @@
 					'<label for="" class="col-sm-2 control-label">选项' + option + '</label>' +
 					'<div class="col-sm-7">' + 
 						'<div class="input-group">' +
-							'<input type="text" class="form-control option" name="option' + option + '" seq="' + next + '">' + 
+							'<input type="text" class="form-control option" name="option' + option + '" data-seq="' + next + '">' + 
 							'<div class="input-group-addon">' + 
 								'<div class="checkbox checkbox-success checkbox-inline">' +
 									'<input type="checkbox" name="answer" id="' + option + '" value="' + option + '">' +
@@ -305,6 +355,11 @@
 			if (validate()) {
 				var formData = new FormData($form[0]); 
 				formData.append('type', type);
+				
+				var imagePath = $page.find('.image-title').data('imagePath');
+				if (imagePath) {
+					formData.append('imagePath', imagePath);
+				}
 				
 				$.ajax({
 					url: '${ctx}/api/question/create',
@@ -335,6 +390,11 @@
 				var formData = new FormData($form[0]); 
 				formData.append('type', type);
 				
+				var imagePath = $page.find('.image-title').data('imagePath');
+				if (imagePath) {
+					formData.append('imagePath', imagePath);
+				}
+				
 				$.ajax({
 					url: '${ctx}/api/question/create',
 					type: 'post',
@@ -363,6 +423,11 @@
 			if (validate()) {
 				var formData = new FormData($form[0]); 
 				formData.append('questionId', '${question.id}');
+				
+				var imagePath = $page.find('.image-title').data('imagePath');
+				if (imagePath) {
+					formData.append('imagePath', imagePath);
+				}
 				
 				$.ajax({
 					url: '${ctx}/api/question/update',

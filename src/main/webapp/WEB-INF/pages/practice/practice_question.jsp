@@ -53,6 +53,9 @@
 					<div class="col-sm-8">
 						<ul class="unstyled ques-options" style="padding-left: 70px; padding-top: 15px;"></ul>
 					</div>
+					<div class="col-sm-4">
+						<img class="ques-image" src="" style="max-width: 100%; max-height: 100%;">
+					</div>
 				</div>
 				
 				<div class="row">
@@ -215,7 +218,7 @@
 		function getQuestion(id) {
 			// tips隐藏
 			$page.find('.ques-tips').addClass('hide');
-			$page.find('.ques-analysis').addClass('hide')
+			$page.find('.ques-analysis').addClass('hide');
 			
 			$.ajax({
 				url: '${ctx}/api/question/get?questionId=' + id,
@@ -241,6 +244,12 @@
 						$page.find('.ques-seq').text(seq + 1 + '.');
 						// 试题题干
 						$page.find('.ques-title').text(question.title);
+						// 题干图片
+						if (question.imagePath) {
+							$page.find('.ques-image').attr('src', '${ctx}' + question.imagePath);
+						} else {
+							$page.find('.ques-image').attr('src', '');
+						}
 						// 试题选项
 						$page.find('.ques-options').empty();
 						// 单选题

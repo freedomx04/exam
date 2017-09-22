@@ -23,6 +23,9 @@
 	.body-question-add .spinner input {
 		width: 100px;
 	}
+	.body-question-add .image-title:HOVER {
+		cursor: pointer;
+	}
 	</style>
 </head>
 
@@ -49,6 +52,17 @@
 						<label for="title" class="col-sm-2 control-label">题干</label>
 						<div class="col-sm-7">
 							<textarea class="form-control" name="title" style="resize: none; height: 150px;">${question.title}</textarea>
+						</div>
+						<div class="col-sm-3" style="padding-left: 0;">
+							<input class="input-title-image" type="file" style="display:none" 
+								accept="image/jpg, image/jpeg, image/webp, image/bmp, image/png, image/svg, image/gif">
+							<c:if test="${method == 'add' || empty question.imagePath}">
+								<button type="button" class="btn btn-white btn-image-add" data-toggle="tooltip" data-placement="top" title="插入图片">
+									<i class="fa fa-file-image-o"></i>
+								</button>
+							</c:if>
+							<img class="image-title hide" src="${ctx}${question.imagePath}" style="max-width: 100%; max-height: 100%;" 
+								data-toggle="tooltip" data-placement="top" title="点击修改图片">
 						</div>
 					</div>
 					
@@ -130,16 +144,56 @@
 		var method = '${method}';
 		var type = 3;
 		
+		// tooltip
+		$page.find('[data-toggle="tooltip"]').tooltip();
+		
 		if (method == 'edit') {
 			$page.find('select[name="libraryId"]').val(${question.library.id});
+			$page.find('.image-title').removeClass('hide');
 			$page.find('input[type="radio"][value="${question.answer}"]').attr('checked', 'checked');
 		}
 		
 		$page
+		.on('click', '.btn-image-add', function() {
+			$page.find('.input-title-image').click();
+		})
+		.on('click', '.image-title', function() {
+			$page.find('.input-title-image').click();
+		})
+		.on('change', '.input-title-image', function() {
+			var formData = new FormData();
+			formData.append('imageFile', this.files[0]);
+			
+			$.ajax({
+				url: '${ctx}/api/uploadImage',
+				type: 'post',
+				data: formData,
+				enctype : 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(ret) {
+                	if (ret.code == 0) {
+                		var imagePath = ret.data;
+                		$page.find('.btn-image-add').addClass('hide');
+                		$page.find('.image-title')
+                			.removeClass('hide')
+                			.attr('src', '${ctx}' + imagePath)
+                			.data('imagePath', imagePath);
+                	}
+                },
+                error: function(err) {}
+			});
+		})
 		.on('click', '.btn-question-add-continue', function() {
 			if (validate()) {
 				var formData = new FormData($form[0]); 
 				formData.append('type', type);
+				
+				var imagePath = $page.find('.image-title').data('imagePath');
+				if (imagePath) {
+					formData.append('imagePath', imagePath);
+				}
 				
 				$.ajax({
 					url: '${ctx}/api/question/create',
@@ -170,6 +224,11 @@
 				var formData = new FormData($form[0]); 
 				formData.append('type', type);
 				
+				var imagePath = $page.find('.image-title').data('imagePath');
+				if (imagePath) {
+					formData.append('imagePath', imagePath);
+				}
+				
 				$.ajax({
 					url: '${ctx}/api/question/create',
 					type: 'post',
@@ -198,6 +257,11 @@
 			if (validate()) {
 				var formData = new FormData($form[0]); 
 				formData.append('questionId', '${question.id}');
+				
+				var imagePath = $page.find('.image-title').data('imagePath');
+				if (imagePath) {
+					formData.append('imagePath', imagePath);
+				}
 				
 				$.ajax({
 					url: '${ctx}/api/question/update',

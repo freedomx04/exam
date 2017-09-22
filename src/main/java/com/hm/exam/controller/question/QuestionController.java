@@ -62,13 +62,14 @@ public class QuestionController {
 	}
 
 	@RequestMapping(value = "/api/question/update", method = RequestMethod.POST)
-	public Result update(Long questionId, Long libraryId, String title, String optionA, String optionB, String optionC,
+	public Result update(Long questionId, Long libraryId, String title, String imagePath, String optionA, String optionB, String optionC,
 			String optionD, String optionE, String optionF, String answer, String analysis, Integer score) {
 		try {
 			LibraryEntity library = libraryService.findOne(libraryId);
 			QuestionEntity question = questionService.findOne(questionId);
 			question.setLibrary(library);
 			question.setTitle(title);
+			question.setImagePath(imagePath);
 			question.setOptionA(optionA);
 			question.setOptionB(optionB);
 			question.setOptionC(optionC);
@@ -247,7 +248,7 @@ public class QuestionController {
 			return new Result(Code.SUCCESS.value(), "成功导入" + success + "个试题");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
-			return new Result(Code.ERROR.value(), e.getMessage());
+			return new Result(Code.ERROR.value(), "导入文件出错！");
 		}
 	}
 

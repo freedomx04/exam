@@ -88,8 +88,11 @@
                         </div>
                         
                         <div class="form-group">
-                        	<div class="col-sm-12">
+                        	<div class="col-sm-8">
                         		<ul class="unstyled ques-options" style="padding-left: 0; line-height: 2em;"></ul>
+                        	</div>
+                        	<div class="col-sm-4">
+                        		<img class="ques-image" src="" style="max-width: 100%; max-height: 100%;">
                         	</div>
                         </div>
                         
@@ -104,7 +107,7 @@
                         
                         <div class="form-group">
                         	<div class="col-sm-12">
-                        		试题解析: <span class="ques-analysis">阿斯兰大手大脚按时打死</span>
+                        		试题解析: <span class="ques-analysis"></span>
                         	</div>
                         </div>
                     </form>
@@ -235,6 +238,11 @@
 								$dialog.find('.ques-answer').text(row.answer);
 							}
 							$dialog.find('.ques-title').text(row.title);
+							if (row.imagePath) {
+								$dialog.find('.ques-image').attr('src', '${ctx}' + row.imagePath);
+							} else {
+								$dialog.find('.ques-image').attr('src', '');
+							}
 							$dialog.find('.ques-score').text(row.score);
 							$dialog.find('.ques-analysis').text(row.analysis);
 							$dialog.modal('show');
