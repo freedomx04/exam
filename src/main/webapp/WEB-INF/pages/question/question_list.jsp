@@ -11,6 +11,7 @@
 	
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/animate/animate.min.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/bootstrap-table/bootstrap-table.min.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/sweetalert/sweetalert.css">
@@ -43,22 +44,22 @@
 	 					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-question-import-dialog">
 	 						<i class="fa fa-upload fa-fw"></i>导入试题
 	 					</button>
-	 					<button type="button" class="btn btn-white btn-question-delete-batch" disabled='disabled'>
+	 					<button type="button" class="btn btn-white btn-question-delete-batch" disabled="disabled">
 	 						<i class="fa fa-trash-o fa-fw"></i>批量删除
 	 					</button>
-	 					<button type="button" class="btn btn-white btn-question-refresh">
-	 						<i class="fa fa-refresh fa-fw"></i>刷新
+	 					<button type="button" class="btn btn-white btn-question-move" disabled="disabled">
+	 						移动到题库
 	 					</button>
 					</div>
 					
 					<div class="col-sm-6 text-right">
-						<select class="form-control" id="question-library" name="library" style="width: 200px; display: inline-block;">
+						<select class="form-control" id="question-library" name="library" style="width: 160px; display: inline-block;">
 							<option value="0">所有题库</option>
 							<c:forEach var="library" items="${libraryList}">
 								<option value="${library.id}">${library.name}</option>
 							</c:forEach>
 						</select>
-						<select class="form-control" id="question-type" name="type" style="width: 200px; display: inline-block;">
+						<select class="form-control" id="question-type" name="type" style="width: 160px; display: inline-block;">
 							<option value="0">所有题型</option>
 							<option value="1">单选题</option>
 							<option value="2">多选题</option>
@@ -151,6 +152,36 @@
     		</div>
     	</div>
     </div>
+    
+    <div class="modal" id="modal-question-move-dialog" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    	<div class="modal-dialog">
+    		<div class="modal-content animated fadeInDown">
+    			<div class="modal-header">
+    				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h3 class="modal-title">请选择题库</h3>
+    			</div>
+    			<div class="modal-body" style="max-height: 400px; overflow: auto;">
+    				<div class="alert alert-success alert-question-move hide">
+    					请先选择一项
+    				</div>
+    				<ul class="unstyled">
+    					<c:forEach var="library" items="${libraryList}">
+    						<li style="height: 30px;">
+    							<div class="radio radio-success radio-inline">
+    								<input type="radio" name="library" id="${library.id}" value="${library.id}">
+    								<label for="${library.id}">${library.name}</label>
+    							</div>
+    						</li>
+    					</c:forEach>
+    				</ul>
+    			</div>
+    			<div class="modal-footer">
+    				<button type="button" class="btn btn-white" data-dismiss="modal" style="width: 100px;">关闭</button>
+                    <button type="button" class="btn btn-primary btn-question-move-confirm" style="width: 100px;">确定</button>
+    			</div>
+    		</div>
+    	</div>
+    </div>
 	
 	<script type="text/javascript" src="${ctx}/plugins/jquery/2.1.4/jquery.min.js"></script>
 	<script type="text/javascript" src="${ctx}/plugins/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -167,6 +198,7 @@
 		var $page = $('.body-question-list');
 		var $dialog = $page.find('#modal-question-dialog');
 		var $importDialog = $page.find('#modal-question-import-dialog');
+		var $moveDialog = $page.find('#modal-question-move-dialog');
 		
 		var $table;
 		var libraryId = 0;
@@ -333,6 +365,7 @@
 			$table.on('all.bs.table', function(e, row) {
 	            var selNum = $table.bootstrapTable('getSelections').length;
 	            selNum > 0 ? $page.find('.btn-question-delete-batch').removeAttr('disabled') : $page.find('.btn-question-delete-batch').attr('disabled', 'disabled');
+	            selNum > 0 ? $page.find('.btn-question-move').removeAttr('disabled') : $page.find('.btn-question-move').attr('disabled', 'disabled');
 	        });
 		};
 		
@@ -390,6 +423,7 @@
                 var rows = $table.bootstrapTable('getSelections');
                 $.ajax({
                     url: '${ctx}/api/question/batchDelete',
+                    type: 'post',
                     data: { 
                         questionIdList: $k.util.getIdList(rows) 
                     },
@@ -405,8 +439,37 @@
                 });
             });
 		})
-		.on('click', '.btn-question-refresh', function() {
-			$table.bootstrapTable('refresh');
+		.on('click', '.btn-question-move', function() {
+			$moveDialog.find('.alert-question-move').addClass('hide');
+			$moveDialog.find('input[name="library"]').removeAttr('checked');
+			$moveDialog.modal('show');
+		})
+		.on('click', '.btn-question-move-confirm', function() {
+			var libraryId = $moveDialog.find('input[name="library"]:checked').val();
+			if (!libraryId) {
+				$moveDialog.find('.alert-question-move').removeClass('hide');
+				return;
+			}
+			
+			var rows = $table.bootstrapTable('getSelections');
+			$.ajax({
+				url: '${ctx}/api/question/move',
+				type: 'post',
+				data: {
+					questionIdList: $k.util.getIdList(rows),
+					libraryId: libraryId
+				},
+				success: function(ret) {
+					$moveDialog.modal('hide');
+					if (ret.code == 0) {
+						swal('', '移动成功!', 'success');
+					} else {
+						swal('', ret.msg, 'error');
+					}
+					$table.bootstrapTable('refresh');
+				},
+				error: function(err) {}
+			});
 		});
 		
 	</script>

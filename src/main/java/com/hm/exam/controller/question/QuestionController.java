@@ -102,7 +102,7 @@ public class QuestionController {
 		}
 	}
 
-	@RequestMapping(value = "/api/question/batchDelete")
+	@RequestMapping(value = "/api/question/batchDelete", method = RequestMethod.POST)
 	public Result batchDelete(@RequestParam("questionIdList[]") List<Long> questionIdList) {
 		try {
 			questionService.delete(questionIdList);
@@ -167,6 +167,24 @@ public class QuestionController {
 			LibraryEntity library = libraryService.findOne(libraryId);
 			List<QuestionEntity> list = questionService.listByLibrary(library);
 			return new ResultInfo(Code.SUCCESS.value(), "ok", list);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return new Result(Code.ERROR.value(), e.getMessage());
+		}
+	}
+	
+	@RequestMapping(value = "/api/question/move", method = RequestMethod.POST)
+	public Result move(@RequestParam("questionIdList[]") List<Long> questionIdList, Long libraryId) {
+		try {
+			LibraryEntity library = libraryService.findOne(libraryId);
+			for (Long questionId: questionIdList) {
+				QuestionEntity question = questionService.findOne(questionId);
+				question.setLibrary(library);
+				question.setUpdateTime(new Date());
+				questionService.save(question);
+			}
+			
+			return new Result(Code.SUCCESS.value(), "moved");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());

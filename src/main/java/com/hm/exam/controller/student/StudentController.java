@@ -90,7 +90,7 @@ public class StudentController {
 		}
 	}
 
-	@RequestMapping(value = "/api/student/batchDelete")
+	@RequestMapping(value = "/api/student/batchDelete", method = RequestMethod.POST)
 	public Result batchDelete(@RequestParam("studentIdList[]") List<Long> studentIdList) {
 		try {
 			studentService.delete(studentIdList);
@@ -149,6 +149,24 @@ public class StudentController {
 			GroupEntity group = groupService.findOne(groupId);
 			List<StudentEntity> list = studentService.listByGroup(group);
 			return new ResultInfo(Code.SUCCESS.value(), "ok", list);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return new Result(Code.ERROR.value(), e.getMessage());
+		}
+	}
+	
+	@RequestMapping(value = "/api/student/move", method = RequestMethod.POST)
+	public Result move(@RequestParam("studentIdList[]") List<Long> studentIdList, Long groupId) {
+		try {
+			GroupEntity group = groupService.findOne(groupId);
+			for (Long studentId: studentIdList) {
+				StudentEntity student = studentService.findOne(studentId);
+				student.setGroup(group);
+				student.setUpdateTime(new Date());
+				studentService.save(student); 
+			}
+			
+			return new Result(Code.SUCCESS.value(), "moved");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());

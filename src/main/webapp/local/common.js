@@ -58,8 +58,8 @@
 			
 			// 显示设置
 			iconSize: 'outline',			// btn样式
-			//showColumns: true,			// 是否显示 内容列下拉框, 默认为false
-			//showRefresh: true,			// 是否显示 刷新按钮, 默认为false
+			showColumns: true,				// 是否显示 内容列下拉框, 默认为false
+			showRefresh: true,				// 是否显示 刷新按钮, 默认为false
 			showToggle: false,				// 是否显示 切换试图（table/card）按钮, 默认为false
 			
 			// 点击

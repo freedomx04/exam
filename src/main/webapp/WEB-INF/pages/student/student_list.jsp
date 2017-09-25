@@ -11,6 +11,7 @@
 	
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/animate/animate.min.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/bootstrap-table/bootstrap-table.min.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/sweetalert/sweetalert.css">
@@ -38,8 +39,8 @@
 	 					<button type="button" class="btn btn-white btn-student-delete-batch" disabled='disabled'>
 	 						<i class="fa fa-trash-o fa-fw"></i>批量删除
 	 					</button>
-	 					<button type="button" class="btn btn-white btn-student-refresh">
-	 						<i class="fa fa-refresh fa-fw"></i>刷新
+	 					<button type="button" class="btn btn-white btn-student-move" disabled="disabled">
+	 						 移动到分组
 	 					</button>
 					</div>
  					
@@ -93,6 +94,36 @@
     		</div>
     	</div>
     </div>
+    
+    <div class="modal" id="modal-student-move-dialog" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+        	<div class="modal-content animated fadeInDown">
+        		<div class="modal-header">
+        			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h3 class="modal-title">请选择分组</h3>
+                </div>
+                <div class="modal-body" style="max-height: 400px; overflow: auto;">
+                	<div class="alert alert-success alert-student-move hide">
+                		 请先选择一项
+                	</div>
+                	<ul class="unstyled">
+                		<c:forEach var="group" items="${groupList}">
+                			<li style="height: 30px;">
+                				<div class="radio radio-success radio-inline">
+                					<input type="radio" name="group" id="${group.id}" value="${group.id}">
+                					<label for="${group.id}">${group.name}</label>
+                				</div>
+                			</li>
+                		</c:forEach>
+                	</ul>
+                </div>
+               	<div class="modal-footer">
+               		<button type="button" class="btn btn-white" data-dismiss="modal" style="width: 100px;">关闭</button>
+                    <button type="button" class="btn btn-primary btn-student-move-confirm" style="width: 100px;">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
 	
 	<script type="text/javascript" src="${ctx}/plugins/jquery/2.1.4/jquery.min.js"></script>
 	<script type="text/javascript" src="${ctx}/plugins/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -108,6 +139,7 @@
 		
 		var $page = $('.body-student-list');
 		var $importDialog = $page.find('#modal-student-import-dialog');
+		var $moveDialog = $page.find('#modal-student-move-dialog');
 		
 		var $table;
 		var groupId = 0;
@@ -199,6 +231,7 @@
 			$table.on('all.bs.table', function(e, row) {
 	            var selNum = $table.bootstrapTable('getSelections').length;
 	            selNum > 0 ? $page.find('.btn-student-delete-batch').removeAttr('disabled') : $page.find('.btn-student-delete-batch').attr('disabled', 'disabled');
+	            selNum > 0 ? $page.find('.btn-student-move').removeAttr('disabled') : $page.find('.btn-student-move').attr('disabled', 'disabled');
 	        });
 		}
 		
@@ -255,6 +288,7 @@
                 var rows = $table.bootstrapTable('getSelections');
                 $.ajax({
                     url: '${ctx}/api/student/batchDelete',
+                    type: 'post',
                     data: { 
                     	studentIdList: $k.util.getIdList(rows) 
                     },
@@ -270,8 +304,37 @@
                 });
             });
 		})
-		.on('click', '.btn-student-refresh', function() {
-			$table.bootstrapTable('refresh');
+		.on('click', '.btn-student-move', function() {
+			$moveDialog.find('.alert-student-move').addClass('hide');
+			$moveDialog.find('input[name="group"]').removeAttr('checked');
+			$moveDialog.modal('show');
+		})
+		.on('click', '.btn-student-move-confirm', function() {
+			var groupId = $moveDialog.find('input[name="group"]:checked').val();
+			if (!groupId) {
+				$moveDialog.find('.alert-student-move').removeClass('hide');
+				return
+			}
+			
+			var rows = $table.bootstrapTable('getSelections');
+			$.ajax({
+				url: '${ctx}/api/student/move',
+				type: 'post',
+				data: {
+					studentIdList: $k.util.getIdList(rows),
+					groupId: groupId
+				},
+				success: function(ret) {
+                    $moveDialog.modal('hide');
+                    if (ret.code == 0) {
+                    	swal('', '移动成功!', 'success');
+                    } else {
+                    	swal('', ret.msg, 'error');
+                    }
+                    $table.bootstrapTable('refresh');
+                },
+                error: function(err) {}
+			});
 		});
 		
 	</script>
