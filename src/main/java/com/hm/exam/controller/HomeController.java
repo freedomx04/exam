@@ -80,8 +80,9 @@ public class HomeController {
 		}
 	}
 	
+	
 	/**
-	 * 考试管理
+	 * 考生管理
 	 */
 	@RequestMapping(value = "/groupList")
 	String groupList() {
@@ -177,6 +178,14 @@ public class HomeController {
 		}
 		modelMap.addAttribute("typeList", typeList);
 		return "pages/practice/practice_type";
+	}
+	
+	/**
+	 * 考试管理
+	 */
+	@RequestMapping(value = "/classifyList")
+	String classifyList() {
+		return "pages/exam/classify_list";
 	}
 	
 }

@@ -71,20 +71,20 @@
 					</li>
 					<li>
 						<a href="#">
-							<i class="fa fa-clock-o fa-fw"></i><span class="nav-label">考试管理</span><span class="fa arrow"></span>
-						</a>
-						<ul class="nav nav-second-level">
-							<li><a class="J_menuItem" href="libraryList">考生管理</a></li>
-							<li><a class="J_menuItem" href="libraryList">试卷管理</a></li>
-						</ul>
-					</li>
-					<li>
-						<a href="#">
 							<i class="fa fa-users fa-fw"></i><span class="nav-label">考生管理</span><span class="fa arrow"></span>
 						</a>
 						<ul class="nav nav-second-level">
 							<li><a class="J_menuItem" href="groupList">分组列表</a></li>
 							<li><a class="J_menuItem" href="studentList">考生列表</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fa fa-clock-o fa-fw"></i><span class="nav-label">考试管理</span><span class="fa arrow"></span>
+						</a>
+						<ul class="nav nav-second-level">
+							<li><a class="J_menuItem" href="classifyList">试卷分类</a></li>
+							<li><a class="J_menuItem" href="paperList">试卷列表</a></li>
 						</ul>
 					</li>
 					<li>
