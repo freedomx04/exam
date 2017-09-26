@@ -7,7 +7,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
-	<title>考生列表</title>
+	<title>考生管理</title>
 	
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -26,7 +26,7 @@
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content">
-				<h2 class="page-title">考生列表</h2>
+				<h2 class="page-title">考生管理</h2>
 				
 				<div id="student-list-table-toolbar" class="row" role="student">
 					<div class="col-sm-6">
@@ -158,6 +158,12 @@
 				columns: [{
 					field: 'state',
 					checkbox: true
+				}, {
+					title: '#',
+					width: '20',
+					formatter: function(value, row, index) {
+						return index + 1;
+					}
 				}, {
 					field: 'username',
 					title: '考号',

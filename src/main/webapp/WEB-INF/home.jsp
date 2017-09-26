@@ -61,11 +61,11 @@
 					</li>
 					<li>
 						<a href="#">
-							<i class="fa fa-question-circle-o fa-fw"></i><span class="nav-label">题库管理</span><span class="fa arrow"></span>
+							<i class="fa fa-question-circle-o fa-fw"></i><span class="nav-label">题库中心</span><span class="fa arrow"></span>
 						</a>
 						<ul class="nav nav-second-level">
-							<li><a class="J_menuItem" href="libraryList">题库列表</a></li>
-							<li><a class="J_menuItem" href="questionList">试题列表</a></li>
+							<li><a class="J_menuItem" href="libraryList">题库管理</a></li>
+							<li><a class="J_menuItem" href="questionList">试题管理</a></li>
 							<!-- <li><a class="J_menuItem" href="questionAnalysis">题库分析</a></li> -->
 						</ul>
 					</li>
@@ -74,8 +74,8 @@
 							<i class="fa fa-users fa-fw"></i><span class="nav-label">考生管理</span><span class="fa arrow"></span>
 						</a>
 						<ul class="nav nav-second-level">
-							<li><a class="J_menuItem" href="groupList">分组列表</a></li>
-							<li><a class="J_menuItem" href="studentList">考生列表</a></li>
+							<li><a class="J_menuItem" href="groupList">分组管理</a></li>
+							<li><a class="J_menuItem" href="studentList">考生管理</a></li>
 						</ul>
 					</li>
 					<li>
@@ -84,7 +84,7 @@
 						</a>
 						<ul class="nav nav-second-level">
 							<li><a class="J_menuItem" href="classifyList">试卷分类</a></li>
-							<li><a class="J_menuItem" href="paperList">试卷列表</a></li>
+							<li><a class="J_menuItem" href="paperList">试卷管理</a></li>
 						</ul>
 					</li>
 					<li>

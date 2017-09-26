@@ -10,11 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.hm.exam.entity.exam.ClassifyEntity;
 import com.hm.exam.entity.question.LibraryEntity;
 import com.hm.exam.entity.question.QuestionEntity;
 import com.hm.exam.entity.question.TypeEntity;
 import com.hm.exam.entity.student.GroupEntity;
 import com.hm.exam.entity.student.StudentEntity;
+import com.hm.exam.service.exam.ClassifyService;
+import com.hm.exam.service.exam.PaperService;
 import com.hm.exam.service.question.LibraryService;
 import com.hm.exam.service.question.QuestionService;
 import com.hm.exam.service.student.GroupService;
@@ -34,6 +37,12 @@ public class HomeController {
 	
 	@Autowired
 	StudentService studentService;
+	
+	@Autowired
+	ClassifyService classifyService;
+	
+	@Autowired
+	PaperService paperService;
 	
 	/**
 	 * 题库管理
@@ -186,6 +195,13 @@ public class HomeController {
 	@RequestMapping(value = "/classifyList")
 	String classifyList() {
 		return "pages/exam/classify_list";
+	}
+	
+	@RequestMapping(value = "/paperList")
+	String paperList(ModelMap modelMap) {
+		List<ClassifyEntity> classifyList = classifyService.list();
+		modelMap.addAttribute("classifyList", classifyList);
+		return "pages/exam/paper_list";
 	}
 	
 }
