@@ -33,6 +33,11 @@ public class PaperEntity extends BaseEntity {
 	private ClassifyEntity classify;
 	
 	/**
+	 * 描述
+	 */
+	private String description;
+	
+	/**
 	 * 多对多关联试题
 	 */
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
@@ -50,10 +55,11 @@ public class PaperEntity extends BaseEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PaperEntity(String title, ClassifyEntity classify, Date createTime, Date updateTime) {
+	public PaperEntity(String title, ClassifyEntity classify, String description, Date createTime, Date updateTime) {
 		super();
 		this.title = title;
 		this.classify = classify;
+		this.description = description;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
 	}
@@ -72,6 +78,14 @@ public class PaperEntity extends BaseEntity {
 
 	public void setClassify(ClassifyEntity classify) {
 		this.classify = classify;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public List<QuestionEntity> getQuestions() {

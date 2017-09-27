@@ -31,11 +31,11 @@ public class PaperController {
 	ClassifyService classifyService;
 
 	@RequestMapping(value = "/api/paper/create", method = RequestMethod.POST)
-	public Result create(String title, Long classifyId) {
+	public Result create(String title, Long classifyId, String description) {
 		try {
 			ClassifyEntity classify = classifyService.findOne(classifyId);
 			Date now = new Date();
-			PaperEntity paper = new PaperEntity(title, classify, now, now);
+			PaperEntity paper = new PaperEntity(title, classify, description, now, now);
 			paperService.save(paper);
 			return new ResultInfo(Code.SUCCESS.value(), "created", paper);
 		} catch (Exception e) {
@@ -100,6 +100,17 @@ public class PaperController {
 			}
 			
 			return new Result(Code.SUCCESS.value(), "moved");
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return new Result(Code.ERROR.value(), e.getMessage());
+		}
+	}
+	
+	@RequestMapping(value = "/api/paper/listQuestion")
+	public Result listQuestion(Long paperId) {
+		try {
+			PaperEntity paper = paperService.findOne(paperId);
+			return new ResultInfo(Code.SUCCESS.value(), "moved", paper.getQuestions());
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());

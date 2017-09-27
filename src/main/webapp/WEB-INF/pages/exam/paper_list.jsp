@@ -177,7 +177,7 @@
 	
 		$page
 		.on('click', '.btn-paper-add', function() {
-			
+			window.location.href = '${ctx}/paperAdd';
 		})
 		.on('click', '.btn-paper-move', function() {
 			$moveDialog.find('.alert-paper-move').addClass('hide');

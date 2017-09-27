@@ -204,4 +204,22 @@ public class HomeController {
 		return "pages/exam/paper_list";
 	}
 	
+	@RequestMapping(value = "/paperAdd")
+	String paperAdd(ModelMap modelMap) {
+		List<ClassifyEntity> classifyList = classifyService.list();
+		modelMap.addAttribute("classifyList", classifyList);
+		
+		List<LibraryEntity> libraryList = libraryService.list();
+		for (LibraryEntity library: libraryList) {
+			Integer count = questionService.countByLibrary(library);
+			library.setCount(count);
+		}
+		modelMap.addAttribute("libraryList", libraryList);
+		
+		List<QuestionEntity> questionList = questionService.list();
+		modelMap.addAttribute("questionList", questionList);
+		
+		return "pages/exam/paper_add";
+	}
+	
 }
