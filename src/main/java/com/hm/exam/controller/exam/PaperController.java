@@ -16,8 +16,10 @@ import com.hm.exam.common.result.Result;
 import com.hm.exam.common.result.ResultInfo;
 import com.hm.exam.entity.exam.ClassifyEntity;
 import com.hm.exam.entity.exam.PaperEntity;
+import com.hm.exam.entity.question.QuestionEntity;
 import com.hm.exam.service.exam.ClassifyService;
 import com.hm.exam.service.exam.PaperService;
+import com.hm.exam.service.question.QuestionService;
 
 @RestController
 public class PaperController {
@@ -29,6 +31,9 @@ public class PaperController {
 
 	@Autowired
 	ClassifyService classifyService;
+	
+	@Autowired
+	QuestionService questionService;
 
 	@RequestMapping(value = "/api/paper/create", method = RequestMethod.POST)
 	public Result create(String title, Long classifyId, String description) {
@@ -111,6 +116,91 @@ public class PaperController {
 		try {
 			PaperEntity paper = paperService.findOne(paperId);
 			return new ResultInfo(Code.SUCCESS.value(), "moved", paper.getQuestions());
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return new Result(Code.ERROR.value(), e.getMessage());
+		}
+	}
+	
+	@RequestMapping(value = "/api/paper/randomAdd", method = RequestMethod.POST)
+	public Result randomAdd(Long paperId, @RequestParam("randomList[]") List<String> randomList) {
+		try {
+			PaperEntity paper = paperService.findOne(paperId);
+			for (String random: randomList) {
+				Long libraryId = Long.parseLong(random.split("-")[0]);
+				Integer count = Integer.parseInt(random.split("-")[1]);
+				
+				List<QuestionEntity> questionList = questionService.listByLibraryIdOrderByRand(libraryId, count);
+				for (QuestionEntity question: questionList) {
+					if (!paper.getQuestions().contains(question)) {
+						paper.getQuestions().add(question);
+					}
+				}
+			}
+			paperService.save(paper);
+			
+			return new Result(Code.SUCCESS.value(), "success");
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return new Result(Code.ERROR.value(), e.getMessage());
+		}
+	}
+	
+	@RequestMapping(value = "/api/paper/manualAdd")
+	public Result manualAdd(Long paperId, Long questionId) {
+		try {
+			PaperEntity paper = paperService.findOne(paperId);
+			QuestionEntity question = questionService.findOne(questionId);
+			if (!paper.getQuestions().contains(question)) {
+				paper.getQuestions().add(question);
+			}
+			paperService.save(paper);
+			return new Result(Code.SUCCESS.value(), "added");
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return new Result(Code.ERROR.value(), e.getMessage());
+		}
+	}
+	
+	@RequestMapping(value = "/api/paper/deleteQuestion")
+	public Result deleteQuestion(Long paperId, Long questionId) {
+		try {
+			PaperEntity paper = paperService.findOne(paperId);
+			QuestionEntity question = questionService.findOne(questionId);
+			paper.getQuestions().remove(question);
+			paperService.save(paper);
+			return new Result(Code.SUCCESS.value(), "deleted");
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return new Result(Code.ERROR.value(), e.getMessage());
+		}
+	}
+	
+	@RequestMapping(value = "/api/paper/batchDeleteQuestion", method = RequestMethod.POST)
+	public Result batchDeleteQuestion(Long paperId, @RequestParam("questionIdList[]") List<Long> questionIdList) {
+		try {
+			PaperEntity paper = paperService.findOne(paperId);
+			for(Long questionId: questionIdList) {
+				QuestionEntity question = questionService.findOne(questionId);
+				paper.getQuestions().remove(question);
+			}
+			paperService.save(paper);
+			return new Result(Code.SUCCESS.value(), "deleted");
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return new Result(Code.ERROR.value(), e.getMessage());
+		}
+	}
+	
+	@RequestMapping(value = "/api/paper/setting", method = RequestMethod.POST)
+	public Result setting(Long paperId, Date startTime, Date endTime, Integer duration) {
+		try {
+			PaperEntity paper = paperService.findOne(paperId);
+			paper.setStartTime(startTime);
+			paper.setEndTime(endTime);
+			paper.setDuration(duration);
+			paperService.save(paper);
+			return new Result(Code.SUCCESS.value(), "success");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());

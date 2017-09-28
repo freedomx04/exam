@@ -39,4 +39,10 @@ public interface QuestionRepository extends PagingAndSortingRepository<QuestionE
 	@Query(value = "select id from question_question where type = :type", nativeQuery = true)
 	List<BigInteger> listIdByType(@Param("type") Integer type);
 
+	/**
+	 * 根据题库随机抽取指定数目的试题
+	 */
+	@Query(value = "select * from question_question where library_id = :libraryId order by RAND() limit :limit", nativeQuery = true)
+	List<QuestionEntity> listByLibraryIdOrderByRand(@Param("libraryId") Long libraryId, @Param("limit") Integer limit);
+	
 }

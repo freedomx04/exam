@@ -20,6 +20,11 @@ import com.hm.exam.entity.question.QuestionEntity;
 @Table(name = "exam_paper")
 public class PaperEntity extends BaseEntity {
 	
+	public class PaperStatus {
+		public static final int STATUS_ENABLE = 0;
+		public static final int STATUS_UNABLE = 1;
+	}
+	
 	/**
 	 * 试卷标题
 	 */
@@ -50,6 +55,23 @@ public class PaperEntity extends BaseEntity {
 	 * 链接
 	 */
 	private String link;
+	
+	private Integer status = PaperStatus.STATUS_ENABLE;
+	
+	/**
+	 * 开始时间
+	 */
+	private Date startTime;
+	
+	/**
+	 * 结束时间
+	 */
+	private Date endTime;
+	
+	/**
+	 * 考试时长
+	 */
+	private Integer duration;
 	
 	public PaperEntity() {
 		// TODO Auto-generated constructor stub
@@ -95,6 +117,14 @@ public class PaperEntity extends BaseEntity {
 	public void setQuestions(List<QuestionEntity> questions) {
 		this.questions = questions;
 	}
+	
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
 	public String getLink() {
 		return link;
@@ -102,6 +132,30 @@ public class PaperEntity extends BaseEntity {
 
 	public void setLink(String link) {
 		this.link = link;
+	}
+
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+
+	public Integer getDuration() {
+		return duration;
+	}
+
+	public void setDuration(Integer duration) {
+		this.duration = duration;
 	}
 
 }

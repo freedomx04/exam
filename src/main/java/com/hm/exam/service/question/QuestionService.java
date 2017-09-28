@@ -44,5 +44,10 @@ public interface QuestionService {
 	List<BigInteger> listIdByLibraryId(Long libraryId);
 	
 	List<BigInteger> listIdByType(Integer type);
+	
+	/**
+	 * 试卷添加试题
+	 */
+	List<QuestionEntity> listByLibraryIdOrderByRand(Long libraryId, Integer limit);
 
 }

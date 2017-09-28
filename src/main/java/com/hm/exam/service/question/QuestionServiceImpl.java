@@ -117,4 +117,9 @@ public class QuestionServiceImpl implements QuestionService {
 		return questionRepository.listIdByType(type);
 	}
 
+	@Override
+	public List<QuestionEntity> listByLibraryIdOrderByRand(Long libraryId, Integer limit) {
+		return questionRepository.listByLibraryIdOrderByRand(libraryId, limit);
+	}
+
 }
