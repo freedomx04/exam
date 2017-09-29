@@ -68,6 +68,31 @@
 		</div>
 	</div>
 	
+	<div class="modal" id="modal-paper-detail-dialog" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+		<div class="modal-dialog">
+			<div class="modal-content animated fadeInDown">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h3 class="modal-title">试卷详情</h3>
+				</div>
+				<div class="modal-body">
+					<h2>复制下面的连接并分享给您的考生</h2>
+					<div>
+						<pre class="url-share"></pre>
+						<button type="button" class="btn btn-primary btn-copy" data-clipboard-text="aa">
+							<i class="fa fa-copy fa-fw"></i>点击复制
+						</button>
+					</div>
+				</div>
+				<div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                        <i class="fa fa-close fa-fw"></i>关闭
+                    </button>
+                </div>
+			</div>
+		</div>
+	</div>
+	
 	<script type="text/javascript" src="${ctx}/plugins/jquery/2.1.4/jquery.min.js"></script>
 	<script type="text/javascript" src="${ctx}/plugins/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${ctx}/plugins/hplus/content.min.js"></script>
@@ -76,11 +101,15 @@
 	<script type="text/javascript" src="${ctx}/plugins/sweetalert/sweetalert.min.js"></script>
 	<script type="text/javascript" src="${ctx}/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 	<script type="text/javascript" src="${ctx}/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+	<script type="text/javascript" src="${ctx}/plugins/clipboard/clipboard.min.js"></script>
 	
 	<script type="text/javascript">
 		
 		var $page = $('.body-paper-list');
 		var $moveDialog = $page.find('#modal-paper-move-dialog');
+		var $detailDialog = $page.find('#modal-paper-detail-dialog');
+		
+		var clipboard = new Clipboard('.btn-copy');
 		
 		var $table = $k.util.bsTable($page.find('#paper-list-table'), {
 			url: '${ctx}/api/paper/list',
@@ -101,6 +130,18 @@
 			}, {
 				field: 'title',
 				title: '试卷标题',
+				formatter: function(value, row, index) {
+					return '<a class="paper-detail">' + value + '</a>';
+				},
+				events: window.operateEvents = {
+					'click .paper-detail': function(e, value, row, index) {
+						e.stopPropagation();
+						var shareUrl = 'http://' + window.location.host + '${ctx}/online/' + row.id;
+						$detailDialog.find('.url-share').text(shareUrl);
+						$detailDialog.find('.btn-copy').attr('data-clipboard-text', shareUrl);
+						$detailDialog.modal('show');
+					}
+				}
 			}, {
 				field: 'classify',
 				title: '试卷分类',
@@ -117,24 +158,26 @@
 			}, {
 				title: '操作',
 				align: 'center',
-				width: '100',
+				width: '200',
 				formatter: function(value, row, index) {
-					if (row.editable == 0) {
-						var $edit = '<a class="btn-paper-edit a-operate">编辑</a>';
-						var $delete = '<a class="btn-paper-delete a-operate">删除</a>';
-						return $edit + $delete;
-					} 
+					var $edit = '<a class="btn-paper-edit a-operate">编辑</a>';
+					var $question = '<a class="btn-paper-question a-operate">试题管理</a>';
+					var $setting = '<a class="btn-paper-setting a-operate">设置</a>';
+					var $delete = '<a class="btn-paper-delete a-operate">删除</a>';
+					return $edit + $question + $setting + $delete;
 				},
 				events: window.operateEvents = {
 					'click .btn-paper-edit': function(e, value, row, index) {
 						e.stopPropagation();
-						$dialog.find('.modal-title strong').text('编辑分类');
-            			$.each(row, function(key, val) {
-            				$form.find('input[name="' + key + '"]').val(val);
-            			});
-            			$dialog.data('method', 'edit');
-            			$dialog.data('paperId', row.id);
-            			$dialog.modal('show');
+						window.location.href = '${ctx}/paperEdit?paperId=' + row.id;
+					},
+					'click .btn-paper-question': function(e, value, row, index) {
+						e.stopPropagation();
+						window.location.href = '${ctx}/paperQuestion?paperId=' + row.id;
+					},
+					'click .btn-paper-setting': function(e, value, row, index) {
+						e.stopPropagation();
+						window.location.href = '${ctx}/paperSetting?paperId=' + row.id;
 					},
 					'click .btn-paper-delete': function(e, value, row, index) {
 						e.stopPropagation();

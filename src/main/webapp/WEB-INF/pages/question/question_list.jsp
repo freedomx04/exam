@@ -72,54 +72,6 @@
 		</div>
 	</div>
 	
-	<div class="modal" id="modal-question-dialog" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog">
-            <div class="modal-content animated fadeInDown">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h3 class="modal-title">试题详情</h3>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal" role="form" id="form-area" autocomplete="off">
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <span class="ques-type" style="margin-right: 5px;"></span>
-                                <span class="ques-title" style="font-size: 14px; line-height: 2em;"></span>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                        	<div class="col-sm-8">
-                        		<ul class="unstyled ques-options" style="padding-left: 0; line-height: 2em;"></ul>
-                        	</div>
-                        	<div class="col-sm-4">
-                        		<img class="ques-image" src="" style="max-width: 100%; max-height: 100%;">
-                        	</div>
-                        </div>
-                        
-                        <div class="form-group">
-                        	<div class="col-sm-4">
-                        		正确答案: <span class="ques-answer font-bold"></span>
-                        	</div>
-                        	<div class="col-sm-4">
-                        		分数: <span class="ques-score"></span>
-                        	</div>
-                        </div>
-                        
-                        <div class="form-group">
-                        	<div class="col-sm-12">
-                        		试题解析: <span class="ques-analysis"></span>
-                        	</div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" style="width: 100px;">关闭</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
     <div class="modal" id="modal-question-import-dialog" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
     	<div class="modal-dialog">
     		<div class="modal-content animated fadeInDown">
@@ -192,11 +144,11 @@
 	<script type="text/javascript" src="${ctx}/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 	<script type="text/javascript" src="${ctx}/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 	<script type="text/javascript" src="${ctx}/plugins/toastr/toastr.min.js"></script>
+	<%@ include file="/WEB-INF/pages/question/dialog_question_detail.jsp"%>
 	
 	<script type="text/javascript">
 		
 		var $page = $('.body-question-list');
-		var $dialog = $page.find('#modal-question-dialog');
 		var $importDialog = $page.find('#modal-question-import-dialog');
 		var $moveDialog = $page.find('#modal-question-move-dialog');
 		
@@ -233,51 +185,7 @@
 					events: window.operateEvents = {
 						'click .question-detail': function(e, value, row, index) {
 							e.stopPropagation();
-							// 试题类型
-							$dialog.find('.ques-type').removeClass('ques-single ques-multiple ques-boolean');
-							switch (row.type) {
-							case 1:
-								$dialog.find('.ques-type').addClass('ques-single').text('单选题');
-								break;
-							case 2:
-								$dialog.find('.ques-type').addClass('ques-multiple').text('多选题');
-								break;
-							case 3:
-								$dialog.find('.ques-type').addClass('ques-boolean').text('判断题');
-								break;
-							}
-							
-							// 试题选项
-							$dialog.find('.ques-options').empty();
-							if (row.type == 3) {
-								var answer = row.answer == 'A' ? '正确' : '错误';
-								$dialog.find('.ques-answer').text(answer);
-							} else {
-								$dialog.find('.ques-options').append('<li>A：' + row.optionA + '</li>');
-								$dialog.find('.ques-options').append('<li>B：' + row.optionB + '</li>');
-								if (row.optionC) {
-									$dialog.find('.ques-options').append('<li>C：' + row.optionC + '</li>');
-								}
-								if (row.optionD) {
-									$dialog.find('.ques-options').append('<li>D：' + row.optionD + '</li>');
-								}
-								if (row.optionE) {
-									$dialog.find('.ques-options').append('<li>E：' + row.optionE + '</li>');
-								}
-								if (row.optionF) {
-									$dialog.find('.ques-options').append('<li>F：' + row.optionF + '</li>');
-								}
-								$dialog.find('.ques-answer').text(row.answer);
-							}
-							$dialog.find('.ques-title').text(row.title);
-							if (row.imagePath) {
-								$dialog.find('.ques-image').attr('src', '${ctx}' + row.imagePath);
-							} else {
-								$dialog.find('.ques-image').attr('src', '');
-							}
-							$dialog.find('.ques-score').text(row.score);
-							$dialog.find('.ques-analysis').text(row.analysis);
-							$dialog.modal('show');
+							showQuestion(row);
 						}
 					}
 				}, {

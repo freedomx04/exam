@@ -51,10 +51,6 @@ public class PaperEntity extends BaseEntity {
 		inverseJoinColumns = {@JoinColumn(name = "question_id", referencedColumnName="id")})
 	private List<QuestionEntity> questions = new LinkedList<>();
 	
-	/**
-	 * 链接
-	 */
-	private String link;
 	
 	private Integer status = PaperStatus.STATUS_ENABLE;
 	
@@ -124,14 +120,6 @@ public class PaperEntity extends BaseEntity {
 
 	public void setStatus(Integer status) {
 		this.status = status;
-	}
-
-	public String getLink() {
-		return link;
-	}
-
-	public void setLink(String link) {
-		this.link = link;
 	}
 
 	public Date getStartTime() {

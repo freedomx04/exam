@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hm.exam.entity.exam.ClassifyEntity;
+import com.hm.exam.entity.exam.PaperEntity;
 import com.hm.exam.entity.question.LibraryEntity;
 import com.hm.exam.entity.question.QuestionEntity;
 import com.hm.exam.entity.question.TypeEntity;
@@ -220,6 +221,38 @@ public class HomeController {
 		modelMap.addAttribute("questionList", questionList);
 		
 		return "pages/exam/paper_add";
+	}
+	
+	@RequestMapping(value = "/paperEdit")
+	String paperEdit(ModelMap modelMap, Long paperId) {
+		PaperEntity paper = paperService.findOne(paperId);
+		modelMap.addAttribute("paper", paper);
+		
+		List<ClassifyEntity> classifyList = classifyService.list();
+		modelMap.addAttribute("classifyList", classifyList);
+		
+		return "pages/exam/paper_edit";
+	}
+	
+	@RequestMapping(value = "/paperQuestion")
+	String paperQuestion(ModelMap modelMap, Long paperId) {
+		PaperEntity paper = paperService.findOne(paperId);
+		modelMap.addAttribute("paper", paper);
+		
+		List<LibraryEntity> libraryList = libraryService.list();
+		for (LibraryEntity library: libraryList) {
+			Integer count = questionService.countByLibrary(library);
+			library.setCount(count);
+		}
+		modelMap.addAttribute("libraryList", libraryList);
+		return "pages/exam/paper_question";
+	}
+	
+	@RequestMapping(value = "/paperSetting")
+	String paperSetting(ModelMap modelMap, Long paperId) {
+		PaperEntity paper = paperService.findOne(paperId);
+		modelMap.addAttribute("paper", paper);
+		return "pages/exam/paper_setting";
 	}
 	
 }

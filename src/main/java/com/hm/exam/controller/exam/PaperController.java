@@ -50,8 +50,15 @@ public class PaperController {
 	}
 
 	@RequestMapping(value = "/api/paper/update", method = RequestMethod.POST)
-	public Result update(Long paper) {
+	public Result update(Long paperId, String title, Long classifyId, String description) {
 		try {
+			PaperEntity paper = paperService.findOne(paperId);
+			paper.setTitle(title);
+			ClassifyEntity classify = classifyService.findOne(classifyId);
+			paper.setClassify(classify);
+			paper.setDescription(description);
+			paper.setUpdateTime(new Date());
+			paperService.save(paper);
 			return new Result(Code.SUCCESS.value(), "updated");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -62,6 +69,7 @@ public class PaperController {
 	@RequestMapping(value = "/api/paper/delete")
 	public Result delete(Long paperId) {
 		try {
+			paperService.delete(paperId);
 			return new Result(Code.SUCCESS.value(), "deleted");
 		} catch (Exception e) {
 			if (e.getCause().toString().indexOf("ConstraintViolationException") != -1) {
@@ -75,7 +83,8 @@ public class PaperController {
 	@RequestMapping(value = "/api/papert/get")
 	public Result get(Long paperId) {
 		try {
-			return new ResultInfo(Code.SUCCESS.value(), "ok", "");
+			PaperEntity paper = paperService.findOne(paperId);
+			return new ResultInfo(Code.SUCCESS.value(), "ok", paper);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
