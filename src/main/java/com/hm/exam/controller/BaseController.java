@@ -19,14 +19,19 @@ public class BaseController {
 	@Autowired
 	PaperService paperService;
 	
-	@RequestMapping(value = { "/", "/index" })
+	@RequestMapping(value = { "/", "/login" })
 	String index(ModelMap modelMap) {
-		return "index";
+		return "login";
 	}
 	
 	@RequestMapping(value = "/home")
 	String home() {
 		return "home";
+	}
+	
+	@RequestMapping(value = "/init")
+	String init() {
+		return "init";
 	}
 	
 	@RequestMapping(value = "/video")

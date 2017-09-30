@@ -32,7 +32,7 @@
 				<ul class="nav" id="side-menu">
 					<li class="nav-header">
 						<div class="dropdown profile-element">
-							<span><img alt="image" class="img-circle" src="${ctx}/img/home-avatar.png" width="64" height="64"/></span>
+							<span><img alt="image" class="img-circle" src="${ctx}/img/default_avatar.jpg" width="64" height="64"/></span>
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<span class="clear">
 									<span class="block m-t-xs"><strong class="font-bold user-name">${user.username}</strong></span>
@@ -98,14 +98,14 @@
 							<li><a class="J_menuItem" href="practiceType">题型练习</a></li>
 						</ul>
 					</li>
-					<li>
+					<!-- <li>
 						<a href="#">
 							<i class="fa fa-users fa-fw"></i><span class="nav-label">视频</span><span class="fa arrow"></span>
 						</a>
 						<ul class="nav nav-second-level">
 							<li><a class="J_menuItem" href="video">插入视频</a></li>
 						</ul>
-					</li>
+					</li> -->
 					<li>
 						<a href="#">
 							<i class="fa fa-user fa-fw"></i><span class="nav-label">个人中心</span><span class="fa arrow"></span>
@@ -184,24 +184,23 @@
 	
 	<script type="text/javascript">
 	
-	var $page = $('.body-home');
-	/* var userId = '${user.id}';
-	
-	$page
-	.on('click', '.btn-logout', function() {
-		$.ajax({
-			url: '${ctx}/api/user/logout',
-			success: function() {
-				window.location.href = "./login";
-			},
-			error: function() {}
-		});
-	}); */
-	
-	function open(menu) {
-		debugger;
-		$page.find('a[href="' + menu + '"]').trigger('click');
-	}
+		var $page = $('.body-home');
+		var userId = '${user.id}';
+		
+		$page
+		.on('click', '.btn-logout', function() {
+			$.ajax({
+				url: '${ctx}/api/user/logout',
+				success: function() {
+					window.location.href = "${ctx}/login";
+				},
+				error: function() {}
+			});
+		}); 
+		
+		function open(menu) {
+			$page.find('a[href="' + menu + '"]').trigger('click');
+		}
 	
 	</script>
 	

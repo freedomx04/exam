@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.hm.exam.common.utils.CurrentUserUtils;
+import com.hm.exam.entity.authority.UserEntity;
 import com.hm.exam.entity.exam.ClassifyEntity;
 import com.hm.exam.entity.exam.PaperEntity;
 import com.hm.exam.entity.question.LibraryEntity;
@@ -17,6 +19,7 @@ import com.hm.exam.entity.question.QuestionEntity;
 import com.hm.exam.entity.question.TypeEntity;
 import com.hm.exam.entity.student.GroupEntity;
 import com.hm.exam.entity.student.StudentEntity;
+import com.hm.exam.service.authority.UserService;
 import com.hm.exam.service.exam.ClassifyService;
 import com.hm.exam.service.exam.PaperService;
 import com.hm.exam.service.question.LibraryService;
@@ -26,6 +29,9 @@ import com.hm.exam.service.student.StudentService;
 
 @Controller
 public class HomeController {
+	
+	@Autowired
+	UserService userService;
 	
 	@Autowired
 	LibraryService libraryService;
@@ -44,6 +50,48 @@ public class HomeController {
 	
 	@Autowired
 	PaperService paperService;
+	
+	/**
+	 * 控制中心
+	 */
+	@RequestMapping(value = "/overview")
+	String overview() {
+		return "pages/overview";
+	}
+	
+	/**
+	 * 系统管理
+	 */
+	@RequestMapping(value = "/userList")
+	String userList() {
+		return "pages/authority/user_list";
+	}
+	
+	@RequestMapping(value = "userAdd")
+	String userAdd(ModelMap modelMap, String method, Long userId) {
+		String title = "";
+		switch (method) {
+		case "add":
+			title = "用户新增";
+			break;
+		case "edit":
+			title = "用户编辑";
+			break;
+		case "detail":
+			title = "用户详情";
+			break;
+		}
+		
+		modelMap.addAttribute("title", title);
+		modelMap.addAttribute("method", method);
+		
+		if (userId != null) {
+			UserEntity user = userService.findOne(userId);
+			modelMap.addAttribute("user", user);
+		}
+		
+		return "pages/authority/user_add";
+	}
 	
 	/**
 	 * 题库管理
@@ -253,6 +301,16 @@ public class HomeController {
 		PaperEntity paper = paperService.findOne(paperId);
 		modelMap.addAttribute("paper", paper);
 		return "pages/exam/paper_setting";
+	}
+	
+	/**
+	 * 个人中心
+	 */
+	@RequestMapping(value = "/modifyPassword")
+	String modifyPassword(ModelMap modelMap) {
+		UserEntity user = CurrentUserUtils.getInstance().getUser();
+		modelMap.addAttribute("user", user);
+		return "pages/personal/modify_password";
 	}
 	
 }

@@ -130,10 +130,10 @@
 			}, {
 				field: 'title',
 				title: '试卷标题',
-				formatter: function(value, row, index) {
+				/*formatter: function(value, row, index) {
 					return '<a class="paper-detail">' + value + '</a>';
 				},
-				events: window.operateEvents = {
+				 events: window.operateEvents = {
 					'click .paper-detail': function(e, value, row, index) {
 						e.stopPropagation();
 						var shareUrl = 'http://' + window.location.host + '${ctx}/online/' + row.id;
@@ -141,7 +141,7 @@
 						$detailDialog.find('.btn-copy').attr('data-clipboard-text', shareUrl);
 						$detailDialog.modal('show');
 					}
-				}
+				} */
 			}, {
 				field: 'classify',
 				title: '试卷分类',
