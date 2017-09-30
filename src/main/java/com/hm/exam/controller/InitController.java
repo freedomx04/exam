@@ -94,7 +94,7 @@ public class InitController {
 			ClassifyEntity classify = classifyService.findByName("默认分类");
 			if (classify == null) {
 				Date now = new Date();
-				classify = new ClassifyEntity("默认题库", now, now);
+				classify = new ClassifyEntity("默认分类", now, now);
 				classify.setEditable(Editable.UNABLE);
 				classifyService.save(classify);
 			}
