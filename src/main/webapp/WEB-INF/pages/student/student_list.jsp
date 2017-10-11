@@ -167,15 +167,12 @@
 				}, {
 					field: 'username',
 					title: '考号',
-					align: 'center'
 				}, {
 					field: 'name',
 					title: '姓名',
-					align: 'center'
 				}, {
 					field: 'group',
 					title: '分组',
-					align: 'center',
 					formatter: function(value, row, index) {
 						return value.name;
 					}

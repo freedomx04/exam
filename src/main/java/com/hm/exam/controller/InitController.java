@@ -12,10 +12,12 @@ import com.hm.exam.common.result.Code;
 import com.hm.exam.common.result.Result;
 import com.hm.exam.common.utils.CiphersUtils;
 import com.hm.exam.entity.BaseEntity.Editable;
+import com.hm.exam.entity.authority.RoleEntity;
 import com.hm.exam.entity.authority.UserEntity;
 import com.hm.exam.entity.exam.ClassifyEntity;
 import com.hm.exam.entity.question.LibraryEntity;
 import com.hm.exam.entity.student.GroupEntity;
+import com.hm.exam.service.authority.RoleService;
 import com.hm.exam.service.authority.UserService;
 import com.hm.exam.service.exam.ClassifyService;
 import com.hm.exam.service.question.LibraryService;
@@ -25,6 +27,9 @@ import com.hm.exam.service.student.GroupService;
 public class InitController {
 	
 	static Logger log = LoggerFactory.getLogger(InitController.class);
+	
+	@Autowired
+	RoleService roleService;
 	
 	@Autowired
 	UserService userService;
@@ -38,13 +43,31 @@ public class InitController {
 	@Autowired
 	ClassifyService classifyService;
 	
+	@RequestMapping(value = "/api/init/role")
+	public Result role() {
+		try {
+			RoleEntity role = roleService.findByName("管理员");
+			if (role == null) {
+				Date now = new Date();
+				role = new RoleEntity("管理员", "默认管理员", "", now, now);
+				roleService.save(role);
+			}
+			
+			return new Result(Code.SUCCESS.value(), "成功");
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return new Result(Code.ERROR.value(), e.getMessage());
+		}
+	}
+	
 	@RequestMapping(value = "/api/init/admin")
 	public Result admin() {
 		try {
 			UserEntity user = userService.findByUsername("admin");
 			if (user == null) {
 				Date now = new Date();
-				user = new UserEntity("admin", CiphersUtils.getInstance().MD5Password("admin123456"), "管理员", now, now);
+				RoleEntity role = roleService.findByName("管理员");
+				user = new UserEntity("admin", CiphersUtils.getInstance().MD5Password("admin123456"), "管理员", role, now, now);
 				userService.save(user);
 			}
 			return new Result(Code.SUCCESS.value(), "成功");

@@ -139,16 +139,20 @@
             }, {
             	field: 'username',
             	title: '用户名',
-            	align: 'center'
             }, {
             	field: 'name',
             	title: '姓名',
-            	align: 'center'
+            }, {
+            	field: 'role',
+            	title: '角色',
+            	formatter: function(value, row, index) {
+            		return value.name;
+            	}
             }, {
             	field: 'status',
             	title: '状态',
             	align: 'center',
-            	width: '80',
+            	width: '100',
             	formatter: function(value, row, index) {
             		if (value == 0) {
             			return '<span class="label label-primary">正常</span>';
@@ -159,7 +163,7 @@
             }, {
             	title: '操作',
             	align: 'center',
-            	width: '160',
+            	width: '200',
             	formatter: function(value, row, index) {
             		var $edit = '<a class="btn-user-edit a-operate">编辑</a>';
             		var $password = '<a class="btn-user-password a-operate">修改密码</a>';
@@ -168,7 +172,8 @@
                		} else {
                			$status = '<a class="btn-user-enable a-operate">启用</a>';
                		}
-            		return $edit + $password + $status;
+           			var $delete = '<a class="btn-user-delete a-operate">删除</a>';
+            		return $edit + $password + $status + $delete;
             	},
             	events: window.operateEvents = {
            			'click .btn-user-edit': function(e, value, row, index) {

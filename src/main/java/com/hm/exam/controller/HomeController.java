@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hm.exam.common.utils.CurrentUserUtils;
+import com.hm.exam.entity.authority.RoleEntity;
 import com.hm.exam.entity.authority.UserEntity;
 import com.hm.exam.entity.exam.ClassifyEntity;
 import com.hm.exam.entity.exam.PaperEntity;
@@ -19,6 +20,7 @@ import com.hm.exam.entity.question.QuestionEntity;
 import com.hm.exam.entity.question.TypeEntity;
 import com.hm.exam.entity.student.GroupEntity;
 import com.hm.exam.entity.student.StudentEntity;
+import com.hm.exam.service.authority.RoleService;
 import com.hm.exam.service.authority.UserService;
 import com.hm.exam.service.exam.ClassifyService;
 import com.hm.exam.service.exam.PaperService;
@@ -29,6 +31,9 @@ import com.hm.exam.service.student.StudentService;
 
 @Controller
 public class HomeController {
+	
+	@Autowired
+	RoleService roleService;
 	
 	@Autowired
 	UserService userService;
@@ -62,6 +67,35 @@ public class HomeController {
 	/**
 	 * 系统管理
 	 */
+	@RequestMapping(value = "/roleList")
+	String roleList() {
+		return "pages/authority/role_list";
+	}
+	
+	@RequestMapping(value = "/roleAdd")
+	String roleAdd(ModelMap modelMap, String method, Long roleId) {
+		String title = "";
+		switch (method) {
+		case "add":
+			title = "角色新增";
+			break;
+		case "edit":
+			title = "角色编辑";
+			break;
+		case "detail":
+			title = "角色详情";
+			break;
+		}
+		modelMap.addAttribute("title", title);
+		modelMap.addAttribute("method", method);
+		
+		if (roleId != null) {
+			RoleEntity role = roleService.findOne(roleId);
+			modelMap.addAttribute("role", role);
+		}
+		return "pages/authority/role_add";
+	}
+	
 	@RequestMapping(value = "/userList")
 	String userList() {
 		return "pages/authority/user_list";
@@ -81,7 +115,6 @@ public class HomeController {
 			title = "用户详情";
 			break;
 		}
-		
 		modelMap.addAttribute("title", title);
 		modelMap.addAttribute("method", method);
 		
@@ -89,7 +122,6 @@ public class HomeController {
 			UserEntity user = userService.findOne(userId);
 			modelMap.addAttribute("user", user);
 		}
-		
 		return "pages/authority/user_add";
 	}
 	

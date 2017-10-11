@@ -16,8 +16,10 @@ import com.hm.exam.common.result.Result;
 import com.hm.exam.common.result.ResultInfo;
 import com.hm.exam.common.utils.CiphersUtils;
 import com.hm.exam.common.utils.CurrentUserUtils;
+import com.hm.exam.entity.authority.RoleEntity;
 import com.hm.exam.entity.authority.UserEntity;
 import com.hm.exam.entity.authority.UserEntity.UserStatus;
+import com.hm.exam.service.authority.RoleService;
 import com.hm.exam.service.authority.UserService;
 
 @RestController
@@ -28,8 +30,11 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
+	@Autowired
+	RoleService roleService;
+	
 	@RequestMapping(value = "/api/user/create", method = RequestMethod.POST)
-	public Result create(String username, String password, String name) {
+	public Result create(String username, String password, String name, Long roleId) {
 		try {
 			UserEntity user = userService.findByUsername(username);
 			if (user != null) {
@@ -37,7 +42,8 @@ public class UserController {
 			}
 			
 			Date now = new Date();
-			user = new UserEntity(username, CiphersUtils.getInstance().MD5Password(password), name, now, now);
+			RoleEntity role = roleService.findOne(roleId);
+			user = new UserEntity(username, CiphersUtils.getInstance().MD5Password(password), name, role, now, now);
 			userService.save(user);
 			
 			return new Result(Code.SUCCESS.value(), "created");

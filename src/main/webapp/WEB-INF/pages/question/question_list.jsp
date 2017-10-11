@@ -191,8 +191,6 @@
 				}, {
 					field: 'library',
 					title: '题库',
-					align: 'center',
-					width: '150',
 					formatter: function(value, row, index) {
 						return value.name;
 					}

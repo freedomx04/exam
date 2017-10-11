@@ -56,6 +56,7 @@
 							<i class="fa fa-cog fa-fw"></i><span class="nav-label">系统管理</span><span class="fa arrow"></span>
 						</a>
 						<ul class="nav nav-second-level">
+							<li><a class="J_menuItem" href="roleList">角色管理</a></li>
 							<li><a class="J_menuItem" href="userList">用户管理</a></li>
 						</ul>
 					</li>

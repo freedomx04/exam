@@ -27,6 +27,12 @@
 					<div class="ibox-content">
 						<form class="form-horizontal" role="form" id="form-init" style="padding: 40px;">
 							<div class="form-group">
+								<label class="col-sm-4 control-label">管理员角色</label>
+								<div class="col-sm-2"><button type="button" class="btn btn-primary" data-type="role">初始化</button></div>
+								<label class="col-sm-2 control-label init-result"></label>
+							</div>
+						
+							<div class="form-group">
 								<label class="col-sm-4 control-label">管理员账号</label>
 								<div class="col-sm-2"><button type="button" class="btn btn-primary" data-type="admin">初始化</button></div>
 								<label class="col-sm-2 control-label init-result"></label>

@@ -145,7 +145,6 @@
 			}, {
 				field: 'classify',
 				title: '试卷分类',
-				align: 'center',
 				formatter: function(value, row, index) {
 					return value.name;
 				}

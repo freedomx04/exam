@@ -2,8 +2,11 @@ package com.hm.exam.entity.authority;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.hm.exam.entity.BaseEntity;
@@ -37,6 +40,13 @@ public class UserEntity extends BaseEntity {
 	private String name;
 	
 	/**
+	 * 
+	 */
+	@OneToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "role_id")
+	private RoleEntity role;
+	
+	/**
 	 * 用户状态
 	 */
 	private Integer status = UserStatus.STATUS_VALID;
@@ -45,11 +55,12 @@ public class UserEntity extends BaseEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserEntity(String username, String password, String name, Date createTime, Date updateTime) {
+	public UserEntity(String username, String password, String name, RoleEntity role, Date createTime, Date updateTime) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.name = name;
+		this.role = role;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
 	}
@@ -76,6 +87,14 @@ public class UserEntity extends BaseEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public RoleEntity getRole() {
+		return role;
+	}
+
+	public void setRole(RoleEntity role) {
+		this.role = role;
 	}
 
 	public Integer getStatus() {
