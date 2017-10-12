@@ -131,6 +131,17 @@ public class PaperController {
 		}
 	}
 	
+	@RequestMapping(value = "/api/paper/listStudent")
+	public Result listStudent(Long paperId) {
+		try {
+			PaperEntity paper = paperService.findOne(paperId);
+			return new ResultInfo(Code.SUCCESS.value(), "moved", paper.getStudents());
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return new Result(Code.ERROR.value(), e.getMessage());
+		}
+	}
+	
 	@RequestMapping(value = "/api/paper/randomAdd", method = RequestMethod.POST)
 	public Result randomAdd(Long paperId, @RequestParam("randomList[]") List<String> randomList) {
 		try {

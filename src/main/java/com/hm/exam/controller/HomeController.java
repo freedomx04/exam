@@ -328,6 +328,20 @@ public class HomeController {
 		return "pages/exam/paper_question";
 	}
 	
+	@RequestMapping(value = "/paperStudent")
+	String paperStudent(ModelMap modelMap, Long paperId) {
+		PaperEntity paper = paperService.findOne(paperId);
+		modelMap.addAttribute("paper", paper);
+		
+		List<GroupEntity> groupList = groupService.list();
+		for (GroupEntity group: groupList) {
+			Integer count = studentService.countByGroup(group);
+			group.setCount(count);
+		}
+		modelMap.addAttribute("groupList", groupList);
+		return "pages/exam/paper_student";
+	}
+	
 	@RequestMapping(value = "/paperSetting")
 	String paperSetting(ModelMap modelMap, Long paperId) {
 		PaperEntity paper = paperService.findOne(paperId);

@@ -17,5 +17,5 @@ public interface GroupService {
 	void delete(List<Long> groupIdList);
 	
 	List<GroupEntity> list();
-
+	
 }

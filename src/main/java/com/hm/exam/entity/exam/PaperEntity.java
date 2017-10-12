@@ -15,60 +15,69 @@ import javax.persistence.Table;
 
 import com.hm.exam.entity.BaseEntity;
 import com.hm.exam.entity.question.QuestionEntity;
+import com.hm.exam.entity.student.StudentEntity;
 
 @Entity
 @Table(name = "exam_paper")
 public class PaperEntity extends BaseEntity {
-	
+
 	public class PaperStatus {
 		public static final int STATUS_ENABLE = 0;
 		public static final int STATUS_UNABLE = 1;
 	}
-	
+
 	/**
 	 * 试卷标题
 	 */
 	private String title;
-	
+
 	/**
 	 * 试卷分类
 	 */
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "classify_id")
 	private ClassifyEntity classify;
-	
+
 	/**
 	 * 描述
 	 */
 	private String description;
-	
+
 	/**
 	 * 多对多关联试题
 	 */
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	@JoinTable(name = "relate_paper_question", 
-		joinColumns={@JoinColumn(name = "paper_id", referencedColumnName="id")},
-		inverseJoinColumns = {@JoinColumn(name = "question_id", referencedColumnName="id")})
+		joinColumns = {@JoinColumn(name = "paper_id", referencedColumnName = "id") }, 
+		inverseJoinColumns = {@JoinColumn(name = "question_id", referencedColumnName = "id") })
 	private List<QuestionEntity> questions = new LinkedList<>();
-	
-	
+
+	/**
+	 * 多对多关联考生
+	 */
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@JoinTable(name = "relate_paper_student",
+		joinColumns = {@JoinColumn(name = "paper_id", referencedColumnName = "id")},
+		inverseJoinColumns = {@JoinColumn(name = "student_id", referencedColumnName = "id")})
+	private List<StudentEntity> students = new LinkedList<>();
+
 	private Integer status = PaperStatus.STATUS_ENABLE;
-	
+
 	/**
 	 * 开始时间
 	 */
 	private Date startTime;
-	
+
 	/**
 	 * 结束时间
 	 */
 	private Date endTime;
-	
+
 	/**
 	 * 考试时长
 	 */
 	private Integer duration;
-	
+
 	public PaperEntity() {
 		// TODO Auto-generated constructor stub
 	}
@@ -97,7 +106,7 @@ public class PaperEntity extends BaseEntity {
 	public void setClassify(ClassifyEntity classify) {
 		this.classify = classify;
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}
@@ -114,6 +123,14 @@ public class PaperEntity extends BaseEntity {
 		this.questions = questions;
 	}
 	
+	public List<StudentEntity> getStudents() {
+		return students;
+	}
+
+	public void setStudents(List<StudentEntity> students) {
+		this.students = students;
+	}
+
 	public Integer getStatus() {
 		return status;
 	}

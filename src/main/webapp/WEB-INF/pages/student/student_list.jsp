@@ -191,11 +191,9 @@
 					align: 'center',
 					width: '100',
 					formatter: function(value, row, index) {
-						if (row.editable == 0) {
-							var $edit = '<a class="btn-student-edit a-operate">编辑</a>';
-							var $delete = '<a class="btn-student-delete a-operate">删除</a>';
-							return $edit + $delete;
-						} 
+						var $edit = '<a class="btn-student-edit a-operate">编辑</a>';
+						var $delete = '<a class="btn-student-delete a-operate">删除</a>';
+						return $edit + $delete;
 					},
 					events: window.operateEvents = {
 						'click .btn-student-edit': function(e, value, row, index) {

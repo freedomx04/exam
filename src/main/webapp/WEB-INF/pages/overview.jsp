@@ -23,7 +23,9 @@
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content">
-				<h2 class="page-title">控制中心</h2>
+				<div class="page-title">
+					<h2>控制中心</h2>
+				</div>
 				
 			</div>
 		</div>
