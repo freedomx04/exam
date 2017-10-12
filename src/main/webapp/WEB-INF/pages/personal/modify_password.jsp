@@ -25,21 +25,22 @@
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content">
-				<h2 class="page-title">修改密码</h2>
+				<div class="page-title">
+					<h2>修改密码</h2>
+				</div>
 				
 				<form class="form-horizontal" role="form" autocomplete="off" id="form-password">
-					<div class="hr-line-dashed"></div>
 					<div class="form-group">
 						<label for="oldPassword" class="col-sm-3 control-label"><i class="form-required">*</i>原密码</label>
 						<div class="col-sm-5">
-							<input type="password" class="form-control" name="oldPassword" required data-bv-notempty-message="请输入原密码">
+							<input type="password" class="form-control" name="oldPassword" placeholder="请输入原密码" required data-bv-notempty-message="请输入原密码">
 						</div>
 					</div>
                          
                      <div class="form-group">
                      	<label for="newPassword" class="col-sm-3 control-label"><i class="form-required">*</i>新密码</label>
                      	<div class="col-sm-5">
-                     		<input type="password" class="form-control" name="newPassword" id="newPassword" required data-bv-notempty-message="请输入新密码">
+                     		<input type="password" class="form-control" name="newPassword" id="newPassword" placeholder="6-16个字符,请使用字母加数字或者符号" required data-bv-notempty-message="请输入新密码">
                          </div>
                      </div>
                          
@@ -52,7 +53,6 @@
                      			<div class="pw-txt">
                      				<span>弱</span><span>中</span><span>强</span>
                      			</div>
-                     			<div style="color: #999; padding: 4px 10px;">6-16个字符,请使用字母加数字或者符号的组合密码</div>
                      		</div>
                      	</div>
                      </div>
@@ -60,14 +60,15 @@
                      <div class="form-group">
                      	<label for="confirmPassword" class="col-sm-3 control-label"><i class="form-required">*</i>确认密码</label>
                      	<div class="col-sm-5">
-                     		<input type="password" class="form-control" name="confirmPassword" required data-bv-notempty-message="请输入确认密码">
+                     		<input type="password" class="form-control" name="confirmPassword" placeholder="请再次输入密码" 
+                     			required data-bv-notempty-message="请输入确认密码">
                      	</div>
                      </div>
                        
-                     <div class="hr-line-dashed"></div>
+                     <div class="hr-line-solid"></div>
                      <div class="form-group btn-operate">
                      	<div class="col-sm-4 col-sm-offset-3">
-                     		<button type="button" class="btn btn-primary btn-password">确定</button>
+                     		<button type="button" class="btn btn-primary btn-password">保&nbsp;存</button>
                  		</div>
              		</div>                                        
               	</form>

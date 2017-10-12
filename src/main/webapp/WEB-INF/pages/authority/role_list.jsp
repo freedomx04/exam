@@ -24,17 +24,16 @@
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content">
-				<h2 class="page-title">角色管理</h2>
-			
+				<div class="page-title">
+					<h2>角色管理</h2>
+				</div>
+				
 				<div class="btn-group" id="role-list-table-toolbar" role="group">
                     <button type="button" class="btn btn-primary btn-role-add">
                         <i class="fa fa-plus fa-fw"></i>新增
                     </button>
-                    <button type="button" class="btn btn-white btn-role-delete-batch" disabled='disabled'>
-                        <i class="fa fa-trash-o fa-fw"></i>批量删除
-                    </button>
                 </div>
-                <table id="role-list-table" class="table-hm" data-mobile-responsive="true"> </table>
+                <table id="role-list-table" class="table-hm" data-mobile-responsive="true"></table>
 			</div>
 		</div>
 	</div>
@@ -65,20 +64,35 @@
             	field: 'state',
             	checkbox: true
             }, {
+				title: '#',
+				width: '20',
+				formatter: function(value, row, index) {
+					return index + 1;
+				}
+			}, {
             	field: 'name',
             	title: '角色名称',
-            	align: 'center'
+            	formatter: function(value, row, index) {
+            		return '<a class="btn-role-detail">' + value + '</a>';
+            	},
+            	events: window.operateEvents = {
+            		'click .btn-role-detail': function(e, value, row, index) {
+            			e.stopPropagation();
+            		}
+            	}
             }, {
             	field: 'description',
             	title: '角色描述',
-            	align: 'center'
             }, {
             	title: '操作',
             	align: 'center',
+            	width: '100',
             	formatter: function(value, row, index) {
-            		var $edit = '<a class="btn-role-edit a-operate">编辑</a>';
-            		var $delete = '<a class="btn-role-delete a-operate">删除</a>';
-            		return $edit + $delete;
+            		if (row.editable == 0) {
+            			var $edit = '<a class="btn-role-edit a-operate">编辑</a>';
+                		var $delete = '<a class="btn-role-delete a-operate">删除</a>';
+                		return $edit + $delete;
+            		}
             	},
             	events: window.operateEvents = {
             		'click .btn-role-edit': function(e, value, row, index) {
@@ -126,37 +140,7 @@
 		$page
 		.on('click', '.btn-role-add', function() {
 			window.location.href = './roleAdd?method=add';
-		})
-		.on('click', '.btn-role-delete-batch', function() {
-            swal({
-                title: '',
-                text: '确定批量删除选中记录',
-                type: 'warning',
-                showCancelButton: true,
-                cancelButtonText: '取消',
-                confirmButtonColor: '#DD6B55',
-                confirmButtonText: '确定',
-                closeOnConfirm: false
-            }, function() {
-                var rows = $table.bootstrapTable('getSelections');
-                
-                $.ajax({
-                    url: '${ctx}/api/role/batchDelete',
-                    data: { 
-                        roleIdList: $k.util.getIdList(rows) 
-                    },
-                    success: function(ret) {
-                        if (ret.code == 0) {
-                            swal('', '删除成功!', 'success');
-						} else {
-                            swal('', ret.msg, 'error');
-                        }
-                        $table.bootstrapTable('refresh'); 
-                    },
-                    error: function(err) {}
-                });
-            });
-        });
+		});
 		
 	})( jQuery );
 	</script>

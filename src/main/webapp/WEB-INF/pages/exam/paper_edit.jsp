@@ -24,10 +24,11 @@
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="ibox">
 			<div class="ibox-content">
-				<h2 class="page-title">试卷编辑<small>${paper.title}</small></h2>
+				<div class="page-title">
+					<h2>试卷编辑<small>${paper.title}</small></h2>
+				</div>
 				
 				<form class="form-horizontal" role="form" autocomplete="off">
-					<div class="hr-line-dashed"></div>
 					<div class="form-group">
 						<div class="col-sm-5 col-sm-offset-3">
 							<h3 class="help-block">请填写试卷基本信息</h3>
@@ -35,14 +36,14 @@
 					</div>
 					
 					<div class="form-group">
-						<label for="title" class="col-sm-3 control-label">试卷标题</label>
+						<label for="title" class="col-sm-3 control-label"><i class="form-required">*</i>试卷标题</label>
 						<div class="col-sm-5">
 							<input type="text" class="form-control" name="title" value="${paper.title}">
 						</div>
 					</div>
 					
 					<div class="form-group">
-						<label for="classifyId" class="col-sm-3 control-label">试卷分类</label>
+						<label for="classifyId" class="col-sm-3 control-label"><i class="form-required">*</i>试卷分类</label>
 						<div class="col-sm-5">
 							<select class="form-control" name="classifyId">
 								<c:forEach var="classify" items="${classifyList}">
@@ -59,11 +60,11 @@
 						</div>
 					</div>
 					
-					<div class="hr-line-dashed"></div>
+					<div class="hr-line-solid"></div>
 					<div class="form-group btn-operate">
 						<div class="col-sm-5 col-sm-offset-3">
-							<button type="button" class="btn btn-primary btn-paper-save">保存</button>
-							<button type="button" class="btn btn-white btn-paper-cancel">返回</button>
+							<button type="button" class="btn btn-primary btn-fw btn-paper-save">保&nbsp;存</button>
+							<button type="button" class="btn btn-white btn-fw btn-paper-cancel">返&nbsp;回</button>
 						</div>
 					</div>
 				</form>

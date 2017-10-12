@@ -25,7 +25,9 @@
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content">
-				<h2 class="page-title">试卷管理</h2>
+				<div class="page-title">
+					<h2>试卷管理</h2>
+				</div>
 				
 				<div id="paper-list-table-toolbar" role="group">
  					<button type="button" class="btn btn-primary btn-paper-add">
@@ -61,8 +63,8 @@
 					 </ul>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-white" data-dismiss="modal" style="width: 100px;">关闭</button>
-                    <button type="button" class="btn btn-primary btn-paper-move-confirm" style="width: 100px;">确定</button>
+					<button type="button" class="btn btn-white btn-fw" data-dismiss="modal">关&nbsp;闭</button>
+                    <button type="button" class="btn btn-primary btn-fw btn-paper-move-confirm">确&nbsp;定</button>
 				</div>
 			</div>
 		</div>

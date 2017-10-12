@@ -1,13 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="modal" id="modal-question-dialog" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 800px;">
         <div class="modal-content animated fadeInDown">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h3 class="modal-title">试题详情</h3>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="padding: 20px 40px;">
                 <form class="form-horizontal" role="form" id="form-area" autocomplete="off">
                     <div class="form-group">
                         <div class="col-sm-12">
@@ -17,22 +17,25 @@
                     </div>
                     
                     <div class="form-group">
-                    	<div class="col-sm-8">
+                    	<div class="col-sm-6">
                     		<ul class="unstyled ques-options" style="padding-left: 0; line-height: 2em;"></ul>
                     	</div>
-                    	<div class="col-sm-4">
+                    	<div class="col-sm-6">
                     		<img class="ques-image" src="" style="max-width: 100%; max-height: 100%;">
                     	</div>
                     </div>
                     
                     <div class="form-group">
                     	<div class="col-sm-4">
-                    		正确答案: <span class="ques-answer font-bold"></span>
-                    	</div>
-                    	<div class="col-sm-4">
-                    		分数: <span class="ques-score"></span>
+                    		正确答案: <span class="ques-answer font-bold" style="font-size: 20px;"></span>
                     	</div>
                     </div>
+                    
+                   	<div class="form-group">
+                   		<div class="col-sm-4">
+                    		分数: <span class="ques-score"></span>
+                    	</div>
+                   	</div>
                     
                     <div class="form-group">
                     	<div class="col-sm-12">
@@ -42,7 +45,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" style="width: 100px;">关闭</button>
+                <button type="button" class="btn btn-primary btn-fw" data-dismiss="modal">关&nbsp;闭</button>
             </div>
         </div>
     </div>

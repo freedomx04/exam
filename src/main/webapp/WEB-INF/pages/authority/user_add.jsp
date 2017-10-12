@@ -25,10 +25,11 @@
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="ibox">
 			<div class="ibox-content">
-				<h2 class="page-title">${title}</h2>
+				<div class="page-title">
+					<h2>${title}</h2>
+				</div>
 				
 				<form class="form-horizontal" role="form" autocomplete="off">
-					<div class="hr-line-dashed"></div>
 					<div class="form-group">
 						<label for="username" class="col-sm-3 control-label"><i class="form-required">*</i>用户名</label>
                         <div class="col-sm-5">
@@ -57,7 +58,7 @@
 					<div class="form-group form-hide">
 						<label for="confirm-password" class="col-sm-3 control-label"><i class="form-required">*</i>确认密码</label>
 						<div class="col-sm-5">
-							<input type="password" class="form-control" name="confirmPassword" required>
+							<input type="password" class="form-control" name="confirmPassword" placeholder="请再次输入密码" required>
 						</div>
 					</div>
 					
@@ -68,16 +69,16 @@
                         </div>
 					</div>
 					
-					<div class="hr-line-dashed"></div>
+					<div class="hr-line-solid"></div>
 					<div class="form-group btn-operate">
                         <div class="col-sm-4 col-sm-offset-3">
                             <c:if test="${method == 'add'}">
-                            	<button type="button" class="btn btn-primary btn-user-add">保存</button>
+                            	<button type="button" class="btn btn-primary btn-user-add">保&nbsp;存</button>
                             </c:if>
                             <c:if test="${method == 'edit'}">
-                            	<button type="button" class="btn btn-primary btn-user-edit">保存</button>
+                            	<button type="button" class="btn btn-primary btn-user-edit">保&nbsp;存</button>
                             </c:if>
-                            	<button type="button" class="btn btn-white btn-user-cancel">返回</button>
+                            <button type="button" class="btn btn-white btn-user-cancel">返&nbsp;回</button>
                         </div>
                     </div>
 				

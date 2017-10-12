@@ -24,7 +24,9 @@
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content">
-				<h2 class="page-title">试题管理<small>${paper.title}</small></h2>
+				<div class="page-title">
+					<h2>试题管理<small>${paper.title}</small></h2>
+				</div>
 				
 				<div id="paper-question-table-toolbar" role="group">
 					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-paper-question-dialog">
@@ -33,7 +35,7 @@
 					<button type="button" class="btn btn-white btn-paper-question-delete-batch" disabled="disabled">
  						<i class="fa fa-trash-o fa-fw"></i>批量删除
  					</button>
- 					<a href="${ctx}/paperList">返回试卷管理</a>
+ 					<a class="a-back" href="${ctx}/paperList">返回试卷管理</a>
 				</div>
 				<table id="paper-question-table" class="table-hm" data-mobile-responsive="true"></table>
 			</div>
@@ -90,8 +92,6 @@
 			}, {
 				field: 'library',
 				title: '题库',
-				align: 'center',
-				width: '150',
 				formatter: function(value, row, index) {
 					return value.name
 				}

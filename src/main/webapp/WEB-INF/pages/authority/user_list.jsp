@@ -25,7 +25,9 @@
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="ibox">
 			<div class="ibox-content">
-				<h2 class="page-title">用户管理</h2>
+				<div class="page-title">
+					<h2>用户管理</h2>
+				</div>
 				
 				<div class="btn-group" id="user-list-table-toolbar" role="group">
                     <button type="button" class="btn btn-primary btn-user-add">
@@ -139,6 +141,14 @@
             }, {
             	field: 'username',
             	title: '用户名',
+            	formatter: function(value, row, index) {
+            		return '<a class="btn-user-detail">' + value + '</a>';
+            	},
+            	events: window.operateEvents = {
+            		'click .btn-user-detail': function(e, value, row, index) {
+            			e.stopPropagation();
+            		}	
+            	}
             }, {
             	field: 'name',
             	title: '姓名',

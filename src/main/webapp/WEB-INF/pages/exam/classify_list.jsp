@@ -25,7 +25,9 @@
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content">
-				<h2 class="page-title">试卷分类</h2>
+				<div class="page-title">
+					<h2>试卷分类</h2>
+				</div>
 				
 				<div id="classify-list-table-toolbar" role="group">
  					<button type="button" class="btn btn-primary btn-classify-add" data-toggle="modal" data-target="#modal-classify-dialog">
@@ -55,12 +57,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">
-                        <i class="fa fa-close fa-fw"></i>关闭
-                    </button>
-                    <button type="button" class="btn btn-primary btn-confirm">
-                        <i class="fa fa-check fa-fw"></i>确定
-                    </button>
+                    <button type="button" class="btn btn-white btn-fw" data-dismiss="modal">关&nbsp;闭</button>
+                    <button type="button" class="btn btn-primary btn-fw btn-confirm">确&nbsp;定</button>
                 </div>
             </div>
         </div>
@@ -96,8 +94,22 @@
 				field: 'state',
 				checkbox: true
 			}, {
+            	title: '#',
+            	width: '20',
+				formatter: function(value, row, index) {
+					return index + 1;
+				}
+            }, {
 				field: 'name',
 				title: '试卷分类',
+				formatter: function(value, row, index) {
+            		return '<a class="btn-classify-detail">' + value + '</a>';
+            	},
+            	events: window.operateEvents = {
+            		'click .btn-classify-detail': function(e, value, row, index) {
+            			e.stopPropagation();
+            		}	
+            	}
 			}, {
 				field: 'count',
 				title: '试卷',

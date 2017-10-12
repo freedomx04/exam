@@ -29,9 +29,10 @@
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content">
-				<h2 class="page-title">题库练习</h2>
+				<div class="page-title">
+					<h2>题库练习</h2>
+				</div>
 				
-				 <div class="hr-line-dashed"></div>
 				 <c:forEach var="library" items="${libraryList}">
 				 <div class="row" style="margin-top: 5px;" data-library-id="${library.id}">
 				 	<div class="col-sm-6 col-sm-offset-1" style="height: 39px; line-height: 39px;">

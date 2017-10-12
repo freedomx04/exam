@@ -204,10 +204,10 @@
 	                        </div>
 	                        <div class="form-group row" style="margin: 0 auto;">
 	                        	<div class="col-sm-6">
-	                        		<button type="submit" class="btn btn-primary btn-block">登 录</button>
+	                        		<button type="submit" class="btn btn-primary btn-block">登&nbsp;录</button>
 	                        	</div>
 	                        	<div class="col-sm-6">
-	                        		<a class="btn btn-outline btn-success btn-block" href="register">注册</a>
+	                        		<a class="btn btn-outline btn-success btn-block" href="register">注&nbsp;册</a>
 	                        	</div>
 	                        </div>
 	                    </form>

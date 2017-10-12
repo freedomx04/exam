@@ -34,13 +34,15 @@
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content">
-				<h2 class="page-title" style="display: inline;">${title}<small style="margin-left: 20px;">${subTitle}</small></h2>
+				<div class="page-title">
+					<h2>
+						${title}<small style="margin-left: 20px;">${subTitle}</small>
+						<c:if test="${not empty subTitle}">
+							<a href="javascript:;" class="btn-practice-back a-back">重新选择</a>
+						</c:if>
+					</h2>
+				</div>
 				
-				<c:if test="${not empty subTitle}">
-					<a href="javascript:;" class="btn-practice-back" style="margin-left: 20px;">重新选择</a>
-				</c:if>
-				
-				<div class="hr-line-dashed"></div>
 				<div class="row">
 					<div class="col-sm-12">
 						<span class="ques-type"></span>
@@ -65,7 +67,7 @@
 					</div>
 				</div>
 				
-				<div class="hr-line-dashed" style="margin-top: 50px;"></div>
+				<div class="hr-line-solid" style="margin-top: 50px;"></div>
 				<div class="row">
 					<div class="col-sm-11 ques-control" style="padding-left: 70px;">
 						<button type="button" class="btn btn-primary btn-question-prev">上一题</button>

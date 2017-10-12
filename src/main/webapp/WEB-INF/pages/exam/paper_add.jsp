@@ -38,7 +38,9 @@
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content">
-				<h2 class="page-title">试卷新增</h2>
+				<div class="page-title">
+					<h2>试卷新增</h2>
+				</div>
 				
 				<div class="pearls row" style="padding-top: 20px;">
 					<div class="pearl current col-sm-3" data-pearl="pearl-1" data-step="1">
@@ -68,14 +70,14 @@
 						</div>
 					
 						<div class="form-group">
-							<label for="title" class="col-sm-3 control-label">试卷标题</label>
+							<label for="title" class="col-sm-3 control-label"><i class="form-required">*</i>试卷标题</label>
 							<div class="col-sm-5">
 								<input type="text" class="form-control" name="title">
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label for="classifyId" class="col-sm-3 control-label">试卷分类</label>
+							<label for="classifyId" class="col-sm-3 control-label"><i class="form-required">*</i>试卷分类</label>
 							<div class="col-sm-5">
 								<select class="form-control" name="classifyId">
 									<c:forEach var="classify" items="${classifyList}">
@@ -92,16 +94,18 @@
 							</div>
 						</div>
 						
-						<div class="form-group">
+						<div class="hr-line-solid"></div>
+						<div class="form-group btn-operate">
 							<div class="col-sm-5 col-sm-offset-3">
 								<button type="button" class="btn btn-primary btn-paper-add-next">保存并进入下一步</button>
+								<button type="button" class="btn btn-white btn-paper-cancel">返&nbsp;回</button>
 							</div>
 						</div>
 					</form>
 				</div>
 				
 				<div class="pearl-pane hide" id="pearl-2">
-					<h2>添加试题到试卷中:<span class="paper-title" style="padding-left: 10px;"></span></h2>
+					<h2 style="font-size: 18px;">添加试题到试卷中:<span class="paper-title" style="padding-left: 10px;"></span></h2>
 					<div id="paper-question-table-toolbar" role="group" style="margin-top: 20px;">
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-paper-question-dialog">
 							<i class="fa fa-plus fa-fw"></i>添加试题
@@ -120,7 +124,7 @@
 					<form class="form-horizontal" role="form" id="form-setting" autocomplete="off">
 						<div class="form-group">
 							<div class="col-sm-5 col-sm-offset-2">
-								<h2>试卷设置:<span class="paper-title" style="padding-left: 10px;"></span></h2>
+								<h2 style="font-size: 18px;">试卷设置:<span class="paper-title" style="padding-left: 10px;"></span></h2>
 							</div>
 						</div>
 						
@@ -138,11 +142,10 @@
 							</div>
 						</div>
 						
-						<div class="hr-line-dashed"></div>
-						
+						<div class="hr-line-solid"></div>
 						<div class="form-group">
 							<div class="col-sm-5 col-sm-offset-2">
-								<button type="button" class="btn btn-primary btn-paper-setting-next" style="width: 100px;">完成</button>
+								<button type="button" class="btn btn-primary btn-fw btn-paper-setting-next">完&nbsp;成</button>
 							</div>
 						</div>
 						
@@ -193,6 +196,9 @@
 		var clipboard = new Clipboard('.btn-copy');
 		
 		$page
+		.on('click', '.btn-paper-cancel', function() {
+			window.location.href = '${ctx}/paperList';
+		})
 		.on('click', '.btn-paper-add-next', function() {
 			var $pearl = $page.find('#pearl-1');
 			
@@ -336,8 +342,6 @@
 				}, {
 					field: 'library',
 					title: '题库',
-					align: 'center',
-					width: '150',
 					formatter: function(value, row, index) {
 						return value.name
 					}

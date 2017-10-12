@@ -41,8 +41,13 @@ public class UserController {
 				return new Result(Code.EXISTED.value(), "用户名已存在");
 			}
 			
+			RoleEntity role = null;
+			if (roleId == null) {
+				role = roleService.findByName("普通用户");
+			} else {
+				role = roleService.findOne(roleId);
+			}
 			Date now = new Date();
-			RoleEntity role = roleService.findOne(roleId);
 			user = new UserEntity(username, CiphersUtils.getInstance().MD5Password(password), name, role, now, now);
 			userService.save(user);
 			

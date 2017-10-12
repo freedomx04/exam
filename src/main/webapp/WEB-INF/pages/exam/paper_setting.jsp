@@ -32,10 +32,11 @@
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="ibox">
 			<div class="ibox-content">
-				<h2 class="page-title">试卷设置<small>${paper.title}</small></h2>
+				<div class="page-title">
+					<h2>试卷设置<small>${paper.title}</small></h2>
+				</div>
 				
 				<form class="form-horizontal" role="form" autocomplete="off">
-					<div class="hr-line-dashed"></div>
 					<div class="form-group">
 						<label for="" class="desc col-sm-2 col-sm-offset-2 control-label">进行考试</label>
 						<div class="col-sm-6">
@@ -50,11 +51,11 @@
 						</div>
 					</div>
 					
-					<div class="hr-line-dashed"></div>
+					<div class="hr-line-solid"></div>
 					<div class="form-group btn-operate">
 						<div class="col-sm-5 col-sm-offset-2">
-							<button type="button" class="btn btn-primary btn-paper-save">保存</button>
-							<button type="button" class="btn btn-white btn-paper-cancel">返回</button>
+							<button type="button" class="btn btn-primary btn-fw btn-paper-save">保&nbsp;存</button>
+							<button type="button" class="btn btn-white btn-fw btn-paper-cancel">返&nbsp;回</button>
 						</div>
 					</div>
 				</form>

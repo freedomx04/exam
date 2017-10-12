@@ -38,12 +38,13 @@
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="ibox">
 			<div class="ibox-content">
-				<h2 class="page-title">${title}<small>${typeTitle}</small></h2>
+				<div class="page-title">
+					<h2>${title}<small>${typeTitle}</small></h2>
+				</div>
 				
 				<form class="form-horizontal" role="form" autocomplete="off">
-					<div class="hr-line-dashed"></div>
 					<div class="form-group">
-						<label for="libraryId" class="col-sm-2 control-label">题库</label>
+						<label for="libraryId" class="col-sm-2 control-label"><i class="form-required">*</i>题库</label>
                         <div class="col-sm-4">
                         	<select class="form-control" name="libraryId" required>
                         		<c:forEach var="library" items="${libraryList}">
@@ -54,7 +55,7 @@
 					</div>
 					
 					<div class="form-group">
-						<label for="title" class="col-sm-2 control-label">题干</label>
+						<label for="title" class="col-sm-2 control-label"><i class="form-required">*</i>题干</label>
 						<div class="col-sm-7">
 							<textarea class="form-control" name="title" style="resize: none; height: 150px;">${question.title}</textarea>
 						</div>
@@ -72,7 +73,7 @@
 					</div>
 					
 					<div class="form-group">
-						<label for="optionA" class="col-sm-2 control-label">选项A</label>
+						<label for="optionA" class="col-sm-2 control-label"><i class="form-required">*</i>选项A</label>
 						<div class="col-sm-7">
 							<div class="input-group">
 								<input type="text" class="form-control option" name="optionA" data-seq="0" value="${question.optionA}">
@@ -87,7 +88,7 @@
 					</div>
 					
 					<div class="form-group">
-						<label for="optionB" class="col-sm-2 control-label">选项B</label>
+						<label for="optionB" class="col-sm-2 control-label"><i class="form-required">*</i>选项B</label>
 						<div class="col-sm-7">
 							<div class="input-group">
 								<input type="text" class="form-control option" name="optionB" data-seq="1" value="${question.optionB}">
@@ -103,7 +104,7 @@
 					
 					<c:if test="${method == 'add' || not empty question.optionC}">
 					<div class="form-group">
-						<label for="optionC" class="col-sm-2 control-label">选项C</label>
+						<label for="optionC" class="col-sm-2 control-label"><i class="form-required">*</i>选项C</label>
 						<div class="col-sm-7">
 							<div class="input-group">
 								<input type="text" class="form-control option" name="optionC" data-seq="2" value="${question.optionC}">
@@ -125,7 +126,7 @@
 					
 					<c:if test="${method == 'add' || not empty question.optionD}">
 					<div class="form-group">
-						<label for="optionD" class="col-sm-2 control-label">选项D</label>
+						<label for="optionD" class="col-sm-2 control-label"><i class="form-required">*</i>选项D</label>
 						<div class="col-sm-7">
 							<div class="input-group">
 								<input type="text" class="form-control option" name="optionD" data-seq="3" value="${question.optionD}">
@@ -147,7 +148,7 @@
 					
 					<c:if test="${not empty question.optionE}">
 					<div class="form-group">
-						<label for="optionE" class="col-sm-2 control-label">选项E</label>
+						<label for="optionE" class="col-sm-2 control-label"><i class="form-required">*</i>选项E</label>
 						<div class="col-sm-7">
 							<div class="input-group">
 								<input type="text" class="form-control option" name="optionE" data-seq="4" value="${question.optionE}">
@@ -169,7 +170,7 @@
 					
 					<c:if test="${not empty question.optionF}">
 					<div class="form-group">
-						<label for="optionF" class="col-sm-2 control-label">选项F</label>
+						<label for="optionF" class="col-sm-2 control-label"><i class="form-required">*</i>选项F</label>
 						<div class="col-sm-7">
 							<div class="input-group">
 								<input type="text" class="form-control option" name="optionF" data-seq="5" value="${question.optionF}">
@@ -191,7 +192,7 @@
 					
 					<div class="form-group">
 						<div class="col-sm-9 text-right">
-							<button type="button" class="btn btn-primary btn-option-add">新增选项</button>
+							<button type="button" class="btn btn-primary btn-option-add btn-fw">新增选项</button>
 						</div>
 					</div>
 					
@@ -224,17 +225,17 @@
 						</div>
 					</div>
 					
-					<div class="hr-line-dashed"></div>
+					<div class="hr-line-solid"></div>
 					<div class="form-group btn-operate">
                         <div class="col-sm-8 col-sm-offset-2">
                         	<c:if test="${method == 'add'}">
                             	<button type="button" class="btn btn-primary btn-question-add-continue">保存并继续</button>
-                            	<button type="button" class="btn btn-primary btn-question-add">保存</button>
+                            	<button type="button" class="btn btn-primary btn-question-add">保&nbsp;存</button>
                             </c:if>
                             <c:if test="${method == 'edit'}">
-                            	<button type="button" class="btn btn-primary btn-question-edit">保存</button>
+                            	<button type="button" class="btn btn-primary btn-question-edit">保&nbsp;存</button>
                             </c:if>
-                            <button type="button" class="btn btn-white btn-question-cancel">返回</button>
+                            <button type="button" class="btn btn-white btn-question-cancel">返&nbsp;回</button>
                         </div>
                     </div>
 				</form>
@@ -319,7 +320,7 @@
 			var $row = $(this).closest('.form-group');
 			var $option = 
 				'<div class="form-group">' + 
-					'<label for="" class="col-sm-2 control-label">选项' + option + '</label>' +
+					'<label for="" class="col-sm-2 control-label"><i class="form-required">*</i>选项' + option + '</label>' +
 					'<div class="col-sm-7">' + 
 						'<div class="input-group">' +
 							'<input type="text" class="form-control option" name="option' + option + '" data-seq="' + next + '">' + 

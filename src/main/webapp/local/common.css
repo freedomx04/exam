@@ -1,3 +1,4 @@
+/** common */
 .form-required {
 	color: red;
 	margin-right: 5px;
@@ -6,6 +7,17 @@
 	font-size: 18px;
 }
 
+.hr-line-solid {
+	border-bottom: 1px solid #e7eaec;
+	color: #fff;
+	background-color: #fff;
+	height: 1px;
+	margin: 20px 0
+}
+
+.btn-fw {
+	width: 100px;
+}
 .btn-white:hover {
 	background: #fafafa;
 }
@@ -14,11 +26,22 @@
 	display: none;
 }
 
+.a-back {
+	font-size: 14px;
+	padding-left: 10px;
+}
 .a-operate + .a-operate{
 	margin-left: 10px;
 }
+.btn-operate button {
+	min-width: 100px;
+}
 
+a {
+	color: #459ae9;
+}
 a:HOVER {
+	color: #459ae9;
 	text-decoration: underline;
 }
 
@@ -27,10 +50,13 @@ a:HOVER {
 }
 
 .page-title {
-	margin-bottom: 20px;
-	display: block;
-	color: #666;
-	font-weight: 300;
+	border-bottom: 1px solid #e7e7eb;
+	margin-bottom: 25px;
+}
+.page-title h2 {
+	font-size: 18px;
+	font-weight: 400;
+	font-style: normal;
 	font-family: "Open Sans", "微软雅黑", sans-serif;
 }
 .page-title small {
@@ -115,19 +141,16 @@ a:HOVER {
 	border-color: #36964d;
 	color: #FFF
 }
-
 .btn-primary.active, .btn-primary:active, .btn-primary:focus,
 	.btn-primary:hover, .open .dropdown-toggle.btn-primary {
 	background-color: #389e51;
 	border-color: #36964d;
 	color: #FFF
 }
-
 .btn-primary.active, .btn-primary:active, .open .dropdown-toggle.btn-primary
 	{
 	background-image: none
 }
-
 .btn-primary.active[disabled], .btn-primary.disabled, .btn-primary.disabled.active,
 	.btn-primary.disabled:active, .btn-primary.disabled:focus, .btn-primary.disabled:hover,
 	.btn-primary[disabled], .btn-primary[disabled]:active, .btn-primary[disabled]:focus,
@@ -144,18 +167,15 @@ a:HOVER {
 	border-color: #4B8DF8;
 	color: #FFF
 }
-
 .btn-blue.active, .btn-blue:active, .btn-blue:focus,
 	.btn-blue:hover, .open .dropdown-toggle.btn-blue {
 	background-color: #2977f7;
 	border-color: #2977f7;
 	color: #FFF
 }
-
 .btn-blue.active, .btn-blue:active, .open .dropdown-toggle.btn-blue {
 	background-image: none
 }
-
 .btn-blue.active[disabled], .btn-blue.disabled, .btn-blue.disabled.active,
 	.btn-blue.disabled:active, .btn-blue.disabled:focus, .btn-blue.disabled:hover,
 	.btn-blue[disabled], .btn-blue[disabled]:active, .btn-blue[disabled]:focus,
@@ -202,10 +222,6 @@ a:HOVER {
   top: 0;  
   left: 4px;  
 } 
-
-.btn-operate button {
-	min-width: 100px;
-}
 
 .help-block {
 	display: block;

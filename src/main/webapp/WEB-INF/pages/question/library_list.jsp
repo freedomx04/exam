@@ -25,7 +25,9 @@
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content">
-				<h2 class="page-title">题库管理</h2>
+				<div class="page-title">
+					<h2>题库管理</h2>
+				</div>
 				
 				<div id="library-list-table-toolbar" role="group">
  					<button type="button" class="btn btn-primary btn-library-add" data-toggle="modal" data-target="#modal-library-dialog">
@@ -96,17 +98,22 @@
 				field: 'state',
 				checkbox: true
 			}, {
+				title: '#',
+				width: '20',
+				formatter: function(value, row, index) {
+					return index + 1;
+				}
+			}, {
 				field: 'name',
 				title: '题库名称',
-				/* formatter: function(value, row, index) {
+				formatter: function(value, row, index) {
 					return '<a class="btn-library-detail">' + value + '</a>';
 				},
 				events: window.operateEvents = {
 					'click .btn-library-detail': function(e, value, row, index) {
 						e.stopPropagation();
-						window.parent.open('questionList');
 					}
-				} */
+				} 
 			}, {
 				field: 'count',
 				title: '试题',
