@@ -61,7 +61,7 @@
     	}
     	
     	var $table = $k.util.bsTable($page.find('#paper-question-table'), {
-			url: '${ctx}/api/paper/listQuestion?paperId=' + paper.id,
+			url: '${ctx}/api/paper/question/list?paperId=' + paper.id,
 			toolbar: '#paper-question-table-toolbar',
 			idField: 'id',
 			pagination: false,
@@ -142,7 +142,7 @@
                             closeOnConfirm: false
             			}, function() {
             				$.ajax({
-            					url: '${ctx}/api/paper/deleteQuestion',
+            					url: '${ctx}/api/paper/question/delete',
             					data: {
             						paperId: paper.id,
             						questionId: row.id
@@ -182,7 +182,7 @@
             }, function() {
                 var rows = $table.bootstrapTable('getSelections');
                 $.ajax({
-                    url: '${ctx}/api/paper/batchDeleteQuestion',
+                    url: '${ctx}/api/paper/question/batchDelete',
                     type: 'post',
                     data: { 
                     	paperId: paper.id,
@@ -199,7 +199,7 @@
                     error: function(err) {}
                 });
             });
-		})
+		});
 		
     </script>
     

@@ -14,8 +14,9 @@ import com.hm.exam.entity.BaseEntity;
 
 @Entity
 @Table(name = "question_question", indexes = {
-	@Index(name = "index_question_question_type", columnList = "type"),
-	@Index(name = "index_question_question_library_type", columnList = "library_id, type")
+	@Index(name = "index_question_question_library", columnList = "library_id, updateTime"),
+	@Index(name = "index_question_question_type", columnList = "type, updateTime"),
+	@Index(name = "index_question_question_library_type", columnList = "library_id, type, updateTime")
 })
 public class QuestionEntity extends BaseEntity {
 	

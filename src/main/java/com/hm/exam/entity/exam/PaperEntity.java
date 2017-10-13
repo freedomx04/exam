@@ -44,21 +44,21 @@ public class PaperEntity extends BaseEntity {
 	private String description;
 
 	/**
-	 * 多对多关联试题
+	 * 试题
 	 */
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	@JoinTable(name = "relate_paper_question", 
 		joinColumns = {@JoinColumn(name = "paper_id", referencedColumnName = "id") }, 
 		inverseJoinColumns = {@JoinColumn(name = "question_id", referencedColumnName = "id") })
 	private List<QuestionEntity> questions = new LinkedList<>();
-
+	
 	/**
-	 * 多对多关联考生
+	 * 考生
 	 */
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	@JoinTable(name = "relate_paper_student",
-		joinColumns = {@JoinColumn(name = "paper_id", referencedColumnName = "id")},
-		inverseJoinColumns = {@JoinColumn(name = "student_id", referencedColumnName = "id")})
+		joinColumns = {@JoinColumn(name = "paper_id", referencedColumnName = "id") },
+		inverseJoinColumns = {@JoinColumn(name = "student_id", referencedColumnName = "id") })
 	private List<StudentEntity> students = new LinkedList<>();
 
 	private Integer status = PaperStatus.STATUS_ENABLE;

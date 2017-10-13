@@ -17,9 +17,11 @@ import com.hm.exam.common.result.ResultInfo;
 import com.hm.exam.entity.exam.ClassifyEntity;
 import com.hm.exam.entity.exam.PaperEntity;
 import com.hm.exam.entity.question.QuestionEntity;
+import com.hm.exam.entity.student.StudentEntity;
 import com.hm.exam.service.exam.ClassifyService;
 import com.hm.exam.service.exam.PaperService;
 import com.hm.exam.service.question.QuestionService;
+import com.hm.exam.service.student.StudentService;
 
 @RestController
 public class PaperController {
@@ -34,6 +36,9 @@ public class PaperController {
 	
 	@Autowired
 	QuestionService questionService;
+	
+	@Autowired
+	StudentService studentService;
 
 	@RequestMapping(value = "/api/paper/create", method = RequestMethod.POST)
 	public Result create(String title, Long classifyId, String description) {
@@ -120,30 +125,37 @@ public class PaperController {
 		}
 	}
 	
-	@RequestMapping(value = "/api/paper/listQuestion")
-	public Result listQuestion(Long paperId) {
+	@RequestMapping(value = "/api/paper/setting", method = RequestMethod.POST)
+	public Result setting(Long paperId, Date startTime, Date endTime, Integer duration) {
 		try {
 			PaperEntity paper = paperService.findOne(paperId);
-			return new ResultInfo(Code.SUCCESS.value(), "moved", paper.getQuestions());
+			paper.setStartTime(startTime);
+			paper.setEndTime(endTime);
+			paper.setDuration(duration);
+			paperService.save(paper);
+			return new Result(Code.SUCCESS.value(), "success");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
 		}
 	}
 	
-	@RequestMapping(value = "/api/paper/listStudent")
-	public Result listStudent(Long paperId) {
+	/**
+	 * question
+	 */
+	@RequestMapping(value = "/api/paper/question/list")
+	public Result questionList(Long paperId) {
 		try {
 			PaperEntity paper = paperService.findOne(paperId);
-			return new ResultInfo(Code.SUCCESS.value(), "moved", paper.getStudents());
+			return new ResultInfo(Code.SUCCESS.value(), "success", paper.getQuestions());
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
 		}
 	}
 	
-	@RequestMapping(value = "/api/paper/randomAdd", method = RequestMethod.POST)
-	public Result randomAdd(Long paperId, @RequestParam("randomList[]") List<String> randomList) {
+	@RequestMapping(value = "/api/paper/question/randomAdd", method = RequestMethod.POST)
+	public Result questionRandomAdd(Long paperId, @RequestParam("randomList[]") List<String> randomList) {
 		try {
 			PaperEntity paper = paperService.findOne(paperId);
 			for (String random: randomList) {
@@ -166,8 +178,8 @@ public class PaperController {
 		}
 	}
 	
-	@RequestMapping(value = "/api/paper/manualAdd")
-	public Result manualAdd(Long paperId, Long questionId) {
+	@RequestMapping(value = "/api/paper/question/manualAdd")
+	public Result questionManualAdd(Long paperId, Long questionId) {
 		try {
 			PaperEntity paper = paperService.findOne(paperId);
 			QuestionEntity question = questionService.findOne(questionId);
@@ -182,8 +194,8 @@ public class PaperController {
 		}
 	}
 	
-	@RequestMapping(value = "/api/paper/deleteQuestion")
-	public Result deleteQuestion(Long paperId, Long questionId) {
+	@RequestMapping(value = "/api/paper/question/delete")
+	public Result questionDelete(Long paperId, Long questionId) {
 		try {
 			PaperEntity paper = paperService.findOne(paperId);
 			QuestionEntity question = questionService.findOne(questionId);
@@ -196,8 +208,8 @@ public class PaperController {
 		}
 	}
 	
-	@RequestMapping(value = "/api/paper/batchDeleteQuestion", method = RequestMethod.POST)
-	public Result batchDeleteQuestion(Long paperId, @RequestParam("questionIdList[]") List<Long> questionIdList) {
+	@RequestMapping(value = "/api/paper/question/batchDelete", method = RequestMethod.POST)
+	public Result questionBatchDelete(Long paperId, @RequestParam("questionIdList[]") List<Long> questionIdList) {
 		try {
 			PaperEntity paper = paperService.findOne(paperId);
 			for(Long questionId: questionIdList) {
@@ -212,19 +224,63 @@ public class PaperController {
 		}
 	}
 	
-	@RequestMapping(value = "/api/paper/setting", method = RequestMethod.POST)
-	public Result setting(Long paperId, Date startTime, Date endTime, Integer duration) {
+	/**
+	 * student
+	 */
+	@RequestMapping(value = "/api/paper/student/list")
+	public Result studentList(Long paperId) {
 		try {
 			PaperEntity paper = paperService.findOne(paperId);
-			paper.setStartTime(startTime);
-			paper.setEndTime(endTime);
-			paper.setDuration(duration);
-			paperService.save(paper);
-			return new Result(Code.SUCCESS.value(), "success");
+			return new ResultInfo(Code.SUCCESS.value(), "success", paper.getStudents());
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
 		}
 	}
-
+	
+	@RequestMapping(value = "/api/paper/student/manualAdd")
+	public Result studentManualAdd(Long paperId, Long studentId) {
+		try {
+			PaperEntity paper = paperService.findOne(paperId);
+			StudentEntity student = studentService.findOne(studentId);
+			if (!paper.getStudents().contains(student)) {
+				paper.getStudents().add(student);
+			}
+			paperService.save(paper);
+			return new Result(Code.SUCCESS.value(), "added");
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return new Result(Code.ERROR.value(), e.getMessage());
+		}
+	}
+	
+	@RequestMapping(value = "/api/paper/student/delete")
+	public Result studentDelete(Long paperId, Long studentId) {
+		try {
+			PaperEntity paper = paperService.findOne(paperId);
+			StudentEntity student = studentService.findOne(studentId);
+			paper.getStudents().remove(student);
+			paperService.save(paper);
+			return new Result(Code.SUCCESS.value(), "deleted");
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return new Result(Code.ERROR.value(), e.getMessage());
+		}
+	}
+	
+	@RequestMapping(value = "/api/paper/student/batchDelete")
+	public Result studentBatchDelete(Long paperId, @RequestParam("studentIdList[]") List<Long> studentIdList) {
+		try {
+			PaperEntity paper = paperService.findOne(paperId);
+			for (Long studentId: studentIdList) {
+				StudentEntity student = studentService.findOne(studentId);
+				paper.getStudents().remove(student);
+			}
+			paperService.save(paper);
+			return new Result(Code.SUCCESS.value(), "deleted");
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return new Result(Code.ERROR.value(), e.getMessage());
+		}
+	}
 }

@@ -49,9 +49,9 @@
     <script type="text/javascript" src="${ctx}/plugins/sweetalert/sweetalert.min.js"></script>
     <script type="text/javascript" src="${ctx}/plugins/bootstrap-table/bootstrap-table.min.js"></script>
     <script type="text/javascript" src="${ctx}/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <%@ include file="/WEB-INF/pages/exam/dialog_student_add.jsp"%>
     
     <script type="text/javascript">
-    ;(function( $ ) {
     	
     	var $page = $('.body-paper-student');
     	var paper = {
@@ -59,7 +59,7 @@
     	}
     	
     	var $table = $k.util.bsTable($page.find('#paper-student-table'), {
-			url: '${ctx}/api/paper/listStudent?paperId=' + paper.id,
+			url: '${ctx}/api/paper/student/list?paperId=' + paper.id,
 			toolbar: '#paper-student-table-toolbar',
 			idField: 'id',
 			pagination: false,
@@ -100,22 +100,82 @@
 				align: 'center',
 				width: '100',
 				formatter: function(value, row, index) {
-					var $edit = '<a class="btn-student-edit a-operate">编辑</a>';
 					var $delete = '<a class="btn-student-delete a-operate">删除</a>';
-					return $edit + $delete;
+					return $delete;
 				},
 				events: window.operateEvents = {
-					'click .btn-student-edit': function(e, value, row, index) {
-						e.stopPropagation();
-					},
 					'click .btn-student-delete': function(e, value, row, index) {
 						e.stopPropagation();
+						swal({
+            				title: '',
+            				text: '您确定要删除所选择的考生吗?',
+            				type: 'warning',
+            				showCancelButton: true,
+                            cancelButtonText: '取消',
+                            confirmButtonColor: '#DD6B55',
+                            confirmButtonText: '确定',
+                            closeOnConfirm: false
+            			}, function() {
+            				$.ajax({
+            					url: '${ctx}/api/paper/student/delete',
+            					data: {
+            						paperId: paper.id,
+            						studentId: row.id
+            					},
+            					success: function(ret) {
+            						if (ret.code == 0) {
+            							swal('', '删除成功!', 'success');
+            						} else {
+            							swal('', ret.msg, 'error');
+            						}
+            						$table.bootstrapTable('refresh'); 
+            					},
+            					error: function(err) {}
+            				});
+            			});
 					}
 				}
 			}]
 		});
+    	
+    	$table.on('all.bs.table', function(e, row) {
+            var selNum = $table.bootstrapTable('getSelections').length;
+            selNum > 0 ? $page.find('.btn-paper-student-delete-batch').removeAttr('disabled') : $page.find('.btn-paper-student-delete-batch').attr('disabled', 'disabled');
+        });
+    	
+    	$page
+		.on('click', '.btn-paper-student-delete-batch', function() {
+			swal({
+                title: '',
+                text: '您确定要删除所选择的考生吗?',
+                type: 'warning',
+                showCancelButton: true,
+                cancelButtonText: '取消',
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: '确定',
+                closeOnConfirm: false
+            }, function() {
+                var rows = $table.bootstrapTable('getSelections');
+                $.ajax({
+                    url: '${ctx}/api/paper/student/batchDelete',
+                    type: 'post',
+                    data: { 
+                    	paperId: paper.id,
+                        studentIdList: $k.util.getIdList(rows) 
+                    },
+                    success: function(ret) {
+                        if (ret.code == 0) {
+                            swal('', '删除成功!', 'success');
+						} else {
+                            swal('', ret.msg, 'error');
+                        }
+                        $table.bootstrapTable('refresh'); 
+                    },
+                    error: function(err) {}
+                });
+            });
+		});
 		
-    })( jQuery );
     </script>
     
 </body>

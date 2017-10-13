@@ -113,16 +113,16 @@
 <script type="text/javascript">
 
 	//添加试题对话框
-	var $dialog = $('#modal-paper-question-dialog');
+	var $questionDialog = $('#modal-paper-question-dialog');
 	var $questionTable;
 	var libraryId = 0;
 	var type = 0;
 	initQuestionTable(0, 0);
 	
 	function initQuestionTable(libraryId, type) {
-		$dialog.find('#question-list-table').bootstrapTable('destroy');
+		$questionDialog.find('#question-list-table').bootstrapTable('destroy');
 		
-		$questionTable = $k.util.bsTable($dialog.find('#question-list-table'), {
+		$questionTable = $k.util.bsTable($questionDialog.find('#question-list-table'), {
 			url: '${ctx}/api/question/list?libraryId=' + libraryId + '&type=' + type,
 			toolbar: '#question-list-table-toolbar',
 			idField: 'id',
@@ -136,8 +136,6 @@
 			}, {
 				field: 'library',
 				title: '题库',
-				align: 'center',
-				width: '150',
 				formatter: function(value, row, index) {
 					return value.name;
 				}
@@ -174,7 +172,7 @@
 						var $this = $(this);
 						e.stopPropagation();
 						$.ajax({
-							url: '${ctx}/api/paper/manualAdd',
+							url: '${ctx}/api/paper/question/manualAdd',
 							data: {
 								paperId: paper.id,
 								questionId: row.id
@@ -193,7 +191,7 @@
 		});
 	}
 	
-	$dialog
+	$questionDialog
 	// 从题库随机选择试题
 	.on('keyup', '.input-question-count', function() {
 		var value = Number($(this).val());
@@ -204,23 +202,22 @@
 		} else if (value < min) {
 			$(this).val(min);
 		}
-		
 		var randomCount = 0;
-		$.each($dialog.find('.input-question-count'), function(k, val) {
+		$.each($questionDialog.find('.input-question-count'), function(k, val) {
 			var count = Number($(this).val());
 			randomCount += count;
 		});
 		if (randomCount > 0) {
-			$dialog.find('.question-random-add-count').text(randomCount);
-			$dialog.find('.btn-question-random-add').removeAttr('disabled');
+			$questionDialog.find('.question-random-add-count').text(randomCount);
+			$questionDialog.find('.btn-question-random-add').removeAttr('disabled');
 		} else {
-			$dialog.find('.question-random-add-count').text(0);
-			$dialog.find('.btn-question-random-add').attr('disabled', 'disabled');
+			$questionDialog.find('.question-random-add-count').text(0);
+			$questionDialog.find('.btn-question-random-add').attr('disabled', 'disabled');
 		}
 	})
 	.on('click', '.btn-question-random-add', function() {
 		var randomList = [];
-		$.each($dialog.find('#paper-question-library-random li'), function(k, val) {
+		$.each($questionDialog.find('#paper-question-library-random li'), function(k, val) {
 			var libraryId = $(this).data('libraryId');
 			var count = $(this).find('.input-question-count').val();
 			if (count > 0) {
@@ -229,7 +226,7 @@
 		});
 		
 		$.ajax({
-			url: '${ctx}/api/paper/randomAdd',
+			url: '${ctx}/api/paper/question/randomAdd',
 			type: 'post',
 			data: {
 				paperId: paper.id,
@@ -238,7 +235,7 @@
 			success: function(ret) {
 				if (ret.code == 0) {
 					$table.bootstrapTable('refresh');
-					$dialog.modal('hide');
+					$questionDialog.modal('hide');
 				}
 			},
 			error: function(err) {}
@@ -258,7 +255,7 @@
 		window.location.href = '${ctx}/api/question/template';
 	})
 	.on('click', '.btn-question-import', function() {
-		$dialog.find('#import-file-input').click();
+		$questionDialog.find('#import-file-input').click();
 	})
 	.on('change', '#import-file-input', function() {
 		var formData = new FormData();
