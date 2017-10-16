@@ -19,7 +19,7 @@
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/toastr/toastr.min.css">
     
 </head>
-<body>
+<body class="gray-bg body-online-exam">
 	<div>
 		${paper.title}
 	</div>
