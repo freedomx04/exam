@@ -51,15 +51,15 @@
 						<span class="pearl-number">2</span> 
 						<span class="pearl-title">添加试题</span>
 					</div>
-					<div class="pearl col-sm-2" data-pearl="pearl-3" data-step="2">
+					<div class="pearl col-sm-2" data-pearl="pearl-3" data-step="3">
 						<span class="pearl-number">3</span> 
 						<span class="pearl-title">添加考生</span>
 					</div> 
-					<div class="pearl col-sm-2" data-pearl="pearl-4" data-step="3">
+					<div class="pearl col-sm-2" data-pearl="pearl-4" data-step="4">
 						<span class="pearl-number">4</span> 
 						<span class="pearl-title">试卷设置</span>
 					</div>
-					<div class="pearl col-sm-2" data-pearl="pearl-5" data-step="4">
+					<div class="pearl col-sm-2" data-pearl="pearl-5" data-step="5">
 						<span class="pearl-number">5</span> 
 						<span class="pearl-title">预览</span>
 					</div>

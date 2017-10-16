@@ -35,10 +35,10 @@
 									<c:forEach var="library" items="${libraryList}">
 										<li data-library-id="${library.id}" style="height: 40px; line-height: 40px;">
 											<div class="row">
-												<div class="col-sm-4">
+												<div class="col-sm-6">
 													<span>${library.name}&nbsp;<i style="font-style: normal; color: #bbb;">(共&nbsp;${library.count}&nbsp;道试题)</i></span>
 												</div>
-												<div class="col-sm-4">
+												<div class="col-sm-6">
 													<span>选择&nbsp;</span>
 													<span>
 														<input class="form-control input-question-count" style="display: inline-block; width: 80px" 

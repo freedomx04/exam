@@ -17,10 +17,12 @@ import com.hm.exam.common.result.ResultInfo;
 import com.hm.exam.entity.exam.ClassifyEntity;
 import com.hm.exam.entity.exam.PaperEntity;
 import com.hm.exam.entity.question.QuestionEntity;
+import com.hm.exam.entity.student.GroupEntity;
 import com.hm.exam.entity.student.StudentEntity;
 import com.hm.exam.service.exam.ClassifyService;
 import com.hm.exam.service.exam.PaperService;
 import com.hm.exam.service.question.QuestionService;
+import com.hm.exam.service.student.GroupService;
 import com.hm.exam.service.student.StudentService;
 
 @RestController
@@ -39,6 +41,9 @@ public class PaperController {
 	
 	@Autowired
 	StudentService studentService;
+	
+	@Autowired
+	GroupService groupService;
 
 	@RequestMapping(value = "/api/paper/create", method = RequestMethod.POST)
 	public Result create(String title, Long classifyId, String description) {
@@ -232,6 +237,26 @@ public class PaperController {
 		try {
 			PaperEntity paper = paperService.findOne(paperId);
 			return new ResultInfo(Code.SUCCESS.value(), "success", paper.getStudents());
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return new Result(Code.ERROR.value(), e.getMessage());
+		}
+	}
+	
+	@RequestMapping(value = "/api/paper/student/groupAdd")
+	public Result groupAdd(Long paperId, Long groupId) {
+		try {
+			GroupEntity group = groupService.findOne(groupId);
+			List<StudentEntity> studentList = studentService.listByGroup(group);
+			
+			PaperEntity paper = paperService.findOne(paperId);
+			for (StudentEntity student: studentList) {
+				if (!paper.getStudents().contains(student)) {
+					paper.getStudents().add(student);
+				}
+			}
+			paperService.save(paper);
+			return new Result(Code.SUCCESS.value(), "added");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());

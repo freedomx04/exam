@@ -27,7 +27,25 @@
 					<div class="tab-content">
 						<div id="paper-student-group" class="tab-pane active">
 							<div class="panel-body">
-								a
+								<ul class="unstyled">
+									<c:forEach var="group" items="${groupList}">
+										<li data-group-id="${group.id}" style="height: 40px; line-height: 40px;">
+											<div class="row">
+												<div class="col-sm-6">
+													<span>${group.name}&nbsp;<i style="font-style: normal; color: #bbb">(共&nbsp;${group.count}&nbsp;个考生)</i></span>
+												</div>
+												<div class="col-sm-6">
+													<c:if test="${group.count > 0}">
+														<button class="btn btn-primary btn-sm btn-fw btn-student-group-add">加入试卷</button>
+													</c:if>
+													<c:if test="${group.count == 0}">
+														<button class="btn btn-primary btn-sm btn-fw" disabled>加入试卷</button>
+													</c:if>
+												</div>
+											</div>
+										</li>
+									</c:forEach>
+								</ul>
 							</div>
 						</div>
 						<div id="paper-student-manual" class="tab-pane">
@@ -106,11 +124,11 @@
 				align: 'center',
 				width: '100',
 				formatter: function(value, row, index) {
-					var $add = '<a class="btn-student-append a-operate">加入试卷</a>';
+					var $add = '<a class="btn-student-manual-add a-operate">加入试卷</a>';
 					return $add;
 				},
 				events: window.operateEvents = {
-					'click .btn-student-append': function(e, value, row, index) {
+					'click .btn-student-manual-add': function(e, value, row, index) {
 						e.stopPropagation();
 						var $this = $(this);
 						$.ajax({
@@ -134,6 +152,25 @@
 	}
 	
 	$studentDialog
+	// 从分组选择考生
+	.on('click', '.btn-student-group-add', function() {
+		var $this = $(this);
+		var groupId = $(this).closest('li').data('groupId');
+		$.ajax({
+			url: '${ctx}/api/paper/student/groupAdd',
+			data: {
+				paperId: paper.id,
+				groupId: groupId
+			},
+			success: function(ret) {
+				if (ret.code == 0) {
+					$this.text('已加入').addClass('disabled');
+					$table.bootstrapTable('refresh');
+				}
+			},
+			error: function(err) {}
+		});
+	})
 	// 手动选择考生
 	.on('change', '#student-group', function() {
 		groupId = $(this).val();

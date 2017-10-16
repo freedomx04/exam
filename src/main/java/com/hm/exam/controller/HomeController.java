@@ -297,6 +297,13 @@ public class HomeController {
 		}
 		modelMap.addAttribute("libraryList", libraryList);
 		
+		List<GroupEntity> groupList = groupService.list();
+		for (GroupEntity group: groupList) {
+			Integer count = studentService.countByGroup(group);
+			group.setCount(count);
+		}
+		modelMap.addAttribute("groupList", groupList);
+		
 		List<QuestionEntity> questionList = questionService.list();
 		modelMap.addAttribute("questionList", questionList);
 		
