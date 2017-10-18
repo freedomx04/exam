@@ -25,7 +25,7 @@
     	z-index: 2;
     	-webkit-font-smoothing: subpixel-antialiased;
     }
-    .exam_banner {
+    .exam-banner {
     	top: 0; 
     	left: 0; 
     	width: 100%; 
@@ -36,7 +36,7 @@
     	box-shadow: 0 1px 3px 0 rgba(0,34,77,.05);
     	background-clip: content-box;
     }
-    .exam_banner_inner {
+    .exam-banner-inner {
     	position: relative;
     	display: flex;
     	width: 1000px;
@@ -46,7 +46,7 @@
     	-webkit-box-align: center;
     	align-items: center;
     }
-    .exam_banner_holder {
+    .exam-banner-holder {
     	position: relative;
     	top: 0px;
     	right: 0px;
@@ -68,7 +68,7 @@
     	-webkit-box-sizing: border-box;
     	box-sizing: border-box;
     }
-    .exam_container {
+    .exam-container {
     	display: -webkit-box;
     	display: flex;
     	-webkit-box-align: start;
@@ -77,34 +77,64 @@
     	width: 1000px;
     	margin: 10px auto;
     }
-    .exam_question {
+    .exam-ques {
     	position: relative;
     	padding: 16px 20px;
     }
-    .exam_question ul li {
+    .exam-ques .ques-num {
+    	font-size: 14px;
+    	background-color: #36aafd;
+    	color: #fff;
+    	border-radius: 10px;
+    	padding: 2px 8px;
+    }
+    .exam-ques ul li {
     	height: 30px;
     }
+    .exam-ques .ques-score {
+    	color: #aeaeae;
+    }
+    .exam-controller .ques-list li {
+    	font-size: 12px;
+    	text-align: center;
+    	display: block;
+    	padding: 4px 0px;
+    	border: 1px solid #aaa;
+    	border-radius: 2px;
+    	float: left;
+    	margin-right: 3px;
+    	margin-bottom: 3px;
+    	min-width: 25px;
+    	cursor: pointer;
+    }
+    .exam-controller .ques-list li.done, 
+    .exam-controller .ques-list li:HOVER {
+		background-color: #FF7B29;
+		color: #fff;
+		border: 1px solid #FF7B29;
+	}
     </style>
     
 </head>
 <body class="gray-bg body-online-exam" style="min-width: 1000px; overflow: auto;">
 	<div>
-		<header role="banner" class="exam_banner fixed">
-			<div class="exam_banner_inner">
+		<header role="banner" class="exam-banner fixed">
+			<div class="exam-banner-inner">
 				<div style="font-size: 18px;">${paper.title}</div>
 				<div style="flex: 1; justify-content: flex-end; display: flex; align-items: center;">孙明明</div>
 			</div>
 		</header>
-		<div class="exam_banner_holder"></div>
+		<div class="exam-banner-holder"></div>
 	</div>
 	
-	<main role="main" class="exam_main">
-		<div class="exam_container">
-			<div class="exam_question_list" style="margin-right: 10px; width: 694px;">
+	<main role="main">
+		<div class="exam-container">
+			<div class="exam-ques-list" style="margin-right: 10px; width: 690px;">
 				<c:forEach var="question" items="${paper.questions}" varStatus="status">
-					<div class="card exam_question" data-question-id="${question.id}">
+					<c:set var="seq" value="${status.index + 1}"></c:set>
+					<div id="ques-${status.index + 1}" class="card exam-ques" data-index="${seq}" data-question-id="${question.id}">
 						<div style="line-height: 1.6em;">
-							<span>${status.index + 1}</span>
+							<span class="ques-num">${status.index + 1}/${fn:length(paper.questions)}</span>
 							<c:if test="${question.type == 1}">
 								<span class="ques-type ques-single">单选题</span>
 							</c:if>
@@ -117,87 +147,146 @@
 								<span class="ques-type ques-boolean">判断题</span>
 							</c:if>
 							<span>${question.title}</span>
+							<span class="ques-score">(${question.score}分)</span>
 						</div>
 						<div>
-							<ul class="unstyled" style="margin-top: 15px;">
-								<c:if test="${question.type == 1}">
-									<li>
-										<div class="radio radio-success radio-inline">
-											<input type="radio" name="${question.id}-single" id="${question.id}-A" value="${question.id}-A">
-											<label for="${question.id}-A">A：${question.optionA}</label>
-										</div>
-									</li>
-									<li>
-										<div class="radio radio-success radio-inline">
-											<input type="radio" name="${question.id}-single" id="${question.id}-B" value="${question.id}-B">
-											<label for="${question.id}-B">B：${question.optionB}</label>
-										</div>
-									</li>
-									<c:if test="${not empty quetion.title}">
+							<c:if test="${not empty question.imagePath}">
+								<div style="margin: 10px 20px;">
+									<img alt="图片" src="${ctx}${question.imagePath}">
+								</div>
+							</c:if>
+							<ul class="unstyled" style="margin-top: 15px; padding-left: 20px;">
+								<c:choose>
+									<c:when test="${question.type == 1}">
 										<li>
 											<div class="radio radio-success radio-inline">
-												<input type="radio" name="${question.id}-single" id="${question.id}-C" value="${question.id}-C">
-												<label for="${question.id}-C">C:${question.optionC}</label>
+												<input type="radio" name="options-${seq}" id="options-${seq}-A" value="A">
+												<label for="options-${seq}-A">A：${question.optionA}</label>
 											</div>
 										</li>
-									</c:if>
-									<%-- <c:if test="${not empty quetion.optionD}">
 										<li>
 											<div class="radio radio-success radio-inline">
-												<input type="radio" name="single" id="D" value="D">
-												<label for="D">D:${question.optionD}</label>
+												<input type="radio" name="options-${seq}" id="options-${seq}-B" value="B">
+												<label for="options-${seq}-B">B：${question.optionB}</label>
 											</div>
 										</li>
-									</c:if>
-									<c:if test="${not empty quetion.optionE}">
+										<c:if test="${not empty question.optionC}">
+											<li>
+												<div class="radio radio-success radio-inline">
+													<input type="radio" name="options-${seq}" id="options-${seq}-C" value="C">
+													<label for="options-${seq}-C">C：${question.optionC}</label>
+												</div>
+											</li> 
+										</c:if>
+										<c:if test="${not empty question.optionD}">
+											<li>
+												<div class="radio radio-success radio-inline">
+													<input type="radio" name="options-${seq}" id="options-${seq}-D" value="D">
+													<label for="options-${seq}-D">D：${question.optionD}</label>
+												</div>
+											</li> 
+										</c:if>
+										<c:if test="${not empty question.optionE}">
+											<li>
+												<div class="radio radio-success radio-inline">
+													<input type="radio" name="options-${seq}" id="options-${seq}-E" value="E">
+													<label for="options-${seq}-E">E：${question.optionE}</label>
+												</div>
+											</li> 
+										</c:if>
+										<c:if test="${not empty question.optionF}">
+											<li>
+												<div class="radio radio-success radio-inline">
+													<input type="radio" name="options-${seq}" id="options-${seq}-F" value="F">
+													<label for="options-${seq}-F">F：${question.optionF}</label>
+												</div>
+											</li>
+										</c:if>
+									</c:when>
+									<c:when test="${question.type == 2}">
+										<li>
+											<div class="checkbox checkbox-success checkbox-inline">
+												<input type="checkbox" name="options-${seq}" id="options-${seq}-A" value="A">
+												<label for="options-${seq}-A">A：${question.optionA}</label>
+											</div>
+										</li>
+										<li>
+											<div class="checkbox checkbox-success checkbox-inline">
+												<input type="checkbox" name="options-${seq}" id="options-${seq}-B" value="B">
+												<label for="options-${seq}-B">B：${question.optionB}</label>
+											</div>
+										</li>
+										<c:if test="${not empty question.optionC}">
+											<li>
+												<div class="checkbox checkbox-success checkbox-inline">
+													<input type="checkbox" name="options-${seq}" id="options-${seq}-C" value="C">
+													<label for="options-${seq}-C">C：${question.optionC}</label>
+												</div>
+											</li>
+										</c:if>
+										<c:if test="${not empty question.optionD}">
+											<li>
+												<div class="checkbox checkbox-success checkbox-inline">
+													<input type="checkbox" name="options-${seq}" id="options-${seq}-D" value="D">
+													<label for="options-${seq}-D">D：${question.optionD}</label>
+												</div>
+											</li>
+										</c:if>
+										<c:if test="${not empty question.optionE}">
+											<li>
+												<div class="checkbox checkbox-success checkbox-inline">
+													<input type="checkbox" name="options-${seq}" id="options-${seq}-E" value="E">
+													<label for="options-${seq}-E">E：${question.optionE}</label>
+												</div>
+											</li>
+										</c:if>
+										<c:if test="${not empty question.optionF}">
+											<li>
+												<div class="checkbox checkbox-success checkbox-inline">
+													<input type="checkbox" name="options-${seq}" id="options-${seq}-F" value="F">
+													<label for="options-${seq}-F">F：${question.optionF}</label>
+												</div>
+											</li>
+										</c:if>
+									</c:when>
+									<c:when test="${question.type == 3}">
 										<li>
 											<div class="radio radio-success radio-inline">
-												<input type="radio" name="single" id="E" value="E">
-												<label for="E">E:${question.optionE}</label>
+												<input type="radio" name="options-${seq}" id="options-${seq}-A" value="A">
+												<label for="options-${seq}-A">正确</label>
 											</div>
 										</li>
-									</c:if>
-									<c:if test="${not empty quetion.optionF}">
 										<li>
 											<div class="radio radio-success radio-inline">
-												<input type="radio" name="single" id="F" value="F">
-												<label for="F">F:${question.optionF}</label>
+												<input type="radio" name="options-${seq}" id="options-${seq}-B" value="B">
+												<label for="options-${seq}-B">错误</label>
 											</div>
-										</li>
-									</c:if>  --%>
-								</c:if>
-								
-								<c:if test="${question.type == 2}">
-								
-								</c:if>
-								
-								<c:if test="${question.type == 3}">
-									<li>
-										<div class="radio radio-success radio-inline">
-											<input type="radio" name="${question.id}-boolean" id="${question.id}-A" value="${question.id}-A">
-											<label for="${question.id}-A">正确</label>
-										</div>
-									</li>
-									<li>
-										<div class="radio radio-success radio-inline">
-											<input type="radio" name="${question.id}-boolean" id="${question.id}-B" value="${question.id}-B">
-											<label for="${question.id}-B">错误</label>
-										</div>
-									</li>
-								</c:if>
+										</li> 
+									</c:when>
+								</c:choose>
 							</ul>
 						</div>
 					</div>
 				</c:forEach> 
 			</div>
 			
-			<div class="exam_controller fixed" style="width: 296px;">
+			<div class="exam-controller fixed" style="width: 300px;">
 				<div class="card">
 					aa
 				</div>
 				
-				<div class="card">
-					bb
+				<div class="card" style="display: flex; flex-direction: column; padding: 10px;">
+					<div>
+						<ul class="unstyled ques-list" style="padding: 0;">
+							<c:forEach var="question" items="${paper.questions}" varStatus="status">
+								<li class="ques-link" data-index="${status.index + 1}">${status.index + 1}</li>
+							</c:forEach>
+						</ul>
+					</div>
+					<div class="ques-list-tips text-center" style="margin-top: 10px;">
+						<span>已做&nbsp;<i class="fa fa-square tips-done" style="color: #FF7B29;"></i></span>
+						<span>未做&nbsp;<i class="fa fa-square-o tips-undone"></i></span>
+					</div>
 				</div>
 			</div> 
 		</div>
@@ -218,11 +307,43 @@
 		}
 		
 		function setController() {
-			var $controller = $page.find('.exam_controller');
+			var $controller = $page.find('.exam-controller');
 			var $width = $(document).width();
-			var left_val = ($width - 1000) / 2 + 694 + 10;
+			var left_val = ($width - 1000) / 2 + 690 + 10;
 			$controller.css('left', left_val);
 		}
+		
+		$page
+		.on('change', '.exam-ques input', function() {
+			var $this = $(this);
+			var inputName = $this.attr('name');
+			
+			var val;
+			var type = $this.attr('type');
+			if (type == 'radio') {
+				val = $page.find('input[name="' + inputName + '"]:checked').val();
+			} else if (type == 'checkbox') {
+				var checked = [];
+				$page.find('input[name="' + inputName + '"]:checked').each(function() {
+					checked.push($(this).val());
+				});
+				val = checked.toString();
+			}
+			
+			var index = $this.closest('.exam-ques').data('index');
+			if (val) {
+				$page.find('.ques-link[data-index="' + index + '"]').addClass('done');
+			} else {
+				$page.find('.ques-link[data-index="' + index + '"]').removeClass('done');
+			}
+		})
+		.on('click', '.ques-link', function() {
+			var index = $(this).text();
+			var offset = $page.find('#ques-' + index).offset().top - 62;
+			$('html,body').animate({
+				scrollTop: offset
+			}, 1000);
+		});
 	
 	</script>
 	

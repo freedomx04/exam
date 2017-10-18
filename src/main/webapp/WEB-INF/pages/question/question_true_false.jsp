@@ -62,8 +62,8 @@
 									<i class="fa fa-file-image-o"></i>
 								</button>
 							</c:if>
-							<img class="image-title hide" src="${ctx}${question.imagePath}" style="max-width: 100%; max-height: 100%;" 
-								data-toggle="tooltip" data-placement="top" title="点击修改图片">
+							<img class="image-title hide" src="${ctx}${question.imagePath}" data-image-path="${question.imagePath}" 
+								style="max-width: 100%; max-height: 100%;" data-toggle="tooltip" data-placement="top" title="点击修改图片">
 						</div>
 					</div>
 					

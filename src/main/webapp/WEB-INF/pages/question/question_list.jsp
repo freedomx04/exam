@@ -195,6 +195,13 @@
 					title: '题库',
 					formatter: function(value, row, index) {
 						return value.name;
+					},
+					cellStyle: function(row, index) {
+						return {
+							css: {
+								'white-space': 'nowrap'
+							}
+						}
 					}
 				}, {
 					field: 'type',

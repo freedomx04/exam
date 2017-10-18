@@ -136,6 +136,13 @@
 			}, {
 				field: 'library',
 				title: '题库',
+				cellStyle: function(row, index) {
+					return {
+						css: {
+							'white-space': 'nowrap'
+						}
+					}
+				},
 				formatter: function(value, row, index) {
 					return value.name;
 				}
