@@ -7,7 +7,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>试卷编辑</title>
+    <title>${paper.title}</title>
     
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -113,6 +113,41 @@
 		color: #fff;
 		border: 1px solid #FF7B29;
 	}
+	.card-control {
+		display: flex; 
+		flex-direction: column; 
+		padding: 10px;
+	}
+	.card-title {
+		color: #676a6c;
+		margin-bottom: 15px;
+	}
+	.corner-buttons {
+		position: fixed;
+		width: 100px;
+		bottom: 10px;
+		display: flex;
+		flex-direction: column;
+	}
+	.corner-container {
+		width: 40px;
+	}
+	.corner-btn {
+		margin-top: 10px;
+		padding: 0px;
+		color: #999;
+		background: #fff;
+		border-radius: 4px;
+		width: 40px;
+		height: 40px;
+		-webkit-box-shadow: 0 1px 3px rgba(0,0,0,.1);
+		box-shadow: 0 1px 3px rgba(0,0,0,.1);
+	}
+	.corner-btn:HOVER,
+	.corner-btn:FOCUS {
+		color: #999;
+		background: #d5dbe7;
+	}
     </style>
     
 </head>
@@ -121,7 +156,9 @@
 		<header role="banner" class="exam-banner fixed">
 			<div class="exam-banner-inner">
 				<div style="font-size: 18px;">${paper.title}</div>
-				<div style="flex: 1; justify-content: flex-end; display: flex; align-items: center;">孙明明</div>
+				<div style="flex: 1; justify-content: flex-end; display: flex; align-items: center;">
+					<i class="fa fa-user fa-fw"></i>孙明明
+				</div>
 			</div>
 		</header>
 		<div class="exam-banner-holder"></div>
@@ -270,12 +307,18 @@
 				</c:forEach> 
 			</div>
 			
-			<div class="exam-controller fixed" style="width: 300px;">
-				<div class="card">
-					aa
+			<div class="exam-controller fixed" style="width: 300px; color: #999;">
+				<div class="card card-control text-center">
+					<div><i class="fa fa-clock-o fa-fw fa-2x"></i></div>
+					<div>总剩余时间</div>
+					<div style="font-size: 16px;">08:15</div>
+					<div style="padding: 10px;">
+						<button type="button" class="btn btn-primary btn-submit" style="width: 100%;">提交试卷</button>
+					</div>
 				</div>
-				
-				<div class="card" style="display: flex; flex-direction: column; padding: 10px;">
+			
+				<div class="card card-control">
+					<label class="card-title">题卡</label>
 					<div>
 						<ul class="unstyled ques-list" style="padding: 0;">
 							<c:forEach var="question" items="${paper.questions}" varStatus="status">
@@ -288,9 +331,67 @@
 						<span>未做&nbsp;<i class="fa fa-square-o tips-undone"></i></span>
 					</div>
 				</div>
+				
+				<div class="card card-control">
+					<label class="card-title">考试描述</label>
+					<c:if test="${not empty paper.description}">
+						<div>${paper.description}</div>
+					</c:if>
+					<c:if test="${empty paper.description}">
+						<div>无</div>
+					</c:if>
+				</div>
 			</div> 
 		</div>
 	</main>
+	
+	<div class="corner-buttons">
+		<div class="corner-container btn-feedback" data-toggle="tooltip" data-placement="top" title="建议反馈">
+			<button type="button" class="btn corner-btn">
+				<i class="fa fa-edit fa-lg"></i>
+			</button>
+		</div>
+	
+		<div class="corner-container btn-top hide" data-toggle="tooltip" data-placement="top" title="回到顶部">
+			<button type="button" class="btn corner-btn">
+				<i class="fa fa-chevron-up fa-lg"></i>
+			</button>
+		</div>
+	</div>
+	
+	<div class="modal" id="modal-submit-dialog" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" style="top: 200px;">
+		<div class="modal-dialog">
+			<div class="modal-content animated fadeInDown">
+				<div class="modal-body text-center">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true" style="font-size: 30px;">×</span><span class="sr-only">Close</span>
+					</button>
+					<h4 style="font-size: 24px; font-weight: 100;">提交试卷</h4>
+					
+					<div style="margin-top: 20px;">
+						<button type="button" class="btn btn-blue btn-submit-submit" style="width: 200px;">提&nbsp;&nbsp;交</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal" id="modal-feedback-dialog" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" style="top: 200px;">
+		<div class="modal-dialog">
+			<div class="modal-content animated fadeInDown">
+				<div class="modal-body text-center">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true" style="font-size: 30px;">×</span><span class="sr-only">Close</span>
+					</button>
+					<h4 style="font-size: 24px; font-weight: 100;">提交反馈</h4>
+					<textarea class="form-control textarea-feedback" style="height: 120px; resize: none; margin-top: 20px;" placeholder="告诉我们你的建议或遇到的问题。"></textarea>
+					<div style="margin-top: 20px;">
+						<button type="button" class="btn btn-blue btn-feedback-submit" style="width: 200px;">提&nbsp;&nbsp;交</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 	<script type="text/javascript" src="${ctx}/plugins/jquery/2.1.4/jquery.min.js"></script>
 	<script type="text/javascript" src="${ctx}/plugins/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -299,18 +400,38 @@
 	
 	<script type="text/javascript">
 	
-		var $page = $('.body-online-exam');
-		setController();
+		var paperId = '${paper.id}';
+		var studentId = '1';
 		
+		var $page = $('.body-online-exam');
+		var $submit = $page.find('#modal-submit-dialog');
+		var $feedback = $page.find('#modal-feedback-dialog');
+		
+		// tooltip
+		$page.find('[data-toggle="tooltip"]').tooltip();
+		
+		setController();
 		window.onresize = function() {
 			setController();
 		}
 		
+		// 回到顶部按钮
+		var $top = $page.find('.btn-top');
+		$(window).scroll(function() {
+			if ($(window).scrollTop() > 800) {
+				$top.removeClass('hide');
+			} else {
+				$top.addClass('hide');
+			}
+		});
+		
 		function setController() {
 			var $controller = $page.find('.exam-controller');
+			var $corner = $page.find('.corner-buttons');
 			var $width = $(document).width();
 			var left_val = ($width - 1000) / 2 + 690 + 10;
 			$controller.css('left', left_val);
+			$corner.css('left', left_val);
 		}
 		
 		$page
@@ -343,6 +464,45 @@
 			$('html,body').animate({
 				scrollTop: offset
 			}, 1000);
+		})
+		.on('click', '.btn-submit', function() {
+			$submit.modal('show');
+		})
+		.on('click', '.btn-submit-submit', function() {
+			
+		})
+		.on('click', '.btn-feedback', function() {
+			$feedback.modal('show');
+		})
+		.on('click', '.btn-feedback-submit', function() {
+			var content = $feedback.find('.textarea-feedback').val();
+			if (!content) {
+				$feedback.find('.textarea-feedback').css('border', '1px solid #f75659');
+				return;
+			} else {
+				$feedback.find('.textarea-feedback').css('border', '1px solid #e5e6e7');
+				$.ajax({
+					url: '${ctx}/api/feedback/create',
+					type: 'post',
+					data: {
+						paperId: paperId,
+						studentId: studentId,
+						content: content
+					},
+					success: function(ret) {
+						if (ret.code == 0) {
+							$feedback.modal('hide');
+						}
+					},
+					error: function(err) {}
+				});
+			}
+		})
+		.on('hidden.bs.modal', '#modal-feedback-dialog', function() {
+			$feedback.find('.textarea-feedback').val('');
+        }) 
+		.on('click', '.btn-top', function() {
+			$('html, body').animate({scrollTop: 0}, 1000);
 		});
 	
 	</script>

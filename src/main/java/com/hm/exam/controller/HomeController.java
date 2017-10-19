@@ -356,6 +356,11 @@ public class HomeController {
 		return "pages/exam/paper_setting";
 	}
 	
+	@RequestMapping(value = "/feedbackList")
+	String feedbackList() {
+		return "pages/exam/feedback_list";
+	}
+	
 	/**
 	 * 个人中心
 	 */

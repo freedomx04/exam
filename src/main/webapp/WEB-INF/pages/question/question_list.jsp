@@ -197,11 +197,7 @@
 						return value.name;
 					},
 					cellStyle: function(row, index) {
-						return {
-							css: {
-								'white-space': 'nowrap'
-							}
-						}
+						return { css: {'white-space': 'nowrap'} };
 					}
 				}, {
 					field: 'type',

@@ -86,6 +86,7 @@
 						<ul class="nav nav-second-level">
 							<li><a class="J_menuItem" href="classifyList">试卷分类</a></li>
 							<li><a class="J_menuItem" href="paperList">试卷管理</a></li>
+							<li><a class="J_menuItem" href="feedbackList">建议反馈</a></li>
 						</ul>
 					</li>
 					<li>
