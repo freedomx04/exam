@@ -21,6 +21,9 @@ import com.hm.exam.entity.student.StudentEntity;
 @Table(name = "exam_paper")
 public class PaperEntity extends BaseEntity {
 
+	/**
+	 * 试卷状态 0：可用  1：不可用
+	 */
 	public class PaperStatus {
 		public static final int STATUS_ENABLE = 0;
 		public static final int STATUS_UNABLE = 1;
@@ -61,6 +64,9 @@ public class PaperEntity extends BaseEntity {
 		inverseJoinColumns = {@JoinColumn(name = "student_id", referencedColumnName = "id") })
 	private List<StudentEntity> students = new LinkedList<>();
 
+	/**
+	 * 试卷状态
+	 */
 	private Integer status = PaperStatus.STATUS_ENABLE;
 
 	/**

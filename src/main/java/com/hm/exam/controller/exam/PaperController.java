@@ -1,5 +1,6 @@
 package com.hm.exam.controller.exam;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -131,11 +132,15 @@ public class PaperController {
 	}
 	
 	@RequestMapping(value = "/api/paper/setting", method = RequestMethod.POST)
-	public Result setting(Long paperId, Date startTime, Date endTime, Integer duration) {
+	public Result setting(Long paperId, Integer status, String startTime, String endTime, Integer duration) {
 		try {
 			PaperEntity paper = paperService.findOne(paperId);
-			paper.setStartTime(startTime);
-			paper.setEndTime(endTime);
+			paper.setStatus(status);
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:MM");
+			paper.setStartTime(sdf.parse(startTime));
+			paper.setEndTime(sdf.parse(endTime));
+			
 			paper.setDuration(duration);
 			paperService.save(paper);
 			return new Result(Code.SUCCESS.value(), "success");

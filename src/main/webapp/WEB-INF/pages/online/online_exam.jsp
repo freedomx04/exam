@@ -398,6 +398,8 @@
 	<script type="text/javascript" src="${ctx}/plugins/hplus/content.min.js"></script>
 	<script type="text/javascript" src="${ctx}/local/common.js"></script>
 	
+	<script type="text/javascript" src="${ctx}/plugins/toastr/toastr.min.js"></script>
+	
 	<script type="text/javascript">
 	
 		var paperId = '${paper.id}';
@@ -492,6 +494,7 @@
 					success: function(ret) {
 						if (ret.code == 0) {
 							$feedback.modal('hide');
+							toastr['info']('提交成功！ 谢谢您的建议反馈');
 						}
 					},
 					error: function(err) {}

@@ -20,16 +20,18 @@
     <link rel="stylesheet" type="text/css" href="${ctx}/local/pearls.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/local/common.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/toastr/toastr.min.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/plugins/bootstrap-datepicker/css/bootstrap-datetimepicker.min.css">
     
     <style type="text/css">
     .pearl-pane {
     	padding-top: 20px;
     }
-    .body-paper-add .desc {
-    	text-align: left!important;
+    .body-paper-add .setting-title {
+    	text-align: left;
     }
-    .body-paper-add .sub-desc {
-    	font-weight: normal;
+    .body-paper-add .setting-sub-title {
+    	text-align: left;
+    	width: 100px;
     }
     </style>
 </head>
@@ -141,24 +143,50 @@
 				</div>
 				
 				<div class="pearl-pane hide" id="pearl-4">
-					<form class="form-horizontal" role="form" id="form-setting" autocomplete="off">
+					<form class="form-horizontal" role="form" id="form-setting" autocomplete="off" style="width: 72%; margin: 0 auto;">
 						<div class="form-group">
-							<div class="col-sm-5 col-sm-offset-2">
+							<div class="col-sm-8 text-left">
 								<h2 style="font-size: 18px;">试卷设置:<span class="paper-title" style="padding-left: 10px;"></span></h2>
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label for="" class="desc col-sm-2 col-sm-offset-2 control-label">进行考试</label>
-							<div class="col-sm-6">
-								<div>
-									<label class="control-label sub-desc">考试总时长：</label>
-									<input type="number" class="form-control" name="duration" min="0" value="30" style="width: 80px; display: inline-block;">&nbsp;&nbsp;分钟
+							<label class="control-label col-sm-2 setting-title">试卷权限</label>
+							<div class="col-sm-10">
+								<div class="form-group">
+									<label class="control-label pull-left setting-sub-title">试卷状态</label>
+									<div class="col-sm-8">
+										<div class="radio radio-success radio-inline" style="width: 80px;">
+											<input type="radio" name="status" id="status-enable" value="0" checked>
+											<label for="status-enable">可用</label>
+										</div>
+										<div class="radio radio-success radio-inline" style="width: 80px;">
+											<input type="radio" name="status" id="status-unable" value="1">
+											<label for="status-unable">不可用</label>
+										</div>
+									</div>
 								</div>
-								<!-- <div style="margin-top: 10px;">
-									<label class="control-label sub-desc">最短交卷时间, 0表示不限制时间：</label>
-									<input type="number" class="form-control" name="duration" min="0" value="0" style="width: 80px; display: inline-block;">&nbsp;&nbsp;分钟
-								</div> -->
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-sm-2 setting-title">进行考试</label>
+							<div class="col-sm-10">
+								<div class="form-group">
+									<label class="control-label pull-left setting-sub-title">有效时间</label>
+									<div class="input-daterange input-group col-sm-8" id="paper-time" style="padding-left: 15px; padding-right: 15px; width: 400px;">
+										<input type="text" class="form-control" name="startTime" id="startTime">
+										<span class="input-group-addon">到</span>
+										<input type="text" class="form-control" name="endTime" id="endTime">
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="control-label pull-left setting-sub-title">时间限制</label>
+									<div class="col-sm-6">
+										<input type="number" class="form-control" name="duration" min="0" value="30" style="width: 80px; display: inline-block;">&nbsp;&nbsp;分钟
+									</div>
+								</div>
 							</div>
 						</div>
 						
@@ -168,7 +196,6 @@
 								<button type="button" class="btn btn-primary btn-fw btn-paper-setting-next">完&nbsp;成</button>
 							</div>
 						</div>
-						
 					</form>
 				</div>
 				
@@ -204,6 +231,8 @@
     <script type="text/javascript" src="${ctx}/plugins/bootstrap-table/bootstrap-table.min.js"></script>
     <script type="text/javascript" src="${ctx}/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
     <script type="text/javascript" src="${ctx}/plugins/clipboard/clipboard.min.js"></script>
+    <script type="text/javascript" src="${ctx}/plugins/bootstrap-datepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="${ctx}/plugins/bootstrap-datepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
     
     <%@ include file="/WEB-INF/pages/question/dialog_question_detail.jsp"%>
     <%@ include file="/WEB-INF/pages/exam/dialog_question_add.jsp"%>
@@ -319,6 +348,14 @@
 		})
 		.on('click', '.btn-paper-setting-next', function() {
 			var $pearl = $page.find('#pearl-4');
+			
+			var starttime = $('#startTime').val();
+			var endtime = $('#endTime').val();
+			if (starttime > endtime) {
+				toastr['error']('开始时间大于结束时间！');
+				return;
+			}
+			
 			var $form = $('#form-setting');
 			var formData = new FormData($form[0]);
 			
@@ -352,6 +389,8 @@
 				setPearl2();
 			} else if (currentStep ==3) {
 				setPearl3();
+			} else if (currentStep == 4) {
+				setPearl4();
 			} else if (currentStep == 5) {
 				var shareUrl = 'http://' + window.location.host + '${ctx}/online/' + paper.id;
 				$page.find('.btn-copy').attr('data-clipboard-text', shareUrl);
@@ -562,6 +601,28 @@
 	            var selNum = $table.bootstrapTable('getSelections').length;
 	            selNum > 0 ? $page.find('.btn-paper-student-delete-batch').removeAttr('disabled') : $page.find('.btn-paper-student-delete-batch').attr('disabled', 'disabled');
 	        });
+		}
+		
+		function setPearl4() {
+			$('#paper-time input').datetimepicker({
+				format: 'yyyy-mm-dd hh:ii',
+				language: 'zh-CN',
+				autoclose: true,
+				startDate:"2017-01-01",
+			})
+			.on('changeDate', function() {
+				var starttime = $('#startTime').val();
+				var endtime = $('#endTime').val();
+				if (starttime > endtime) {
+					toastr['error']('开始时间大于结束时间！');
+				}
+			});
+			
+			// 初始化时间
+			var start = new Date().Format("yyyy-MM-dd") + ' 00:00'; 
+			var end = new Date().Format("yyyy-MM-dd") + ' 23:59'; 
+			$('#startTime').val(start);
+			$('#endTime').val(end);
 		}
 		
 	</script>

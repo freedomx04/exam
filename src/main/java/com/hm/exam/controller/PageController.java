@@ -22,6 +22,12 @@ public class PageController {
 	@RequestMapping(value = "/online/{paperId}")
 	String doexam(ModelMap modelMap, @PathVariable Long paperId) {
 		PaperEntity paper = paperService.findOne(paperId);
+		 
+		// 判断试卷是否存在
+		if (paper == null) {
+			return "pages/404";
+		}
+		
 		modelMap.addAttribute("paper", paper);
 		return "pages/online/online_exam";
 	}
