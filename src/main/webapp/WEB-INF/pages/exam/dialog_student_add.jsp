@@ -81,10 +81,8 @@
 <script type="text/javascript">
 	
 	var $studentDialog = $('#modal-paper-student-dialog');
-	
 	var $studentTable;
 	var groupId = 0;
-	
 	initStudentTable(0);
 	
 	function initStudentTable(groupId) {
@@ -140,7 +138,7 @@
 							success: function(ret) {
 								if (ret.code == 0) {
 									$this.text('已加入').addClass('disabled');
-									$table.bootstrapTable('refresh');
+									$paperStudentTable.bootstrapTable('refresh');
 								}
 							},
 							error: function(err) {}
@@ -165,7 +163,7 @@
 			success: function(ret) {
 				if (ret.code == 0) {
 					$this.text('已加入').addClass('disabled');
-					$table.bootstrapTable('refresh');
+					$paperStudentTable.bootstrapTable('refresh');
 				}
 			},
 			error: function(err) {}

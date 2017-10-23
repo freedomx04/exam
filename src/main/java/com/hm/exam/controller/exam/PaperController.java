@@ -137,7 +137,7 @@ public class PaperController {
 			PaperEntity paper = paperService.findOne(paperId);
 			paper.setStatus(status);
 			
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:MM");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:ss");
 			paper.setStartTime(sdf.parse(startTime));
 			paper.setEndTime(sdf.parse(endTime));
 			

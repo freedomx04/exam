@@ -143,56 +143,48 @@
 				</div>
 				
 				<div class="pearl-pane hide" id="pearl-4">
-					<form class="form-horizontal" role="form" id="form-setting" autocomplete="off" style="width: 72%; margin: 0 auto;">
+					<form class="form-horizontal" role="form" id="form-setting" autocomplete="off">
 						<div class="form-group">
-							<div class="col-sm-8 text-left">
-								<h2 style="font-size: 18px;">试卷设置:<span class="paper-title" style="padding-left: 10px;"></span></h2>
+							<div class="col-sm-5 col-sm-offset-3">
+								<h3 class="help-block">试卷设置</h3>
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label class="control-label col-sm-2 setting-title">试卷权限</label>
-							<div class="col-sm-10">
-								<div class="form-group">
-									<label class="control-label pull-left setting-sub-title">试卷状态</label>
-									<div class="col-sm-8">
-										<div class="radio radio-success radio-inline" style="width: 80px;">
-											<input type="radio" name="status" id="status-enable" value="0" checked>
-											<label for="status-enable">可用</label>
-										</div>
-										<div class="radio radio-success radio-inline" style="width: 80px;">
-											<input type="radio" name="status" id="status-unable" value="1">
-											<label for="status-unable">不可用</label>
-										</div>
-									</div>
+							<label for="status" class="col-sm-3 control-label">试卷状态</label>
+							<div class="col-sm-5">
+								<div class="radio radio-success radio-inline" style="width: 80px;">
+									<input type="radio" name="status" id="status-enable" value="0" checked>
+									<label for="status-enable">可用</label>
+								</div>
+								<div class="radio radio-success radio-inline" style="width: 80px;">
+									<input type="radio" name="status" id="status-unable" value="1">
+									<label for="status-unable">不可用</label>
 								</div>
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label class="control-label col-sm-2 setting-title">进行考试</label>
-							<div class="col-sm-10">
-								<div class="form-group">
-									<label class="control-label pull-left setting-sub-title">有效时间</label>
-									<div class="input-daterange input-group col-sm-8" id="paper-time" style="padding-left: 15px; padding-right: 15px; width: 400px;">
-										<input type="text" class="form-control" name="startTime" id="startTime">
-										<span class="input-group-addon">到</span>
-										<input type="text" class="form-control" name="endTime" id="endTime">
-									</div>
+							<label for="paper-valid-time" class="col-sm-3 control-label">有效时间</label>
+							<div class="col-sm-5">
+								<div class="input-daterange input-group col-sm-8" id="paper-valid-time" style="width: 400px;">
+									<input type="text" class="form-control" name="startTime" id="startTime">
+									<span class="input-group-addon">到</span>
+									<input type="text" class="form-control" name="endTime" id="endTime">
 								</div>
-								
-								<div class="form-group">
-									<label class="control-label pull-left setting-sub-title">时间限制</label>
-									<div class="col-sm-6">
-										<input type="number" class="form-control" name="duration" min="0" value="30" style="width: 80px; display: inline-block;">&nbsp;&nbsp;分钟
-									</div>
-								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="duration" class="col-sm-3 control-label">时间限制</label>
+							<div class="col-sm-5">
+								<input type="number" class="form-control" name="duration" min="0" value="30" style="width: 80px; display: inline-block;">&nbsp;&nbsp;分钟
 							</div>
 						</div>
 						
 						<div class="hr-line-solid"></div>
 						<div class="form-group">
-							<div class="col-sm-5 col-sm-offset-2">
+							<div class="col-sm-5 col-sm-offset-3">
 								<button type="button" class="btn btn-primary btn-fw btn-paper-setting-next">完&nbsp;成</button>
 							</div>
 						</div>

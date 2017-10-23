@@ -159,31 +159,16 @@
 			}, {
 				title: '操作',
 				align: 'center',
-				width: '270',
+				width: '100',
 				formatter: function(value, row, index) {
 					var $edit = '<a class="btn-paper-edit a-operate">编辑</a>';
-					var $question = '<a class="btn-paper-question a-operate">试题管理</a>';
-					var $student = '<a class="btn-paper-student a-operate">考生管理</a>';
-					var $setting = '<a class="btn-paper-setting a-operate">设置</a>';
 					var $delete = '<a class="btn-paper-delete a-operate">删除</a>';
-					return $edit + $question + $student + $setting + $delete;
+					return $edit + $delete;
 				},
 				events: window.operateEvents = {
 					'click .btn-paper-edit': function(e, value, row, index) {
 						e.stopPropagation();
 						window.location.href = '${ctx}/paperEdit?paperId=' + row.id;
-					},
-					'click .btn-paper-question': function(e, value, row, index) {
-						e.stopPropagation();
-						window.location.href = '${ctx}/paperQuestion?paperId=' + row.id;
-					},
-					'click .btn-paper-student': function(e, value, row, index) {
-						e.stopPropagation();
-						window.location.href = '${ctx}/paperStudent?paperId=' + row.id;
-					},
-					'click .btn-paper-setting': function(e, value, row, index) {
-						e.stopPropagation();
-						window.location.href = '${ctx}/paperSetting?paperId=' + row.id;
 					},
 					'click .btn-paper-delete': function(e, value, row, index) {
 						e.stopPropagation();

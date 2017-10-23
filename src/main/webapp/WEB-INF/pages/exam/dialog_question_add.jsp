@@ -187,7 +187,7 @@
 							success: function(ret) {
 								if (ret.code == 0) {
 									$this.text('已加入').addClass('disabled');
-									$table.bootstrapTable('refresh');
+									$paperQuestionTable.bootstrapTable('refresh');
 								}
 							},
 							error: function(ret) {}
@@ -241,8 +241,7 @@
 			},
 			success: function(ret) {
 				if (ret.code == 0) {
-					$table.bootstrapTable('refresh');
-					$questionDialog.modal('hide');
+					$paperQuestionTable.bootstrapTable('refresh');
 				}
 			},
 			error: function(err) {}
@@ -279,7 +278,7 @@
             success: function(ret) {
             	if (ret.code == 0) {
             		toastr['success'](ret.msg);
-            		$table.bootstrapTable('refresh'); 
+            		$paperQuestionTable.bootstrapTable('refresh'); 
             	} else {
             		toastr['error'](ret.msg);
             	}
