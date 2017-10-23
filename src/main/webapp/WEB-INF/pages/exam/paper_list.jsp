@@ -157,6 +157,18 @@
 				width: 150,
 				formatter: formatDate2
 			}, {
+				field: 'status',
+				title: '状态',
+				align: 'center',
+				width: '100',
+				formatter: function(value, row, index) {
+					if (value == 0) {
+            			return '<span class="label label-primary">可用</span>';
+            		} else {
+            			return '<span class="label label-warning">不可用</span>';
+            		}
+				}
+			}, {
 				title: '操作',
 				align: 'center',
 				width: '100',

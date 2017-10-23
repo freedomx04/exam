@@ -140,14 +140,26 @@
 								<div class="form-group">
 									<label for="status" class="col-sm-3 control-label">试卷状态</label>
 									<div class="col-sm-5">
-										<div class="radio radio-success radio-inline" style="width: 80px;">
-											<input type="radio" name="status" id="status-enable" value="0" checked>
-											<label for="status-enable">可用</label>
-										</div>
-										<div class="radio radio-success radio-inline" style="width: 80px;">
-											<input type="radio" name="status" id="status-unable" value="1">
-											<label for="status-unable">不可用</label>
-										</div>
+										<c:if test="${paper.status == 0}">
+											<div class="radio radio-success radio-inline" style="width: 80px;">
+												<input type="radio" name="status" id="status-enable" value="0" checked>
+												<label for="status-enable">可用</label>
+											</div>
+											<div class="radio radio-success radio-inline" style="width: 80px;">
+												<input type="radio" name="status" id="status-unable" value="1">
+												<label for="status-unable">不可用</label>
+											</div>
+										</c:if>
+										<c:if test="${paper.status == 1}">
+											<div class="radio radio-success radio-inline" style="width: 80px;">
+												<input type="radio" name="status" id="status-enable" value="0">
+												<label for="status-enable">可用</label>
+											</div>
+											<div class="radio radio-success radio-inline" style="width: 80px;">
+												<input type="radio" name="status" id="status-unable" value="1" checked>
+												<label for="status-unable">不可用</label>
+											</div>
+										</c:if>
 									</div>
 								</div>
 								
@@ -155,9 +167,11 @@
 									<label for="paper-valid-time" class="col-sm-3 control-label">有效时间</label>
 									<div class="col-sm-5">
 										<div class="input-daterange input-group col-sm-8" id="paper-valid-time" style="width: 400px;">
-											<input type="text" class="form-control" name="startTime" id="startTime">
+											<input type="text" class="form-control" name="startTime" id="startTime" 
+												value="<fmt:formatDate value="${paper.startTime}" pattern='yyyy-MM-dd HH:mm'/>">
 											<span class="input-group-addon">到</span>
-											<input type="text" class="form-control" name="endTime" id="endTime">
+											<input type="text" class="form-control" name="endTime" id="endTime"
+												value="<fmt:formatDate value="${paper.endTime}" pattern='yyyy-MM-dd HH:mm'/>">
 										</div>
 									</div>
 								</div>
@@ -165,7 +179,7 @@
 								<div class="form-group">
 									<label for="duration" class="col-sm-3 control-label">时间限制</label>
 									<div class="col-sm-5">
-										<input type="number" class="form-control" name="duration" min="0" value="30" style="width: 80px; display: inline-block;">&nbsp;&nbsp;分钟
+										<input type="number" class="form-control" name="duration" min="0" value="${paper.duration}" style="width: 80px; display: inline-block;">&nbsp;&nbsp;分钟
 									</div>
 								</div>
 							
@@ -433,10 +447,6 @@
 				toastr['error']('开始时间大于结束时间！');
 			}
 		});
-		var start = new Date().Format("yyyy-MM-dd") + ' 00:00'; 
-		var end = new Date().Format("yyyy-MM-dd") + ' 23:59'; 
-		$('#startTime').val(start);
-		$('#endTime').val(end);
 		
 		// preview
 		var clipboard = new Clipboard('.btn-copy');
@@ -454,7 +464,7 @@
 			}
     		
     		var formData = new FormData($infoForm[0]);
-    		formData.append('paperId', paperId);
+    		formData.append('paperId', paper.id);
     		$.ajax({
     			url: '${ctx}/api/paper/update',
     			type: 'post',

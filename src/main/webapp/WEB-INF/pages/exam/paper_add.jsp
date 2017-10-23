@@ -234,7 +234,8 @@
 	
 		var $page = $('.body-paper-add');
 		var paper;
-		var $table;
+		var $paperQuestionTable;
+		var $paperStudentTable;
 		var clipboard = new Clipboard('.btn-copy');
 		
 		$page
@@ -283,7 +284,7 @@
                 confirmButtonText: '确定',
                 closeOnConfirm: false
             }, function() {
-                var rows = $table.bootstrapTable('getSelections');
+                var rows = $paperQuestionTable.bootstrapTable('getSelections');
                 $.ajax({
                     url: '${ctx}/api/paper/question/batchDelete',
                     type: 'post',
@@ -297,7 +298,7 @@
 						} else {
                             swal('', ret.msg, 'error');
                         }
-                        $table.bootstrapTable('refresh'); 
+                        $paperQuestionTable.bootstrapTable('refresh'); 
                     },
                     error: function(err) {}
                 });
@@ -318,7 +319,7 @@
                 confirmButtonText: '确定',
                 closeOnConfirm: false
             }, function() {
-                var rows = $table.bootstrapTable('getSelections');
+                var rows = $paperStudentTable.bootstrapTable('getSelections');
                 $.ajax({
                     url: '${ctx}/api/paper/student/batchDelete',
                     type: 'post',
@@ -332,7 +333,7 @@
 						} else {
                             swal('', ret.msg, 'error');
                         }
-                        $table.bootstrapTable('refresh'); 
+                        $paperStudentTable.bootstrapTable('refresh'); 
                     },
                     error: function(err) {}
                 });
@@ -396,7 +397,7 @@
 		function setPearl2() {
 			$page.find('.paper-title').text(paper.title);
 			
-			$table = $k.util.bsTable($page.find('#paper-question-table'), {
+			$paperQuestionTable = $k.util.bsTable($page.find('#paper-question-table'), {
 				url: '${ctx}/api/paper/question/list?paperId=' + paper.id,
 				toolbar: '#paper-question-table-toolbar',
 				idField: 'id',
@@ -492,7 +493,7 @@
 	            						} else {
 	            							swal('', ret.msg, 'error');
 	            						}
-	            						$table.bootstrapTable('refresh'); 
+	            						$paperQuestionTable.bootstrapTable('refresh'); 
 	            					},
 	            					error: function(err) {}
 	            				});
@@ -502,14 +503,14 @@
 				}]
 			});
 			
-			$table.on('all.bs.table', function(e, row) {
-	            var selNum = $table.bootstrapTable('getSelections').length;
+			$paperQuestionTable.on('all.bs.table', function(e, row) {
+	            var selNum = $paperQuestionTable.bootstrapTable('getSelections').length;
 	            selNum > 0 ? $page.find('.btn-paper-question-delete-batch').removeAttr('disabled') : $page.find('.btn-paper-question-delete-batch').attr('disabled', 'disabled');
 	        });
 		}
 		
 		function setPearl3() {
-			$table = $k.util.bsTable($page.find('#paper-student-table'), {
+			$paperStudentTable = $k.util.bsTable($page.find('#paper-student-table'), {
 				url: '${ctx}/api/paper/student/list?paperId=' + paper.id,
 				toolbar: '#paper-student-table-toolbar',
 				idField: 'id',
@@ -579,7 +580,7 @@
 	            						} else {
 	            							swal('', ret.msg, 'error');
 	            						}
-	            						$table.bootstrapTable('refresh'); 
+	            						$paperStudentTable.bootstrapTable('refresh'); 
 	            					},
 	            					error: function(err) {}
 	            				});
@@ -589,14 +590,14 @@
 				}]
 			});
 	    	
-	    	$table.on('all.bs.table', function(e, row) {
-	            var selNum = $table.bootstrapTable('getSelections').length;
+	    	$paperStudentTable.on('all.bs.table', function(e, row) {
+	            var selNum = $paperStudentTable.bootstrapTable('getSelections').length;
 	            selNum > 0 ? $page.find('.btn-paper-student-delete-batch').removeAttr('disabled') : $page.find('.btn-paper-student-delete-batch').attr('disabled', 'disabled');
 	        });
 		}
 		
 		function setPearl4() {
-			$('#paper-time input').datetimepicker({
+			$('#paper-valid-time input').datetimepicker({
 				format: 'yyyy-mm-dd hh:ii',
 				language: 'zh-CN',
 				autoclose: true,
