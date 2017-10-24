@@ -151,8 +151,24 @@
 					return value.name;
 				}
 			}, {
+				field: 'questions',
+				title: '试题',
+				align: 'center',
+				width: '50',
+				formatter: function(value, row, index) {
+					return value.length;
+				}
+			}, {
+				field: 'students',
+				title: '考生',
+				align: 'center',
+				width: '50',
+				formatter: function(value, row, index) {
+					return value.length;
+				}
+			}, {
 				field: 'updateTime',
-				title: '时间',
+				title: '修改时间',
 				align: 'center',
 				width: 150,
 				formatter: formatDate2
