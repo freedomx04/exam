@@ -38,6 +38,11 @@ public class StudentEntity extends BaseEntity {
 	 */
 	private String name;
 	
+	/**
+	 * 当前试卷
+	 */
+	private Long paperId;
+	
 	public StudentEntity() {
 		// TODO Auto-generated constructor stub
 	}
@@ -82,6 +87,14 @@ public class StudentEntity extends BaseEntity {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Long getPaperId() {
+		return paperId;
+	}
+
+	public void setPaperId(Long paperId) {
+		this.paperId = paperId;
 	}
 	
 }

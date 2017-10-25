@@ -19,6 +19,10 @@
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
+.tips-card h3,
+.tips-card .tips-button {
+	padding: 0 20px;
+}
 .tips-info .tips-error {
 	color: #ec6149;
 }
@@ -31,6 +35,11 @@
 .tips-info h3 {
 	color: #888;
 	font-weight: 400;
+}
+
+.form-login .form-control,
+.form-login .btn {
+	height: 42px;
 }
 
 .exam-banner {

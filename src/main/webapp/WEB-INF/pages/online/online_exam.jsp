@@ -28,7 +28,7 @@
 			<div class="exam-banner-inner">
 				<div style="font-size: 18px;">${paper.title}</div>
 				<div style="flex: 1; justify-content: flex-end; display: flex; align-items: center;">
-					<i class="fa fa-user fa-fw"></i>孙明明
+					<i class="fa fa-user fa-fw"></i>${student.username}
 				</div>
 			</div>
 		</header>
@@ -274,7 +274,7 @@
 	<script type="text/javascript">
 	
 		var paperId = '${paper.id}';
-		var studentId = '1';
+		var studentId = '${student.id}';
 		
 		var $page = $('.body-online-exam');
 		var $submit = $page.find('#modal-submit-dialog');

@@ -43,7 +43,7 @@ public class CurrentUserUtils {
 	}
 
 	public void serUser(UserEntity user) {
-		getSession().setMaxInactiveInterval(120 * 60); // session过期时间
+		getSession().setMaxInactiveInterval(120 * 60);
 		getSession().setAttribute(CUR_USER, user);
 	}
 
