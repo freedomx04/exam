@@ -151,6 +151,22 @@
 				</div>
 			</div>
 		</c:when>
+		
+		<c:when test="${tipsType == 6}">
+			<div class="tips-card">
+				<h3>提交成功</h3>
+				<div class="hr-line-solid"></div>
+				<div class="tips-info">
+					<h3>试卷标题：${paper.title}</h3>
+					<h3>试卷状态：可用</h3>
+					<h3>开始时间：<fmt:formatDate value="${paper.startTime}" pattern='yyyy年MM月dd日 HH:mm'/></h3>
+					<h3>结束时间：<fmt:formatDate value="${paper.endTime}" pattern='yyyy年MM月dd日 HH:mm'/></h3>
+					<h3>考试时间：${paper.duration}分钟</h3>
+					<h3>提交时间：<fmt:formatDate value="${submitTime}" pattern='yyyy年MM月dd日 HH:mm'/></h3>
+					<h3 class="tips-info-other">您的试卷已提交，请耐心等待老师批阅。</h3>
+				</div>
+			</div>
+		</c:when>
 	</c:choose>
 	
 	<script type="text/javascript" src="${ctx}/plugins/jquery/2.1.4/jquery.min.js"></script>
@@ -222,7 +238,7 @@
 							},
 							success: function(ret) {
 								if (ret.code == 0) {
-									window.location.href = '${ctx}/online/exam';
+									window.location.reload();
 								} else {
 									$toastmsg.text(ret.msg);
 									$toast.removeClass('hide');
@@ -247,7 +263,7 @@
 		
 		$page
 		.on('click', '.btn-exam-start', function() {
-			alert('start exam');
+			window.location.href = '${ctx}/online/exam';
 		});
 		
 	})( jQuery );

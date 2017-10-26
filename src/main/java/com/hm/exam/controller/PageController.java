@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hm.exam.common.utils.SessionUtils;
+import com.hm.exam.entity.exam.ExamEntity;
 import com.hm.exam.entity.exam.PaperEntity;
 import com.hm.exam.entity.exam.PaperEntity.PaperStatus;
 import com.hm.exam.entity.student.StudentEntity;
+import com.hm.exam.service.exam.ExamService;
 import com.hm.exam.service.exam.PaperService;
+import com.hm.exam.service.student.StudentService;
 
 @Controller
 public class PageController {
@@ -28,6 +31,12 @@ public class PageController {
 	PaperService paperService;
 	
 	@Autowired
+	StudentService studentService;
+	
+	@Autowired
+	ExamService examService;
+	
+	@Autowired
 	HttpServletRequest request;
 	
 	public class TipsType {
@@ -36,6 +45,7 @@ public class PageController {
 		public static final int TIPS_END = 3;
 		public static final int TIPS_LOGIN = 4;
 		public static final int TIPS_SUCCESS = 5;
+		public static final int TIPS_COMPLETE = 6;
 	}
 	
 	@RequestMapping(value = "/online/{paperId}")
@@ -83,16 +93,40 @@ public class PageController {
 	
 	@RequestMapping(value = "/online/exam")
 	String exam(ModelMap modelMap) {
-		StudentEntity student = SessionUtils.getStudent();
-		if (student == null) {
+		StudentEntity currentStudent = SessionUtils.getStudent();
+		if (currentStudent == null) {
 			return "redirect:/online";
 		}
 		
-		PaperEntity paper = paperService.findOne(student.getPaperId());
+		PaperEntity paper = paperService.findOne(currentStudent.getPaperId());
+		StudentEntity student = studentService.findOne(currentStudent.getId());
+		
+		ExamEntity exam = examService.findOne(paper, student);
+		if (exam == null) {
+			Date now = new Date();
+			exam = new ExamEntity(paper, student, now, now);
+			examService.save(exam);
+		} else {
+			
+		}
+		
 		modelMap.addAttribute("paper", paper);
 		modelMap.addAttribute("student", student);
+		modelMap.addAttribute("exam", exam);
 		
 		return "pages/online/online_exam";
+	}
+	
+	@RequestMapping(value = "/online/complete")
+	String complete(ModelMap modelMap, Long eid) {
+		ExamEntity exam = examService.findOne(eid);
+		
+		PaperEntity paper = paperService.findOne(exam.getPaper().getId());
+		modelMap.addAttribute("paper", paper);
+		modelMap.addAttribute("submitTime", exam.getUpdateTime());
+		
+		modelMap.addAttribute("tipsType", TipsType.TIPS_COMPLETE);
+		return "pages/online/online_tips";
 	}
 	
 	

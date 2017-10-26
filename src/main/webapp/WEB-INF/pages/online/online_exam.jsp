@@ -40,9 +40,9 @@
 			<div class="exam-ques-list" style="margin-right: 10px; width: 690px;">
 				<c:forEach var="question" items="${paper.questions}" varStatus="status">
 					<c:set var="seq" value="${status.index + 1}"></c:set>
-					<div id="ques-${status.index + 1}" class="card exam-ques" data-index="${seq}" data-question-id="${question.id}">
+					<div id="ques-${status.index + 1}" class="card exam-ques" data-index="${seq}" data-question-id="${question.id}" data-question-type="${question.type}">
 						<div style="line-height: 1.6em;">
-							<span class="ques-num">${status.index + 1}/${fn:length(paper.questions)}</span>
+							<span class="ques-num">${seq}/${fn:length(paper.questions)}</span>
 							<c:if test="${question.type == 1}">
 								<span class="ques-type ques-single">单选题</span>
 							</c:if>
@@ -198,7 +198,7 @@
 						</ul>
 					</div>
 					<div class="ques-list-tips text-center" style="margin-top: 10px;">
-						<span>已做&nbsp;<i class="fa fa-square tips-done" style="color: #FF7B29;"></i></span>
+						<span>已做&nbsp;<i class="fa fa-square tips-done" style="color: #FF7B29; margin-right: 10px;"></i></span>
 						<span>未做&nbsp;<i class="fa fa-square-o tips-undone"></i></span>
 					</div>
 				</div>
@@ -233,15 +233,15 @@
 	<div class="modal" id="modal-submit-dialog" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" style="top: 200px;">
 		<div class="modal-dialog">
 			<div class="modal-content animated fadeInDown">
-				<div class="modal-body text-center">
-					<button type="button" class="close" data-dismiss="modal">
-						<span aria-hidden="true" style="font-size: 30px;">×</span><span class="sr-only">Close</span>
-					</button>
-					<h4 style="font-size: 24px; font-weight: 100;">提交试卷</h4>
-					
-					<div style="margin-top: 20px;">
-						<button type="button" class="btn btn-blue btn-submit-submit" style="width: 200px;">提&nbsp;&nbsp;交</button>
-					</div>
+				<div class="modal-header">
+					<h4 class="modal-title">确认交卷</h4>
+				</div>
+				<div class="modal-body">
+					<span>您确认现在交卷吗？离考试结束还有29分钟，您不检查一下吗？</span>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary btn-fw" data-dismiss="modal">在检查一下</button>
+                    <button type="button" class="btn btn-white btn-fw btn-submit-submit">确认交卷</button>
 				</div>
 			</div>
 		</div>
@@ -275,6 +275,7 @@
 	
 		var paperId = '${paper.id}';
 		var studentId = '${student.id}';
+		var examId = '${exam.id}';
 		
 		var $page = $('.body-online-exam');
 		var $submit = $page.find('#modal-submit-dialog');
@@ -342,7 +343,48 @@
 			$submit.modal('show');
 		})
 		.on('click', '.btn-submit-submit', function() {
+			var submitList = [];
+			$.each($page.find('.exam-ques'), function(index, elem) {
+				var $question = $(elem);
+				var questionId = $question.data('questionId');
+				var type = $question.data('questionType');
+				index = index + 1;
+				switch (type) {
+				case 1:
+				case 3:
+					var checked = $question.find('input[name="options-' + index + '"]:checked').val();
+					if (!checked) {
+						checked = 'N';
+					}
+					submitList.push(questionId + '-' + checked);
+					break;
+				case 2:
+					var checked = [];
+					$question.find('input[name="options-' + index + '"]:checked').each(function() {
+						checked.push($(this).val());
+					});
+					if (checked.length == 0) {
+						checked = ['N'];
+					}
+					submitList.push(questionId + '-' + checked);
+					break;
+				}
+			});
 			
+			$.ajax({
+				url: '${ctx}/api/exam/submit',
+				type: 'post',
+				data: {
+					examId: examId,
+					submitList: submitList
+				},
+				success: function(ret) {
+					if (ret.code == 0) {
+						window.location.href = '${ctx}/online/complete?eid=' + examId;
+					}
+				},
+				error: function(err) {}
+			});
 		})
 		.on('click', '.btn-feedback', function() {
 			$feedback.modal('show');
