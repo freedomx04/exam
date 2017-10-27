@@ -41,6 +41,9 @@
 .form-login .btn {
 	height: 42px;
 }
+.form-login .input-group-addon {
+	background-color: #eee;
+}
 
 .exam-banner {
 	top: 0; 

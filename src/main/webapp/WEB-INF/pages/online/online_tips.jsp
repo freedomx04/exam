@@ -113,7 +113,7 @@
 					
 					<div class="form-group">
 						<div class="col-sm-12">
-							<div class="input-group" style="display: table;">
+							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-shield fa-fw fa-lg"></i></span>
 								<input type="text" class="form-control" name="kaptcha" placeholder="请输入验证码" data-fv-field="validCode">
 								<a class="input-group-addon padding-0 reload-vify" href="javascript:;">

@@ -189,7 +189,7 @@
 				</div>
 			
 				<div class="card card-control">
-					<label class="card-title">题卡</label>
+					<label class="card-title">答题卡</label>
 					<div>
 						<ul class="unstyled ques-list" style="padding: 0;">
 							<c:forEach var="question" items="${paper.questions}" varStatus="status">

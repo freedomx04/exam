@@ -57,12 +57,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">
-                        <i class="fa fa-close fa-fw"></i>关闭
-                    </button>
-                    <button type="button" class="btn btn-primary btn-confirm">
-                        <i class="fa fa-check fa-fw"></i>确定
-                    </button>
+                    <button type="button" class="btn btn-white btn-fw" data-dismiss="modal">关&nbsp;闭</button>
+                    <button type="button" class="btn btn-primary btn-fw btn-confirm">确&nbsp;定</button>
                 </div>
             </div>
         </div>

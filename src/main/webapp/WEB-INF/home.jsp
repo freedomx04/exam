@@ -48,12 +48,12 @@
 					</li> 
 					<li>
 						<a class="J_menuItem" href="overview">
-							<i class="fa fa-home fa-fw"></i><span class="nav-label">控制中心</span>
+							<i class="fa fa-home fa-fw fa-lg"></i><span class="nav-label">控制中心</span>
 						</a>
 					</li>
 					<li>
 						<a href="#">
-							<i class="fa fa-cog fa-fw"></i><span class="nav-label">系统管理</span><span class="fa arrow"></span>
+							<i class="fa fa-key fa-fw fa-lg"></i><span class="nav-label">权限管理</span><span class="fa arrow"></span>
 						</a>
 						<ul class="nav nav-second-level">
 							<li><a class="J_menuItem" href="roleList">角色管理</a></li>
@@ -62,7 +62,7 @@
 					</li>
 					<li>
 						<a href="#">
-							<i class="fa fa-question-circle-o fa-fw"></i><span class="nav-label">题库中心</span><span class="fa arrow"></span>
+							<i class="fa fa-question-circle-o fa-fw fa-lg"></i><span class="nav-label">题库中心</span><span class="fa arrow"></span>
 						</a>
 						<ul class="nav nav-second-level">
 							<li><a class="J_menuItem" href="libraryList">题库管理</a></li>
@@ -72,7 +72,7 @@
 					</li>
 					<li>
 						<a href="#">
-							<i class="fa fa-users fa-fw"></i><span class="nav-label">考生管理</span><span class="fa arrow"></span>
+							<i class="fa fa-user fa-fw fa-lg"></i><span class="nav-label">考生管理</span><span class="fa arrow"></span>
 						</a>
 						<ul class="nav nav-second-level">
 							<li><a class="J_menuItem" href="groupList">分组管理</a></li>
@@ -81,7 +81,7 @@
 					</li>
 					<li>
 						<a href="#">
-							<i class="fa fa-clock-o fa-fw"></i><span class="nav-label">考试管理</span><span class="fa arrow"></span>
+							<i class="fa fa-clock-o fa-fw fa-lg"></i><span class="nav-label">考试管理</span><span class="fa arrow"></span>
 						</a>
 						<ul class="nav nav-second-level">
 							<li><a class="J_menuItem" href="classifyList">试卷分类</a></li>
@@ -91,7 +91,7 @@
 					</li>
 					<li>
 						<a href="#">
-							<i class="fa fa-edit fa-fw"></i><span class="nav-label">模拟练习</span><span class="fa arrow"></span>
+							<i class="fa fa-edit fa-fw fa-lg"></i><span class="nav-label">模拟练习</span><span class="fa arrow"></span>
 						</a>
 						<ul class="nav nav-second-level">
 							<li><a class="J_menuItem" href="practiceOrder">顺序练习</a></li>
@@ -110,7 +110,7 @@
 					</li> -->
 					<li>
 						<a href="#">
-							<i class="fa fa-user fa-fw"></i><span class="nav-label">个人中心</span><span class="fa arrow"></span>
+							<i class="fa fa-cog fa-fw fa-lg"></i><span class="nav-label">个人中心</span><span class="fa arrow"></span>
 						</a>
 						<ul class="nav nav-second-level">
 							<li><a class="J_menuItem" href="modifyPassword">修改密码</a></li>
