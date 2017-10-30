@@ -33,6 +33,9 @@
  					<button type="button" class="btn btn-primary btn-library-add" data-toggle="modal" data-target="#modal-library-dialog">
  						<i class="fa fa-plus fa-fw"></i>新增题库
  					</button>
+ 					<button type="button" class="btn btn-white btn-library-delete-batch" disabled="disabled">
+ 						<i class="fa fa-trash-o fa-fw"></i>批量删除
+ 					</button>
  				</div>
  				<table id="library-list-table" class="table-hm" data-mobile-responsive="true"></table>
 			</div>
@@ -92,7 +95,14 @@
 			},
 			columns: [{
 				field: 'state',
-				checkbox: true
+				checkbox: true,
+				formatter: function(value, row, index) {
+					if (row.editable == 1) {
+						return {
+							disabled: true,
+						};
+					}
+				} 
 			}, {
 				title: '#',
 				width: '20',
@@ -173,6 +183,10 @@
 				}
 			}]
 		});
+		$table.on('all.bs.table', function(e, row) {
+            var selNum = $table.bootstrapTable('getSelections').length;
+            selNum > 0 ? $page.find('.btn-library-delete-batch').removeAttr('disabled') : $page.find('.btn-library-delete-batch').attr('disabled', 'disabled');
+        });
 		
 		$dialog.on('click', '.btn-confirm', function() {
 			var validator = $form.data('bootstrapValidator');
@@ -229,6 +243,42 @@
 		.on('click', '.btn-library-add', function() {
 			$dialog.find('.modal-title strong').text('新增题库');
 			$dialog.data('method', 'add');
+		})
+		.on('click', '.btn-library-delete-batch', function() {
+			var rows = $table.bootstrapTable('getSelections');
+			
+			var count = 0;
+            $.each(rows, function(k, row) {
+            	count += row.count;
+            });
+            var text = count > 0 ? '选择的题库将被删除，题库中包含的试题将会移动至系统默认题库。您确定要删除所选择的题库吗?' : '您确定要删除所选择的题库吗?';
+			swal({
+                title: '',
+                text: text,
+                type: 'warning',
+                showCancelButton: true,
+                cancelButtonText: '取消',
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: '确定',
+                closeOnConfirm: false
+            }, function() {
+                $.ajax({
+                    url: '${ctx}/api/library/batchDelete',
+                    type: 'post',
+                    data: { 
+                    	libraryIdList: $k.util.getIdList(rows) 
+                    },
+                    success: function(ret) {
+                        if (ret.code == 0) {
+                            swal('', '删除成功!', 'success');
+						} else {
+                            swal('', ret.msg, 'error');
+                        }
+                        $table.bootstrapTable('refresh'); 
+                    },
+                    error: function(err) {}
+                });
+            });
 		});
 		
 	</script>

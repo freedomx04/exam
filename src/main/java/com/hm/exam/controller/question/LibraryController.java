@@ -89,10 +89,12 @@ public class LibraryController {
 		}
 	}
 	
-	@RequestMapping(value = "/api/libray/batchDelete")
+	@RequestMapping(value = "/api/library/batchDelete", method = RequestMethod.POST)
 	public Result batchDelete(@RequestParam("libraryIdList[]") List<Long> libraryIdList) {
 		try {
-			libraryService.delete(libraryIdList);
+			for (Long libraryId: libraryIdList) {
+				delete(libraryId);
+			}
 			return new Result(Code.SUCCESS.value(), "deleted");
 		} catch (Exception e) {
 			if (e.getCause().toString().indexOf("ConstraintViolationException") != -1) {

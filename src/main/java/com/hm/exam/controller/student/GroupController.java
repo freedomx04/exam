@@ -15,6 +15,7 @@ import com.hm.exam.common.result.Code;
 import com.hm.exam.common.result.Result;
 import com.hm.exam.common.result.ResultInfo;
 import com.hm.exam.entity.student.GroupEntity;
+import com.hm.exam.entity.student.StudentEntity;
 import com.hm.exam.service.student.GroupService;
 import com.hm.exam.service.student.StudentService;
 
@@ -70,6 +71,13 @@ public class GroupController {
 	@RequestMapping(value = "/api/group/delete")
 	public Result delete(Long groupId) {
 		try {
+			GroupEntity group = groupService.findOne(groupId);
+			List<StudentEntity> studentList = studentService.listByGroup(group);
+			for (StudentEntity student: studentList) {
+				GroupEntity defaultGroup = groupService.findByName("默认分组");
+				student.setGroup(defaultGroup);
+				studentService.save(student);
+			}
 			groupService.delete(groupId);
 			return new Result(Code.SUCCESS.value(), "deleted");
 		} catch (Exception e) {
@@ -81,10 +89,12 @@ public class GroupController {
 		}
 	}
 	
-	@RequestMapping(value = "/api/group/batchDelete")
+	@RequestMapping(value = "/api/group/batchDelete", method = RequestMethod.POST)
 	public Result batchDelete(@RequestParam("groupIdList[]") List<Long> groupIdList) {
 		try {
-			groupService.delete(groupIdList);
+			for (Long groupId: groupIdList) {
+				delete(groupId);
+			}
 			return new Result(Code.SUCCESS.value(), "deleted");
 		} catch (Exception e) {
 			if (e.getCause().toString().indexOf("ConstraintViolationException") != -1) {
@@ -114,7 +124,6 @@ public class GroupController {
 				Integer count = studentService.countByGroup(group);
 				group.setCount(count);
 			}
-			
 			return new ResultInfo(Code.SUCCESS.value(), "ok", list);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);

@@ -4,10 +4,15 @@ import java.util.List;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import com.hm.exam.entity.exam.ClassifyEntity;
 import com.hm.exam.entity.exam.PaperEntity;
 
 public interface PaperRepository extends PagingAndSortingRepository<PaperEntity, Long> {
 	
 	List<PaperEntity> findByOrderByUpdateTimeDesc();
+	
+	Integer countByClassify(ClassifyEntity classify);
+	
+	List<PaperEntity> findByClassify(ClassifyEntity classify);
 
 }

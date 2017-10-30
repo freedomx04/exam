@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hm.exam.entity.exam.ClassifyEntity;
 import com.hm.exam.entity.exam.PaperEntity;
 import com.hm.exam.repository.exam.PaperRepository;
 
@@ -32,6 +33,16 @@ public class PaperServiceImpl implements PaperService {
 	@Override
 	public List<PaperEntity> list() {
 		return paperRepository.findByOrderByUpdateTimeDesc();
+	}
+
+	@Override
+	public Integer countByClassify(ClassifyEntity classify) {
+		return paperRepository.countByClassify(classify);
+	}
+
+	@Override
+	public List<PaperEntity> listByClassify(ClassifyEntity classify) {
+		return paperRepository.findByClassify(classify);
 	}
 
 }

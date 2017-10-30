@@ -169,26 +169,28 @@
 	                    
 	                        <div class="form-group">
 	                        	<div class="col-sm-12">
-	                        		<div class="input-group">
+	                        		<!-- <div class="input-group">
 	                        			<span class="input-group-addon"><i class="fa fa-user fa-fw fa-lg"></i></span>
 	                        			<input type="text" class="form-control" name="username" placeholder="请输入用户名">
-	                        		</div>
+	                        		</div> -->
+	                        		<input type="text" class="form-control" name="username" placeholder="请输入用户名">
 	                        	</div>
 	                        </div>
 	                        
 	                        <div class="form-group">
 	                        	<div class="col-sm-12">
-	                        		<div class="input-group">
+	                        		<!-- <div class="input-group">
 	                        			<span class="input-group-addon"><i class="fa fa-lock fa-fw fa-lg"></i></span>
 	                        			<input type="password" class="form-control" name="password" placeholder="请输入密码">
-	                        		</div>
+	                        		</div> -->
+	                        		<input type="password" class="form-control" name="password" placeholder="请输入密码">
 	                        	</div>
 	                        </div>
 	                        
 	                        <div class="form-group">
 	                        	<div class="col-sm-12">
 	                        		<div class="input-group" style="display: table;">
-	                        			<span class="input-group-addon"><i class="fa fa-shield fa-fw fa-lg"></i></span>
+	                        			<!-- <span class="input-group-addon"><i class="fa fa-shield fa-fw fa-lg"></i></span> -->
 		                        		<input type="text" class="form-control" name="kaptcha" placeholder="请输入验证码" data-fv-field="validCode">
 		                                <a class="input-group-addon padding-0 reload-vify" href="javascript:;">
 		                                    <img id="kaptcha-img" src="${ctx}/api/kaptcha/captcha.jpg"  height="40" title="点击更换"/>

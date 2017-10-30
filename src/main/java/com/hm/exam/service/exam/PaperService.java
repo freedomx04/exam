@@ -2,6 +2,7 @@ package com.hm.exam.service.exam;
 
 import java.util.List;
 
+import com.hm.exam.entity.exam.ClassifyEntity;
 import com.hm.exam.entity.exam.PaperEntity;
 
 public interface PaperService {
@@ -13,5 +14,9 @@ public interface PaperService {
 	void delete(Long paperId);
 	
 	List<PaperEntity> list();
+	
+	Integer countByClassify(ClassifyEntity classify);
+	
+	List<PaperEntity> listByClassify(ClassifyEntity classify);
 
 }
