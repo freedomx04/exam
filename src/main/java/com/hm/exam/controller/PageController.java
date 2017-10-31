@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.hm.exam.common.utils.SessionUtils;
 import com.hm.exam.entity.exam.ExamEntity;
 import com.hm.exam.entity.exam.PaperEntity;
+import com.hm.exam.entity.exam.ExamEntity.ExamStatus;
 import com.hm.exam.entity.exam.PaperEntity.PaperStatus;
 import com.hm.exam.entity.student.StudentEntity;
 import com.hm.exam.service.exam.ExamService;
@@ -101,13 +102,30 @@ public class PageController {
 		PaperEntity paper = paperService.findOne(currentStudent.getPaperId());
 		StudentEntity student = studentService.findOne(currentStudent.getId());
 		
+		long remainingTime = 0;
+		
 		ExamEntity exam = examService.findOne(paper, student);
 		if (exam == null) {
 			Date now = new Date();
 			exam = new ExamEntity(paper, student, now, now);
+			exam.setStatus(ExamStatus.STATUS_EXAMING);
 			examService.save(exam);
+			remainingTime = paper.getDuration() * 60;
 		} else {
-			
+			Calendar startTime = Calendar.getInstance();
+			startTime.setTime(exam.getCreateTime());
+			Calendar currentTime = Calendar.getInstance();
+			currentTime.setTime(new Date());
+			long startSecond = startTime.getTimeInMillis();
+			long currentSecond = currentTime.getTimeInMillis();
+			long totleSecond = paper.getDuration() * 60;
+			remainingTime = (totleSecond - (currentSecond - startSecond) / 1000);
+		}
+		
+		if (remainingTime >= 0) {
+			modelMap.addAttribute("remainingTime", remainingTime);
+		} else {
+			modelMap.addAttribute("remainingTime", 0);
 		}
 		
 		modelMap.addAttribute("paper", paper);

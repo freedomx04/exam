@@ -36,6 +36,7 @@ public class ClassifyController {
 			ClassifyEntity classify = classifyService.findByName(name);
 			if (classify != null) {
 				return new Result(Code.EXISTED.value(), "试题分类已存在");
+				
 			}
 
 			Date now = new Date();

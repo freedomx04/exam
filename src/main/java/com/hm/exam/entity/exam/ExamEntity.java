@@ -15,6 +15,12 @@ import com.hm.exam.entity.student.StudentEntity;
 @Table(name = "exam_exam")
 public class ExamEntity extends BaseEntity {
 	
+	public class ExamStatus {
+		public static final int STATUS_EXAM_INIT = 0;
+		public static final int STATUS_EXAMING = 1;
+		public static final int STATUS_EXAM_FINISH = 2;
+	}
+	
 	/**
 	 * 试卷
 	 */
@@ -48,6 +54,11 @@ public class ExamEntity extends BaseEntity {
 	 * 考试分数
 	 */
 	private Integer score = 0;
+	
+	/**
+	 * 当前考试状态
+	 */
+	private Integer status = ExamStatus.STATUS_EXAM_INIT;
 	
 	public ExamEntity() {
 		// TODO Auto-generated constructor stub
@@ -107,6 +118,14 @@ public class ExamEntity extends BaseEntity {
 
 	public void setScore(Integer score) {
 		this.score = score;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 	
 }

@@ -179,10 +179,11 @@
 			</div>
 			
 			<div class="exam-controller fixed" style="width: 300px; color: #999;">
-				<div class="card card-control text-center">
-					<div><i class="fa fa-clock-o fa-fw fa-2x"></i></div>
-					<div>总剩余时间</div>
-					<div style="font-size: 16px;">08:15</div>
+				<div class="card card-control">
+					<div style="font-size: 20px; padding: 15px;">
+						<i class="fa fa-clock-o fa-fw fa-lg"></i>考试剩余时间
+						<span id="time" style="color: #ed5565; padding-left: 5px;"></span>
+					</div>
 					<div style="padding: 10px;">
 						<button type="button" class="btn btn-primary btn-submit" style="width: 100%;">提交试卷</button>
 					</div>
@@ -237,7 +238,7 @@
 					<h4 class="modal-title">确认交卷</h4>
 				</div>
 				<div class="modal-body">
-					<span>您确认现在交卷吗？离考试结束还有29分钟，您不检查一下吗？</span>
+					<span>您确认现在交卷吗？离考试结束还有<span id="submitRemainingTime"></span>分钟，您不检查一下吗？</span>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary btn-fw" data-dismiss="modal">在检查一下</button>
@@ -278,17 +279,16 @@
 		var examId = '${exam.id}';
 		
 		var $page = $('.body-online-exam');
-		var $submit = $page.find('#modal-submit-dialog');
-		var $feedback = $page.find('#modal-feedback-dialog');
+		var $submitDialog = $page.find('#modal-submit-dialog');
+		var $feedbackDialog = $page.find('#modal-feedback-dialog');
 		
 		// tooltip
 		$page.find('[data-toggle="tooltip"]').tooltip();
-		
+		// 设置右侧控制器的位置
 		setController();
 		window.onresize = function() {
 			setController();
 		}
-		
 		// 回到顶部按钮
 		var $top = $page.find('.btn-top');
 		$(window).scroll(function() {
@@ -340,9 +340,49 @@
 			}, 1000);
 		})
 		.on('click', '.btn-submit', function() {
-			$submit.modal('show');
+			$submitDialog.find('#submitRemainingTime').text(getRemainingMinute());
+			$submitDialog.modal('show');
 		})
 		.on('click', '.btn-submit-submit', function() {
+			submitPaper();
+		})
+		.on('click', '.btn-feedback', function() {
+			$feedbackDialog.modal('show');
+		})
+		.on('click', '.btn-feedback-submit', function() {
+			var content = $feedbackDialog.find('.textarea-feedback').val();
+			if (!content) {
+				$feedbackDialog.find('.textarea-feedback').css('border', '1px solid #f75659');
+				return;
+			} else {
+				$feedbackDialog.find('.textarea-feedback').css('border', '1px solid #e5e6e7');
+				$.ajax({
+					url: '${ctx}/api/feedback/create',
+					type: 'post',
+					data: {
+						paperId: paperId,
+						studentId: studentId,
+						content: content
+					},
+					success: function(ret) {
+						if (ret.code == 0) {
+							$feedbackDialog.modal('hide');
+							toastr['info']('提交成功！ 谢谢您的建议反馈');
+						}
+					},
+					error: function(err) {}
+				});
+			}
+		})
+		.on('hidden.bs.modal', '#modal-feedback-dialog', function() {
+			$feedbackDialog.find('.textarea-feedback').val('');
+        }) 
+		.on('click', '.btn-top', function() {
+			$('html, body').animate({scrollTop: 0}, 1000);
+		});
+		
+		// 提交试卷
+		function submitPaper() {
 			var submitList = [];
 			$.each($page.find('.exam-ques'), function(index, elem) {
 				var $question = $(elem);
@@ -385,41 +425,48 @@
 				},
 				error: function(err) {}
 			});
-		})
-		.on('click', '.btn-feedback', function() {
-			$feedback.modal('show');
-		})
-		.on('click', '.btn-feedback-submit', function() {
-			var content = $feedback.find('.textarea-feedback').val();
-			if (!content) {
-				$feedback.find('.textarea-feedback').css('border', '1px solid #f75659');
-				return;
-			} else {
-				$feedback.find('.textarea-feedback').css('border', '1px solid #e5e6e7');
-				$.ajax({
-					url: '${ctx}/api/feedback/create',
-					type: 'post',
-					data: {
-						paperId: paperId,
-						studentId: studentId,
-						content: content
-					},
-					success: function(ret) {
-						if (ret.code == 0) {
-							$feedback.modal('hide');
-							toastr['info']('提交成功！ 谢谢您的建议反馈');
-						}
-					},
-					error: function(err) {}
-				});
-			}
-		})
-		.on('hidden.bs.modal', '#modal-feedback-dialog', function() {
-			$feedback.find('.textarea-feedback').val('');
-        }) 
-		.on('click', '.btn-top', function() {
-			$('html, body').animate({scrollTop: 0}, 1000);
-		});
+		}
+		
+		// 倒计时控制器
+		var totleSecond = initTimer();	// 剩余秒数
+		startTime(totleSecond);
+		
+		// 获取剩余时间
+		function initTimer() {
+			//var totleSecond = Number('${remainingTime}');
+			var totleSecond = 100;
+			return totleSecond;
+		}
+		// 开始倒计时
+		function startTime(totleSecond) {
+			$page.find('#time').text(formatTime(totleSecond));
+			var timer = setInterval(function() {
+				totleSecond -= 1;
+				if (totleSecond >= 0) {
+					$page.find('#time').text(formatTime(totleSecond));
+				} else {
+					// 强制提交试卷
+					alert('end');
+					clearInterval(timer);
+				}
+			}, 1000);
+		}
+		// 格式化剩余秒数
+		function formatTime(totleSecond) {
+			var hour = formatTimeNumber(Math.floor(totleSecond / 3600));
+			var minute = formatTimeNumber(Math.floor((totleSecond % 3600) /60));
+			var second = formatTimeNumber(Math.floor(totleSecond % 60));
+			return hour + ':' + minute + ':' + second;
+		}
+		// 格式化数字
+		function formatTimeNumber(number) {
+			return number < 10 ? '0' + number : number
+		}
+		// 获取剩余分钟数
+		function getRemainingMinute() {
+			var minute = formatTimeNumber(Math.floor((totleSecond % 3600) /60));
+			return minute;
+		}
 	
 	</script>
 	

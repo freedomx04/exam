@@ -18,6 +18,7 @@ import com.hm.exam.common.utils.CiphersUtils;
 import com.hm.exam.common.utils.SessionUtils;
 import com.hm.exam.entity.exam.ExamEntity;
 import com.hm.exam.entity.exam.PaperEntity;
+import com.hm.exam.entity.exam.ExamEntity.ExamStatus;
 import com.hm.exam.entity.question.QuestionEntity;
 import com.hm.exam.entity.student.StudentEntity;
 import com.hm.exam.service.exam.ExamService;
@@ -97,6 +98,7 @@ public class ExamController {
 			exam.setCorrectNum(correctNum);
 			exam.setTotalNum(totalNum);
 			exam.setScore(score);
+			exam.setStatus(ExamStatus.STATUS_EXAM_FINISH);
 			exam.setUpdateTime(new Date());
 			examService.save(exam);
 			
@@ -107,6 +109,4 @@ public class ExamController {
 		}
 	}
 	
-	
-
 }
