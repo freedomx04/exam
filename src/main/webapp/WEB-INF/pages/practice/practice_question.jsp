@@ -20,8 +20,7 @@
        
    	<style type="text/css">
    	.body-practice-question .ques-options li {
-   		height: 36px;
-   		font-size: 16px;
+   		height: 30px;
    	}
    	.body-practice-question .btn {
    		width: 100px;
@@ -46,8 +45,8 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<span class="ques-type"></span>
-						<span class="ques-seq" style="font-size: 20px; margin-left: 10px;"></span>
-						<span class="ques-title" style="font-size: 20px;"></span>
+						<span class="ques-seq" style="margin-left: 10px;"></span>
+						<span class="ques-title"></span>
 					</div>
 				</div>
 				
@@ -61,7 +60,7 @@
 				</div>
 				
 				<div class="row">
-					<div class="col-sm-8">
+					<div class="col-sm-12">
 						<div class="ques-tips alert hide" style="margin-left: 70px; width: fit-content; font-size: 16px;"></div>
 						<div class="ques-analysis hide" style="margin-left: 70px;"></div>
 					</div>

@@ -154,6 +154,42 @@
 		
 		<c:when test="${tipsType == 6}">
 			<div class="tips-card">
+				<h3>登录成功</h3>
+				<div class="hr-line-solid"></div>
+				<div class="tips-info">
+					<h3>试卷标题：${paper.title}</h3>
+					<h3>试卷状态：可用</h3>
+					<h3>开始时间：<fmt:formatDate value="${paper.startTime}" pattern='yyyy年MM月dd日 HH:mm'/></h3>
+					<h3>结束时间：<fmt:formatDate value="${paper.endTime}" pattern='yyyy年MM月dd日 HH:mm'/></h3>
+					<h3>考试时间：${paper.duration}分钟</h3>
+					<h3>剩余时间：<span id="remainingTime"></span></h3>
+					<h3 class="tips-info-other">如果考试异常中断，请退出并及时按同样步骤进入，继续考试</h3>
+				</div>
+				<div class="hr-line-solid"></div>
+				<div class="tips-button">
+					<button type="button" class="btn btn-primary btn-block btn-exam-start">继续考试</button>
+				</div>
+			</div>
+		</c:when>
+		
+		<c:when test="${tipsType == 7}">
+			<div class="tips-card">
+				<h3>登录成功</h3>
+				<div class="hr-line-solid"></div>
+				<div class="tips-info">
+					<h3>试卷标题：${paper.title}</h3>
+					<h3>试卷状态：可用</h3>
+					<h3>开始时间：<fmt:formatDate value="${paper.startTime}" pattern='yyyy年MM月dd日 HH:mm'/></h3>
+					<h3>结束时间：<fmt:formatDate value="${paper.endTime}" pattern='yyyy年MM月dd日 HH:mm'/></h3>
+					<h3>考试时间：${paper.duration}分钟</h3>
+					<h3>提交时间：<fmt:formatDate value="${submitTime}" pattern='yyyy年MM月dd日 HH:mm'/></h3>
+					<h3 class="tips-info-other">您的试卷已提交，请耐心等待老师批阅。</h3>
+				</div>
+			</div>
+		</c:when>
+		
+		<c:when test="${tipsType == 8}">
+			<div class="tips-card">
 				<h3>提交成功</h3>
 				<div class="hr-line-solid"></div>
 				<div class="tips-info">
@@ -265,6 +301,40 @@
 		.on('click', '.btn-exam-start', function() {
 			window.location.href = '${ctx}/online/exam';
 		});
+		
+		var tipsType = '${tipsType}';
+		var totleSecond;
+		if (tipsType == 6) {
+			totleSecond = initTimer();
+			startTime(totleSecond);
+		}
+		// 获取剩余时间
+		function initTimer() {
+			var totleSecond = Number('${remainingTime}');
+			return totleSecond;
+		}
+		// 开始倒计时
+		function startTime(totleSecond) {
+			$page.find('#remainingTime').text(formatTime(totleSecond));
+			var timer = setInterval(function() {
+				totleSecond -= 1;
+				if (totleSecond >= 0) {
+					$page.find('#remainingTime').text(formatTime(totleSecond));
+				} else {
+					clearInterval(timer);
+				}
+			}, 1000);
+		}
+		// 格式化剩余秒数
+		function formatTime(totleSecond) {
+			var minute = formatTimeNumber(Math.floor(totleSecond / 60));
+			var second = formatTimeNumber(Math.floor(totleSecond % 60));
+			return minute + ':' + second;
+		}
+		// 格式化数字
+		function formatTimeNumber(number) {
+			return number < 10 ? '0' + number : number
+		}
 		
 	})( jQuery );
 	</script>

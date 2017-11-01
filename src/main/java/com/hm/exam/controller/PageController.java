@@ -41,12 +41,14 @@ public class PageController {
 	HttpServletRequest request;
 	
 	public class TipsType {
-		public static final int TIPS_UNABLE = 1;
-		public static final int TIPS_START = 2;
-		public static final int TIPS_END = 3;
-		public static final int TIPS_LOGIN = 4;
-		public static final int TIPS_SUCCESS = 5;
-		public static final int TIPS_COMPLETE = 6;
+		public static final int TIPS_UNABLE = 1;	// 考试不可用
+		public static final int TIPS_START = 2;		// 考试时间未开始
+		public static final int TIPS_END = 3;		// 考试时间已结束
+		public static final int TIPS_LOGIN = 4;		// 登录页面
+		public static final int TIPS_SUCCESS = 5;	// 登录成功
+		public static final int TIPS_CONTINUE = 6;	// 继续考试
+		public static final int TIPS_FINISH = 7;	// 考试已结束
+		public static final int TIPS_COMPLETE = 8;	// 考试已提交
 	}
 	
 	@RequestMapping(value = "/online/{paperId}")
@@ -82,12 +84,52 @@ public class PageController {
 			return "pages/online/online_tips";
 		}
 		
+		StudentEntity currentStudent = SessionUtils.getStudent();
 		// 判断是否登录
-		if (SessionUtils.getStudent() == null) {
+		if (currentStudent == null) {
+			// 未登录，跳转到登录页面
 			modelMap.addAttribute("tipsType", TipsType.TIPS_LOGIN);
 			return "pages/online/online_tips";
 		} else {
-			modelMap.addAttribute("tipsType", TipsType.TIPS_SUCCESS);
+			// 已登录 
+			StudentEntity student = studentService.findOne(currentStudent.getId());
+			ExamEntity exam = examService.findOne(paper, student);
+			// 考试未开始
+			if (exam == null) {	
+				modelMap.addAttribute("tipsType", TipsType.TIPS_SUCCESS);
+			} 
+			// 考试中断，继续考试
+			else if(exam.getStatus() == ExamStatus.STATUS_EXAMING) {		
+				// 获取剩余时间
+				Calendar startTime = Calendar.getInstance();
+				startTime.setTime(exam.getCreateTime());
+				Calendar currentTime = Calendar.getInstance();
+				currentTime.setTime(new Date());
+				long startSecond = startTime.getTimeInMillis();
+				long currentSecond = currentTime.getTimeInMillis();
+				long totleSecond = paper.getDuration() * 60;
+				long remainingTime = (totleSecond - (currentSecond - startSecond) / 1000);
+				
+				// 还有剩余时间，继续考试
+				if (remainingTime > 0) {
+					modelMap.addAttribute("remainingTime", remainingTime);
+					modelMap.addAttribute("tipsType", TipsType.TIPS_CONTINUE);
+				} 
+				// 时间已到，自动提交试卷
+				else {
+					long finishSecond = totleSecond + (startSecond / 1000);
+					Date finishTime = new Date(finishSecond);
+					exam.setUpdateTime(finishTime);
+					exam.setStatus(ExamStatus.STATUS_EXAM_FINISH);
+					modelMap.addAttribute("tipsType", TipsType.TIPS_FINISH);
+				}
+			} 
+			// 考试已结束
+			else if (exam.getStatus() == ExamStatus.STATUS_EXAM_FINISH) {
+				modelMap.addAttribute("submitTime", exam.getUpdateTime());
+				modelMap.addAttribute("tipsType", TipsType.TIPS_FINISH);
+			}
+			
 			return "pages/online/online_tips";
 		}
 	}
@@ -105,13 +147,16 @@ public class PageController {
 		long remainingTime = 0;
 		
 		ExamEntity exam = examService.findOne(paper, student);
+		// 第一次进入考试
 		if (exam == null) {
 			Date now = new Date();
 			exam = new ExamEntity(paper, student, now, now);
 			exam.setStatus(ExamStatus.STATUS_EXAMING);
 			examService.save(exam);
 			remainingTime = paper.getDuration() * 60;
-		} else {
+		} 
+		// 考试中断进入
+		else if (exam.getStatus() == ExamStatus.STATUS_EXAMING) {
 			Calendar startTime = Calendar.getInstance();
 			startTime.setTime(exam.getCreateTime());
 			Calendar currentTime = Calendar.getInstance();
@@ -120,6 +165,13 @@ public class PageController {
 			long currentSecond = currentTime.getTimeInMillis();
 			long totleSecond = paper.getDuration() * 60;
 			remainingTime = (totleSecond - (currentSecond - startSecond) / 1000);
+		} 
+		// 考试已结束
+		else if (exam.getStatus() == ExamStatus.STATUS_EXAM_FINISH) {
+			modelMap.addAttribute("paper", paper);
+			modelMap.addAttribute("submitTime", exam.getUpdateTime());
+			modelMap.addAttribute("tipsType", TipsType.TIPS_FINISH);
+			return "pages/online/online_tips";
 		}
 		
 		if (remainingTime >= 0) {
@@ -146,6 +198,5 @@ public class PageController {
 		modelMap.addAttribute("tipsType", TipsType.TIPS_COMPLETE);
 		return "pages/online/online_tips";
 	}
-	
 	
 }

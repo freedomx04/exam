@@ -433,8 +433,8 @@
 		
 		// 获取剩余时间
 		function initTimer() {
-			//var totleSecond = Number('${remainingTime}');
-			var totleSecond = 100;
+			var totleSecond = Number('${remainingTime}');
+			//var totleSecond = 5400;
 			return totleSecond;
 		}
 		// 开始倒计时
@@ -444,19 +444,29 @@
 				totleSecond -= 1;
 				if (totleSecond >= 0) {
 					$page.find('#time').text(formatTime(totleSecond));
+					
+					// 距离考试结束提示
+					if (totleSecond == 300) {
+						toastr['info']('距离考试结束还有5分钟！');
+					}
+					if (totleSecond == 60) {
+						toastr['info']('距离考试结束还有1分钟！');
+					}
+					if (totleSecond == 5) {
+						toastr['info']('考试即将结束，试卷将会自动提交！');
+					}
 				} else {
 					// 强制提交试卷
-					alert('end');
+					submitPaper();
 					clearInterval(timer);
 				}
 			}, 1000);
 		}
 		// 格式化剩余秒数
 		function formatTime(totleSecond) {
-			var hour = formatTimeNumber(Math.floor(totleSecond / 3600));
-			var minute = formatTimeNumber(Math.floor((totleSecond % 3600) /60));
+			var minute = formatTimeNumber(Math.floor(totleSecond / 60));
 			var second = formatTimeNumber(Math.floor(totleSecond % 60));
-			return hour + ':' + minute + ':' + second;
+			return minute + ':' + second;
 		}
 		// 格式化数字
 		function formatTimeNumber(number) {
