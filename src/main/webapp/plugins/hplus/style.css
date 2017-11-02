@@ -97,7 +97,8 @@ body.body-small .navbar-top-links li:last-child {
 	border: medium none;
 	display: none;
 	float: left;
-	font-size: 12px;
+	min-width: 140px;
+	font-size: 14px;
 	left: 0;
 	list-style: none outside none;
 	padding: 0;

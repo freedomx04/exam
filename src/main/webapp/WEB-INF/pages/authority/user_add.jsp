@@ -27,6 +27,7 @@
 			<div class="ibox-content">
 				<div class="page-title">
 					<h2>${title}</h2>
+					<a href="${ctx}/userList"><i class="fa fa-mail-reply fa-fw"></i>用户管理</a>
 				</div>
 				
 				<form class="form-horizontal" role="form" autocomplete="off">
@@ -78,7 +79,7 @@
                             <c:if test="${method == 'edit'}">
                             	<button type="button" class="btn btn-primary btn-user-edit">保&nbsp;存</button>
                             </c:if>
-                            <button type="button" class="btn btn-white btn-user-cancel">返&nbsp;回</button>
+                            <button type="button" class="btn btn-white btn-user-cancel">取&nbsp;消</button>
                         </div>
                     </div>
 				

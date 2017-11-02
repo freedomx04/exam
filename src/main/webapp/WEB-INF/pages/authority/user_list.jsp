@@ -169,17 +169,19 @@
             }, {
             	title: '操作',
             	align: 'center',
-            	width: '200',
+            	width: '80',
             	formatter: function(value, row, index) {
-            		var $edit = '<a class="btn-user-edit a-operate">编辑</a>';
-            		var $password = '<a class="btn-user-password a-operate">修改密码</a>';
-           			if (row.status == 0) {
-               			$status = '<a class="btn-user-disable a-operate">禁用</a>';
-               		} else {
-               			$status = '<a class="btn-user-enable a-operate">启用</a>';
-               		}
-           			var $delete = '<a class="btn-user-delete a-operate">删除</a>';
-            		return $edit + $password + $status + $delete;
+            		var $start = '<div class="dropdown"><a data-toggle="dropdown" aria-expanded="true">操作<span class="caret"></span></a><ul class="dropdown-menu">';
+					var $edit = '<li><a class="btn-user-edit"><i class="fa fa-edit fa-fw"></i>编辑</a></li>';
+					var $password = '<li><a class="btn-user-password"><i class="fa fa-key fa-fw"></i>修改密码</a></li>';
+					if (row.status == 0) {
+						$status = '<li><a class="btn-user-disable"><i class="fa fa-ban fa-fw"></i>禁用</a></li>';
+					} else {
+						$status = '<li><a class="btn-user-enable"><i class="fa fa-circle-o fa-fw"></i>启用</a></li>';
+					}
+					var $delete = '<li><a class="btn-user-delete"><i class="fa fa-trash-o fa-fw"></i>删除</a></li>';
+					var $end = '</ul></div>';
+					return $start + $edit + $password + $status + $delete + $end;
             	},
             	events: window.operateEvents = {
            			'click .btn-user-edit': function(e, value, row, index) {

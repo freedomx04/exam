@@ -42,6 +42,7 @@
 			<div class="ibox-content">
 				<div class="page-title">
 					<h2>试卷新增</h2>
+					<a href="${ctx}/paperList"><i class="fa fa-mail-reply fa-fw"></i>试卷管理</a>
 				</div>
 				
 				<div class="pearls row" style="padding-top: 20px;">
@@ -104,7 +105,7 @@
 						<div class="form-group btn-operate">
 							<div class="col-sm-5 col-sm-offset-3">
 								<button type="button" class="btn btn-primary btn-paper-add-next">保存并进入下一步</button>
-								<button type="button" class="btn btn-white btn-paper-cancel">返&nbsp;回</button>
+								<button type="button" class="btn btn-white btn-paper-cancel">取&nbsp;消</button>
 							</div>
 						</div>
 					</form>

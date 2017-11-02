@@ -45,11 +45,16 @@ a:HOVER {
 	text-decoration: underline;
 }
 
+/** table */
 .table-hm thead tr {
 	background-color: #f5f5f5;
 }
+.fixed-table-body {
+	overflow: visible;
+}
 
 .page-title {
+	min-height: 34px;
 	border-bottom: 1px solid #e7e7eb;
 	margin-bottom: 25px;
 }
@@ -58,12 +63,17 @@ a:HOVER {
 	font-weight: 400;
 	font-style: normal;
 	font-family: "Open Sans", "微软雅黑", sans-serif;
+	float: left;
 }
 .page-title small {
 	font-size: 16px;
 	font-weight: 300;
 	color: #888;
 	padding-left: 10px;
+}
+.page-title a {
+	float: right;
+	margin-top: 5px;
 }
 
 .close.fileinput-remove {

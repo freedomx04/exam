@@ -30,7 +30,7 @@
 				
 				<div class="btn-group" id="role-list-table-toolbar" role="group">
                     <button type="button" class="btn btn-primary btn-role-add">
-                        <i class="fa fa-plus fa-fw"></i>新增
+                        <i class="fa fa-plus fa-fw"></i>新增角色
                     </button>
                 </div>
                 <table id="role-list-table" class="table-hm" data-mobile-responsive="true"></table>
@@ -86,12 +86,14 @@
             }, {
             	title: '操作',
             	align: 'center',
-            	width: '100',
+            	width: '80',
             	formatter: function(value, row, index) {
             		if (row.editable == 0) {
-            			var $edit = '<a class="btn-role-edit a-operate">编辑</a>';
-                		var $delete = '<a class="btn-role-delete a-operate">删除</a>';
-                		return $edit + $delete;
+            			var $start = '<div class="dropdown"><a data-toggle="dropdown" aria-expanded="true">操作<span class="caret"></span></a><ul class="dropdown-menu">';
+						var $edit = '<li><a class="btn-role-edit"><i class="fa fa-edit fa-fw"></i>编辑</a></li>';
+						var $delete = '<li><a class="btn-role-delete"><i class="fa fa-trash-o fa-fw"></i>删除</a></li>';
+						var $end = '</ul></div>';
+						return $start + $edit + $delete + $end;
             		}
             	},
             	events: window.operateEvents = {

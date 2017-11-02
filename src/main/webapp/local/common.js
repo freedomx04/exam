@@ -63,7 +63,7 @@
 			showToggle: false,				// 是否显示 切换试图（table/card）按钮, 默认为false
 			
 			// 点击
-			clickToSelect: true,			// 设置true 将在点击行时，自动选择rediobox 和 checkbox, 默认为false
+			//clickToSelect: true,			// 设置true 将在点击行时，自动选择rediobox 和 checkbox, 默认为false
 			//singleSelect: true			// 设置True 将禁止多选, 默认为false
 			
 		}, param); 

@@ -91,11 +91,13 @@
 			}, {
 				title: '操作',
 				align: 'center',
-				width: '60',
+				width: '80',
 				formatter: function(value, row, index) {
 					if (row.editable == 0) {
-						var $delete = '<a class="btn-feedback-delete a-operate">删除</a>';
-						return $delete;
+						var $start = '<div class="dropdown"><a data-toggle="dropdown" aria-expanded="true">操作<span class="caret"></span></a><ul class="dropdown-menu">';
+						var $delete = '<li><a class="btn-feedback-delete"><i class="fa fa-trash-o fa-fw"></i>删除</a></li>';
+						var $end = '</ul></div>';
+						return $start + $delete + $end;
 					} 
 				},
 				events: window.operateEvents = {
