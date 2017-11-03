@@ -203,6 +203,11 @@ public class HomeController {
 		return "pages/student/student_add";
 	}
 	
+	@RequestMapping(value = "studentList2")
+	String studentList2(ModelMap modelMap) {
+		return "pages/student/student_list2";
+	}
+	
 	// 模拟考试
 	@RequestMapping(value = "practiceOrder")
 	String practiceOrder(ModelMap modelMap, Long libraryId, Integer type) {
