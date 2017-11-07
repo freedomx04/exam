@@ -119,12 +119,14 @@ public class GroupController {
 	@RequestMapping(value = "/api/group/list")
 	public Result list() {
 		try {
+			Integer total = 0;
 			List<GroupEntity> list = groupService.list();
 			for (GroupEntity group: list) {
 				Integer count = studentService.countByGroup(group);
+				total += count;
 				group.setCount(count);
 			}
-			return new ResultInfo(Code.SUCCESS.value(), "ok", list);
+			return new ResultInfo(Code.SUCCESS.value(), total.toString(), list);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());

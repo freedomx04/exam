@@ -205,6 +205,16 @@ public class HomeController {
 	
 	@RequestMapping(value = "studentList2")
 	String studentList2(ModelMap modelMap) {
+		List<GroupEntity> groupList = groupService.list();
+		
+		Integer total = 0;
+		for (GroupEntity group: groupList) {
+			Integer count = studentService.countByGroup(group);
+			total += count;
+			group.setCount(count);
+		}
+		modelMap.addAttribute("total", total);
+		modelMap.addAttribute("groupList", groupList);
 		return "pages/student/student_list2";
 	}
 	
