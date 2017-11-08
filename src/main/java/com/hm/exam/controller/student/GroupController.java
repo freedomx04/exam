@@ -33,15 +33,15 @@ public class GroupController {
 	@RequestMapping(value = "/api/group/create", method = RequestMethod.POST)
 	public Result create(String name) {
 		try {
-			GroupEntity group = groupService.findByName(name);
+			GroupEntity group = groupService.findByName(name.trim());
 			if (group != null) {
 				return new Result(Code.EXISTED.value(), "分组已存在");
 			}
 			
 			Date now = new Date();
 			group = new GroupEntity(name, now, now);
-			groupService.save(group);
-			return new Result(Code.SUCCESS.value(), "created");
+			group = groupService.save(group);
+			return new ResultInfo(Code.SUCCESS.value(), "添加成功", group);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
@@ -53,12 +53,12 @@ public class GroupController {
 		try {
 			GroupEntity group = groupService.findOne(groupId);
 			
-			GroupEntity updateGroup = groupService.findByName(name);
+			GroupEntity updateGroup = groupService.findByName(name.trim());
 			if (updateGroup == null || group.getId() == updateGroup.getId()) {
 				group.setName(name);
 				group.setUpdateTime(new Date());
 				groupService.save(group);
-				return new Result(Code.SUCCESS.value(), "updated");
+				return new Result(Code.SUCCESS.value(), "编辑成功");
 			} else {
 				return new Result(Code.EXISTED.value(), "分组已存在");
 			}
@@ -79,7 +79,7 @@ public class GroupController {
 				studentService.save(student);
 			}
 			groupService.delete(groupId);
-			return new Result(Code.SUCCESS.value(), "deleted");
+			return new Result(Code.SUCCESS.value(), "删除成功");
 		} catch (Exception e) {
 			if (e.getCause().toString().indexOf("ConstraintViolationException") != -1) {
 				return new Result(Code.CONSTRAINT.value(), "该数据存在关联，无法删除！");
@@ -95,7 +95,7 @@ public class GroupController {
 			for (Long groupId: groupIdList) {
 				delete(groupId);
 			}
-			return new Result(Code.SUCCESS.value(), "deleted");
+			return new Result(Code.SUCCESS.value(), "删除成功");
 		} catch (Exception e) {
 			if (e.getCause().toString().indexOf("ConstraintViolationException") != -1) {
 				return new Result(Code.CONSTRAINT.value(), "该数据存在关联，无法删除！");

@@ -7,7 +7,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
-	<title>分组管理</title>
+	<title>考生管理</title>
 	
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -15,166 +15,23 @@
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/animate/animate.min.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/bootstrap-table/bootstrap-table.min.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/sweetalert/sweetalert.css">
-	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/bootstrapValidator/css/bootstrapValidator.min.css">
 	
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/hplus/style.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/local/common.css">
-	
-	<style type="text/css">
-	.page-aside {
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		width: 220px;
-		overflow-y: hidden;
-		background-color: #fff;
-		border-right: 1px solid #e4eaec;
-		-webkit-transition: visibility .1s ease,top .3s ease,left .5s ease;
-		transition: visibility .1s ease,top .3s ease,left .5s ease;
-	}
-	.page-aside-section {
-		position: relative;
-	}
-	.page-aside-section:after {
-		position: relative;
-		display: block;
-		margin: 11px;
-		content: "";
-		border-bottom: 1px solid #e7e7eb;
-	}
-	.page-aside-section:first-child {
-		padding-top: 11px;
-	}
-	.page-aside-section:last-child:after {
-		display: none;
-	}
-	.page-aside .list-group-item {
-		padding: 13px 20px;
-		margin-bottom: 1px;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		border: none;
-		border-radius: 0;
-	}
-	.page-aside .list-group-item .item-right {
-		float: right;
-	}
-	.page-aside .list-group-item:FOCUS,
-	.page-aside .list-group-item:HOVER {
-		color: #459ae9;
-		background-color: #f5f5f5;
-	}
-	.page-aside .list-group-item.active,
-	.page-aside .list-group-item.active:focus, 
-	.page-aside .list-group-item.active:hover {
-		color: #459ae9;
-		background-color: #f5f5f5;
-	}
-	.page-aside .list-group.has-actions .list-group-item {
-		padding-top: 6px;
-		padding-bottom: 6px;
-		line-height: 32px;
-		cursor: pointer;
-	}
-	.page-aside .list-group.has-actions .list-group-item:HOVER {
-		color: #459ae9;
-		background-color: #f5f5f5;
-	}
-	.page-aside .list-group.has-actions .list-group-item:HOVER .item-actions {
-		display: block;
-		color: #676a6c;
-	}
-	.page-aside .list-group.has-actions .list-group-item:HOVER .item-right {
-		display: none;
-	}
-	.page-aside-title {
-		padding: 10px 20px;
-		overflow: hidden;
-		font-weight: 400;
-		color: #526069;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		cursor: default;
-	}
-	.page-aside .list-group.has-actions .list-group-item .item-actions {
-		position: absolute;
-		top: 6px;
-		right: 15px;
-		display: none;
-	}
-	.btn-pure, .btn-pure.active, .btn-pure:active, .btn-pure:focus, .btn-pure[disabled], 
-	.open>.dropdown-toggle.btn-pure, fieldset[disabled] .btn-pure {
-		background-color: transparent;
-		border-color: transparent;
-		-webkit-box-shadow: none;
-		box-shadow: none;
-	}
-	.btn-pure:hover {
-		color: #459ae9;
-	}
-	.page-aside .btn-pure {
-		padding-left: 2px;
-		padding-right: 2px;
-		background-color: transparent;
-	}
-	.page-main {
-		height: 100%;
-		margin-left: 220px;
-		overflow-y: auto;
-	}
-	</style>
+	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/toastr/toastr.min.css">
 	
 </head>
 
-<body class="gray-bg body-group-list">
-	<div class="wrapper wrapper-content animated fadeInRight height-full">
-		<div class="ibox float-e-margins height-full">
-			<div class="height-full" style="position: relative;">
-				<div class="page-aside">
-					<div class="page-aside-inner height-full">
-						<div class="page-aside-section">
-							<div class="list-group">
-								<a class="list-group-item active" href="javascript:;" data-id="0">
-									<span class="item-right group-student-total">${total}</span>
-									<i class="fa fa-tag fa-fw"></i>所有分组
-								</a>
-							</div>
-						</div>
-						
-						<div class="page-aside-section">
-							<h4 class="page-aside-title">分组</h4>
-							<div class="list-group has-actions">
-								<c:forEach var="group" items="${groupList}">
-									<div class="list-group-item" data-id="${group.id}">
-										<div class="list-content">
-											<span class="item-right">${group.count}</span>
-											<span class="item-text">${group.name}</span>
-											<div class="item-actions">
-												<span class="btn btn-pure btn-group-edit"><i class="fa fa-edit"></i></span>
-												<span class="btn btn-pure btn-group-delete"><i class="fa fa-remove"></i></span>
-											</div>
-										</div>
-									</div>
-								</c:forEach>
-							</div>
-						</div>
-						
-						<div class="page-aside-section">
-							<a class="list-group-item btn-group-add" href="javascript:;">
-								<i class="fa fa-plus fa-fw"></i>添加新分组
-							</a>
-						</div>
-					</div>
+<body class="gray-bg body-student-list">
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="ibox float-e-margins">
+			<div class="ibox-content">
+				<div class="page-title">
+					<h2>考生管理</h2>
 				</div>
 				
-				<div class="page-main ibox-content">
-					<div class="page-title">
-						<h2>考生列表</h2>
-					</div>
-					
-					<div id="student-list-table-toolbar" role="group">
+				<div id="student-list-table-toolbar" class="row" role="student">
+					<div class="col-sm-6">
 						<button type="button" class="btn btn-primary btn-student-add" data-toggle="modal" data-target="#modal-student-dialog">
 	 						<i class="fa fa-plus fa-fw"></i>新增考生
 	 					</button>
@@ -188,8 +45,17 @@
 	 						 移动到分组
 	 					</button>
 					</div>
-					<table id="student-list-table" class="table-hm" data-mobile-responsive="true"></table>
-				</div>
+ 					
+ 					<div class="col-sm-6 text-right">
+ 						<select class="form-control" id="student-group" style="width: 200px; display: inline-block;">
+ 							<option value="0">所有分组</option>
+ 							<c:forEach var="group" items="${groupList}">
+ 								<option value="${group.id}">${group.name}</option>
+ 							</c:forEach>
+ 						</select>
+ 					</div>
+ 				</div>
+ 				<table id="student-list-table" class="table-hm" data-mobile-responsive="true"></table>
 			</div>
 		</div>
 	</div>
@@ -269,10 +135,11 @@
 	<script type="text/javascript" src="${ctx}/plugins/sweetalert/sweetalert.min.js"></script>
 	<script type="text/javascript" src="${ctx}/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 	<script type="text/javascript" src="${ctx}/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+	<script type="text/javascript" src="${ctx}/plugins/toastr/toastr.min.js"></script>
 	
 	<script type="text/javascript">
 		
-		var $page = $('.body-group-list');
+		var $page = $('.body-student-list');
 		var $importDialog = $page.find('#modal-student-import-dialog');
 		var $moveDialog = $page.find('#modal-student-move-dialog');
 		
@@ -281,24 +148,11 @@
 		
 		initTable(0);
 		
-		function refreshGroup() {
-			$.ajax({
-				url: '${ctx}/api/group/list',
-				success: function(ret) {
-					if (ret.code == 0) {
-						$page.find('.group-student-total').text(ret.msg);
-					}
-				},
-				error: function(err) {}
-			});
-		}
-		
 		function initTable(groupId) {
 			$page.find('#student-list-table').bootstrapTable('destroy'); 
 			
 			$table = $k.util.bsTable($page.find('#student-list-table'), {
 				url: '${ctx}/api/student/list?groupId=' + groupId,
-				toolbar: '#student-list-table-toolbar',
 				idField: 'id',
 				responseHandler: function(res) {
 					return res.data;
@@ -395,25 +249,9 @@
 		}
 		
 		$page
-		.on('click', '.list-group-item', function(e) {
-			e.stopPropagation();
-			var groupId = $(this).data('id');
-			if (groupId > -1) {
-				$page.find('.list-group-item').removeClass('active');
-				$(this).addClass('active');
-				initTable(groupId);
-			}
-		})
-		.on('click', '.btn-group-edit', function(e) {
-			e.stopPropagation();
-			alert('edit');
-		})
-		.on('click', '.btn-group-delete', function(e) {
-			e.stopPropagation();
-			alert('delete');
-		})
-		.on('click', '.btn-group-add', function() {
-			alert('add group');
+		.on('change', '#student-group', function() {
+			groupId = $(this).val();
+			initTable(groupId);
 		})
 		.on('click', '.btn-student-add', function() {
 			window.location.href = '${ctx}/studentAdd?method=add';
@@ -511,7 +349,6 @@
                 error: function(err) {}
 			});
 		});
-		
 		
 	</script>
 	

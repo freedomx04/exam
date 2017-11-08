@@ -71,13 +71,9 @@
 						</ul>
 					</li>
 					<li>
-						<a href="#">
-							<i class="fa fa-user fa-fw fa-lg"></i><span class="nav-label">考生管理</span><span class="fa arrow"></span>
+						<a class="J_menuItem" href="studentList">
+							<i class="fa fa-user fa-fw fa-lg"></i><span class="nav-label">考生管理</span>
 						</a>
-						<ul class="nav nav-second-level">
-							<li><a class="J_menuItem" href="groupList">分组管理</a></li>
-							<li><a class="J_menuItem" href="studentList">考生管理</a></li>
-						</ul>
 					</li>
 					<li>
 						<a href="#">

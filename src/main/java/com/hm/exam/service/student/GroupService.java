@@ -10,7 +10,7 @@ public interface GroupService {
 	
 	GroupEntity findByName(String name);
 	
-	void save(GroupEntity group);
+	GroupEntity save(GroupEntity group);
 	
 	void delete(Long groupId);
 	

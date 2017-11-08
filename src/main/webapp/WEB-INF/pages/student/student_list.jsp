@@ -7,7 +7,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
-	<title>考生管理</title>
+	<title>分组管理</title>
 	
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -15,25 +15,64 @@
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/animate/animate.min.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/bootstrap-table/bootstrap-table.min.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/sweetalert/sweetalert.css">
+	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/bootstrapValidator/css/bootstrapValidator.min.css">
 	
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/hplus/style.css">
-	<link rel="stylesheet" type="text/css" href="${ctx}/local/common.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/toastr/toastr.min.css">
+	<link rel="stylesheet" type="text/css" href="${ctx}/local/common.css">
 	
 </head>
 
-<body class="gray-bg body-student-list">
-	<div class="wrapper wrapper-content animated fadeInRight">
-		<div class="ibox float-e-margins">
-			<div class="ibox-content">
-				<div class="page-title">
-					<h2>考生管理</h2>
+<body class="gray-bg body-group-list">
+	<div class="wrapper wrapper-content animated fadeInRight height-full">
+		<div class="ibox float-e-margins height-full" style="margin-bottom: 0;">
+			<div class="height-full" style="position: relative;">
+				<div class="page-aside">
+					<div class="page-aside-inner height-full">
+						<div class="page-aside-section">
+							<div class="list-group">
+								<a class="list-group-item active" href="javascript:;" data-id="0">
+									<%-- <span class="item-right group-student-total">${total}</span> --%>
+									<i class="fa fa-user fa-fw"></i>所有考生
+								</a>
+							</div>
+						</div>
+						
+						<div class="page-aside-section">
+							<h4 class="page-aside-title"><i class="fa fa-bars fa-fw"></i>分组</h4>
+							<div class="list-group has-actions">
+								<c:forEach var="group" items="${groupList}">
+									<div class="list-group-item" data-id="${group.id}">
+										<div class="list-content">
+											<%-- <span class="item-right">${group.count}</span> --%>
+											<span class="item-text">${group.name}</span>
+											<c:if test="${group.editable == 0}">
+												<div class="item-actions">
+													<span class="btn btn-pure btn-group-edit"><i class="fa fa-edit"></i></span>
+													<span class="btn btn-pure btn-group-delete"><i class="fa fa-remove"></i></span>
+												</div>
+											</c:if>
+										</div>
+									</div>
+								</c:forEach>
+							</div>
+						</div>
+						
+						<div class="page-aside-section">
+							<a class="list-group-item btn-group-add" href="javascript:;">
+								<i class="fa fa-plus fa-fw"></i>添加新分组
+							</a>
+						</div>
+					</div>
 				</div>
 				
-				<div id="student-list-table-toolbar" class="row" role="student">
-					<div class="col-sm-6">
+				<div class="page-main ibox-content">
+					<div class="page-title">
+						<h2>考生列表</h2>
+					</div>
+					<div id="student-list-table-toolbar" role="group">
 						<button type="button" class="btn btn-primary btn-student-add" data-toggle="modal" data-target="#modal-student-dialog">
-	 						<i class="fa fa-plus fa-fw"></i>新增考生
+	 						<i class="fa fa-user-plus fa-fw"></i>新增考生
 	 					</button>
 	 					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-student-import-dialog">
 	 						<i class="fa fa-upload fa-fw"></i>导入考生
@@ -45,23 +84,93 @@
 	 						 移动到分组
 	 					</button>
 					</div>
- 					
- 					<div class="col-sm-6 text-right">
- 						<select class="form-control" id="student-group" style="width: 200px; display: inline-block;">
- 							<option value="0">所有分组</option>
- 							<c:forEach var="group" items="${groupList}">
- 								<option value="${group.id}">${group.name}</option>
- 							</c:forEach>
- 						</select>
- 					</div>
- 				</div>
- 				<table id="student-list-table" class="table-hm" data-mobile-responsive="true"></table>
+					<table id="student-list-table" class="table-hm" data-mobile-responsive="true"></table>
+				</div>
 			</div>
 		</div>
 	</div>
 	
+	<div class="modal" id="modal-group-dialog" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-center">
+            <div class="modal-content animated fadeInDown">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" autocomplete="off">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-3 control-label"><i class="form-required">*</i>分组名称</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" name="name" required data-bv-notempty-message="分组名称不能为空">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white btn-fw" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary btn-fw btn-confirm">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="modal-student-add-dialog" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    	<div class="modal-dialog modal-center">
+            <div class="modal-content animated fadeInDown">
+            	<div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                	<form class="form-horizontal" role="form" autocomplete="off">
+                		<div class="form-group">
+                			<label for="groupId" class="col-sm-3 control-label"><i class="form-required">*</i>分组</label>
+                			<div class="col-sm-7">
+                				<select class="form-control" name="groupId" required>
+                					<option value="a">aa</option>
+                				</select>
+                			</div>
+                		</div>
+                		
+                		<div class="form-group">
+							<label for="username" class="col-sm-3 control-label"><i class="form-required">*</i>考号</label>
+	                        <div class="col-sm-7">
+	                            <input type="text" class="form-control" name="username" placeholder="只能包含英文、数字、下划线等字符" value="${student.username}" required>
+	                        </div>
+						</div>
+						
+						<div class="form-group form-hide">
+							<label for="password" class="col-sm-3 control-label"><i class="form-required">*</i>密码</label>
+							<div class="col-sm-7">
+								<input type="password" id="password" class="form-control" name="password" placeholder="6-16个字符,请使用字母加数字或者符号" required>
+							</div>
+						</div>
+						<div class="form-group form-hide">
+							<label for="confirm-password" class="col-sm-3 control-label"><i class="form-required">*</i>确认密码</label>
+							<div class="col-sm-7">
+								<input type="password" class="form-control" name="confirmPassword" placeholder="请再次输入密码" required>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="name" class="col-sm-3 control-label"><i class="form-required">*</i>姓名</label>
+	                        <div class="col-sm-7">
+	                            <input type="text" class="form-control" name="name" value="${student.name}" required>
+	                        </div>
+						</div>
+                	</form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white btn-fw" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary btn-fw btn-confirm">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+	
 	<div class="modal" id="modal-student-import-dialog" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
-    	<div class="modal-dialog">
+    	<div class="modal-dialog modal-center">
     		<div class="modal-content animated fadeInDown">
     			<div class="modal-header">
     				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -98,7 +207,7 @@
     </div>
     
     <div class="modal" id="modal-student-move-dialog" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-center">
         	<div class="modal-content animated fadeInDown">
         		<div class="modal-header">
         			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -132,14 +241,20 @@
 	<script type="text/javascript" src="${ctx}/plugins/hplus/content.min.js"></script>
 	<script type="text/javascript" src="${ctx}/local/common.js"></script>
 	
-	<script type="text/javascript" src="${ctx}/plugins/sweetalert/sweetalert.min.js"></script>
+	<script type="text/javascript" src="${ctx}/plugins/sweetalert/sweetalert.js"></script>
+	<script type="text/javascript" src="${ctx}/plugins/toastr/toastr.min.js"></script>
 	<script type="text/javascript" src="${ctx}/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 	<script type="text/javascript" src="${ctx}/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
-	<script type="text/javascript" src="${ctx}/plugins/toastr/toastr.min.js"></script>
+	<script type="text/javascript" src="${ctx}/plugins/bootstrapValidator/js/bootstrapValidator.min.js"></script>
+	<script type="text/javascript" src="${ctx}/plugins/bootstrapValidator/js/language/zh_CN.js"></script>
 	
 	<script type="text/javascript">
+	;(function( $ ) {
 		
-		var $page = $('.body-student-list');
+		var $page = $('.body-group-list');
+		var $aside = $('.page-aside');
+		
+		var $studentDialog = $page.find('#modal-student-add-dialog');
 		var $importDialog = $page.find('#modal-student-import-dialog');
 		var $moveDialog = $page.find('#modal-student-move-dialog');
 		
@@ -153,6 +268,7 @@
 			
 			$table = $k.util.bsTable($page.find('#student-list-table'), {
 				url: '${ctx}/api/student/list?groupId=' + groupId,
+				toolbar: '#student-list-table-toolbar',
 				idField: 'id',
 				responseHandler: function(res) {
 					return res.data;
@@ -248,13 +364,131 @@
 	        });
 		}
 		
+		// 分组新增/编辑对话框
+		var $groupDialog = $page.find('#modal-group-dialog');
+		var $groupForm = $groupDialog.find('form');
+		$k.util.bsValidator($groupForm);
+		$groupDialog.on('click', '.btn-confirm', function() {
+			var validator = $groupForm.data('bootstrapValidator');
+			validator.validate();
+			
+            if (validator.isValid()) {
+            	var method = $groupDialog.data('method');
+            	var name = $groupDialog.find('input[name = "name"]').val();
+            	var groupId = $groupDialog.data('groupId');
+            	if (method == 'add') {
+            		$.ajax({
+ 						url: '${ctx}/api/group/create',
+                 		type: 'POST',
+                 		data: {
+                 			name: name,
+                 		},
+                 		success: function(ret) {
+                 			if (ret.code == 0) {
+	               				$groupDialog.modal('hide');
+	               				toastr['success'](ret.msg);
+	               				
+	               				// 添加新分组到最后
+	               				var group = ret.data;
+	               				var $item = '<div class="list-group-item" data-id="' + group.id + '">'
+	               							+ 	'<div class="list-content">'
+	               							+		'<span class="item-text">' + group.name + '</span>'
+	               							+ 		'<div class="item-actions">'
+	               							+			'<span class="btn btn-pure btn-group-edit"><i class="fa fa-edit"></i></span>'
+	               							+			'<span class="btn btn-pure btn-group-delete"><i class="fa fa-remove"></i></span>'
+	               							+		'</div>'
+	               							+ 	'</div>'
+	               							+ '</div>';
+	               				$aside.find('.list-group.has-actions').append($item);
+	               			} else {
+	               				toastr['error'](ret.msg);
+	               			}
+                 		},
+                 		error: function(err) {}
+                 	});
+            	} else {
+            		$.ajax({
+                		url: '${ctx}/api/group/update',
+                		type: 'POST',
+                		data: { 
+                			groupId: groupId, 
+                			name: name 
+                		},
+                		success: function(ret) {
+                			if (ret.code == 0) {
+                				$groupDialog.modal('hide');
+	               				toastr['success'](ret.msg);
+	               				$aside.find('.list-group-item[data-id="' + groupId + '"]').find('.item-text').text(name);
+                			} else {
+                				toastr['error'](ret.msg);
+                			}
+                		},
+                		error: function(err) {}
+                	});
+            	}
+            }
+		});
+		
 		$page
-		.on('change', '#student-group', function() {
-			groupId = $(this).val();
-			initTable(groupId);
+		.on('click', '.list-group-item', function(e) {
+			e.stopPropagation();
+			var groupId = $(this).data('id');
+			if (groupId > -1) {
+				$page.find('.list-group-item').removeClass('active');
+				$(this).addClass('active');
+				initTable(groupId);
+			}
+		})
+		.on('hidden.bs.modal', '#modal-group-dialog', function() {
+            $groupForm.bootstrapValidator('resetForm', true);
+            $(this).removeData('bs.modal');
+        }) 
+		.on('click', '.btn-group-add', function() {
+			$groupDialog.find('.modal-title').text('添加分组');
+			$groupDialog.data('method', 'add');
+			$groupDialog.modal('show');
+		})
+		.on('click', '.btn-group-edit', function(e) {
+			e.stopPropagation();
+			var groupId = $(this).closest('.list-group-item').data('id');
+			var groupName = $(this).closest('.list-group-item').find('.item-text').text();
+			$groupDialog.find('.modal-title').text('编辑分组');
+			$groupForm.find('input[name="name"]').val(groupName);
+			$groupDialog.data('method', 'edit');
+			$groupDialog.data('groupId', groupId);
+			$groupDialog.modal('show');
+		})
+		.on('click', '.btn-group-delete', function(e) {
+			e.stopPropagation();
+			var text = '您确定要删除所选择的分组吗?<br/>assadsad';
+			var groupId = $(this).closest('.list-group-item').data('id');
+			swal({
+				title: '您确定要删除所选择的分组吗?',
+				text: '分组中包含的考生将会移动至默认分组',
+				type: 'warning',
+				showCancelButton: true
+			}, function() {
+				$.ajax({
+					url: '${ctx}/api/group/delete',
+					data: {
+						groupId: groupId
+					},
+					success: function(ret) {
+						if (ret.code == 0) {
+							toastr['success'](ret.msg);
+							$aside.find('.list-group-item[data-id="' + groupId + '"]').remove();
+						} else {
+							toastr['error'](ret.msg);
+						}
+					},
+					error: function(err) {}
+				});
+			});
 		})
 		.on('click', '.btn-student-add', function() {
-			window.location.href = '${ctx}/studentAdd?method=add';
+			$studentDialog.find('.modal-title').text('添加考生');
+			$studentDialog.data('method', 'add');
+			$studentDialog.modal('show');
 		})
 		.on('click', '.btn-student-template', function() {
 			window.location.href = '${ctx}/api/student/template';
@@ -350,6 +584,7 @@
 			});
 		});
 		
+	})( jQuery );
 	</script>
 	
 </body>

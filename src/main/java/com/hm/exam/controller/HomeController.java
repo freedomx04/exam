@@ -19,7 +19,6 @@ import com.hm.exam.entity.question.LibraryEntity;
 import com.hm.exam.entity.question.QuestionEntity;
 import com.hm.exam.entity.question.TypeEntity;
 import com.hm.exam.entity.student.GroupEntity;
-import com.hm.exam.entity.student.StudentEntity;
 import com.hm.exam.service.authority.RoleService;
 import com.hm.exam.service.authority.UserService;
 import com.hm.exam.service.exam.ClassifyService;
@@ -174,48 +173,11 @@ public class HomeController {
 	/**
 	 * 考生管理
 	 */
-	@RequestMapping(value = "/groupList")
-	String groupList() {
-		return "pages/student/group_list";
-	}
-	
-	@RequestMapping(value = "studentList") 
-	String studentList(ModelMap modelMap) {
+	@RequestMapping(value = "studentList")
+	String studentList2(ModelMap modelMap) {
 		List<GroupEntity> groupList = groupService.list();
 		modelMap.addAttribute("groupList", groupList);
 		return "pages/student/student_list";
-	}
-	
-	@RequestMapping(value = "studentAdd")
-	String studentAdd(ModelMap modelMap, String method, Long studentId) {
-		modelMap.addAttribute("method", method);
-		String title = method.equals("add") ? "考生新增" : "考生编辑";
-		modelMap.addAttribute("title", title);
-		
-		List<GroupEntity> groupList = groupService.list();
-		modelMap.addAttribute("groupList", groupList);
-		
-		if (studentId != null) {
-			StudentEntity student = studentService.findOne(studentId);
-			modelMap.addAttribute("student", student);
-		}
-		
-		return "pages/student/student_add";
-	}
-	
-	@RequestMapping(value = "studentList2")
-	String studentList2(ModelMap modelMap) {
-		List<GroupEntity> groupList = groupService.list();
-		
-		Integer total = 0;
-		for (GroupEntity group: groupList) {
-			Integer count = studentService.countByGroup(group);
-			total += count;
-			group.setCount(count);
-		}
-		modelMap.addAttribute("total", total);
-		modelMap.addAttribute("groupList", groupList);
-		return "pages/student/student_list2";
 	}
 	
 	// 模拟考试
