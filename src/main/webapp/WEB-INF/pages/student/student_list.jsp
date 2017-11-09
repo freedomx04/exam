@@ -120,46 +120,114 @@
             <div class="modal-content animated fadeInDown">
             	<div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title"></h4>
+                    <h4 class="modal-title">添加考生</h4>
                 </div>
                 <div class="modal-body">
                 	<form class="form-horizontal" role="form" autocomplete="off">
                 		<div class="form-group">
                 			<label for="groupId" class="col-sm-3 control-label"><i class="form-required">*</i>分组</label>
                 			<div class="col-sm-7">
-                				<select class="form-control" name="groupId" required>
-                					<option value="a">aa</option>
-                				</select>
+                				<select class="form-control" name="groupId"></select>
                 			</div>
                 		</div>
                 		
                 		<div class="form-group">
 							<label for="username" class="col-sm-3 control-label"><i class="form-required">*</i>考号</label>
 	                        <div class="col-sm-7">
-	                            <input type="text" class="form-control" name="username" placeholder="只能包含英文、数字、下划线等字符" value="${student.username}" required>
+	                            <input type="text" class="form-control" name="username" placeholder="只能包含英文、数字、下划线等字符" required data-bv-notempty-message="考号不能为空">
 	                        </div>
 						</div>
 						
-						<div class="form-group form-hide">
+						<div class="form-group">
 							<label for="password" class="col-sm-3 control-label"><i class="form-required">*</i>密码</label>
 							<div class="col-sm-7">
-								<input type="password" id="password" class="form-control" name="password" placeholder="6-16个字符,请使用字母加数字或者符号" required>
+								<input type="password" id="password" class="form-control" name="password" placeholder="6-16个字符,请使用字母加数字或者符号" required data-bv-notempty-message="密码不能为空">
 							</div>
 						</div>
-						<div class="form-group form-hide">
+						<div class="form-group">
 							<label for="confirm-password" class="col-sm-3 control-label"><i class="form-required">*</i>确认密码</label>
 							<div class="col-sm-7">
-								<input type="password" class="form-control" name="confirmPassword" placeholder="请再次输入密码" required>
+								<input type="password" class="form-control" name="confirmPassword" placeholder="请再次输入密码" required data-bv-notempty-message="确认密码不能为空">
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label for="name" class="col-sm-3 control-label"><i class="form-required">*</i>姓名</label>
 	                        <div class="col-sm-7">
-	                            <input type="text" class="form-control" name="name" value="${student.name}" required>
+	                            <input type="text" class="form-control" name="name" placeholder="请输入姓名" required data-bv-notempty-message="姓名不能为空">
 	                        </div>
 						</div>
                 	</form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white btn-fw" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary btn-fw btn-confirm">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="modal-student-edit-dialog" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    	<div class="modal-dialog modal-center">
+    		<div class="modal-content animated fadeInDown">
+    			<div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">编辑考生</h4>
+                </div>
+                <div class="modal-body">
+                	<form class="form-horizontal" role="form" autocomplete="off">
+                		<div class="form-group">
+                			<label for="groupId" class="col-sm-3 control-label"><i class="form-required">*</i>分组</label>
+                			<div class="col-sm-7">
+                				<select class="form-control" name="groupId"></select>
+                			</div>
+                		</div>
+                		
+                		<div class="form-group">
+							<label for="username" class="col-sm-3 control-label">考号</label>
+	                        <div class="col-sm-7">
+	                            <input type="text" class="form-control" name="username" placeholder="只能包含英文、数字、下划线等字符" required data-bv-notempty-message="考号不能为空" disabled="disabled">
+	                        </div>
+						</div>
+						
+						<div class="form-group">
+							<label for="name" class="col-sm-3 control-label"><i class="form-required">*</i>姓名</label>
+	                        <div class="col-sm-7">
+	                            <input type="text" class="form-control" name="name" placeholder="请输入姓名" required data-bv-notempty-message="姓名不能为空">
+	                        </div>
+						</div>
+                	</form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white btn-fw" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary btn-fw btn-confirm">确定</button>
+                </div>
+    		</div>
+    	</div>
+    </div>
+    
+    <div class="modal" id="modal-student-password-dialog" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-center">
+            <div class="modal-content animated fadeInDown">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">修改密码</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" id="form-password" autocomplete="off">
+                        <div class="form-group">
+							<label for="password" class="col-sm-3 control-label"><i class="form-required">*</i>密码</label>
+							<div class="col-sm-7">
+								<input type="password" id="password" class="form-control" name="password" placeholder="6-16个字符,请使用字母加数字或者符号" required data-bv-notempty-message="密码不能为空">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="confirm-password" class="col-sm-3 control-label"><i class="form-required">*</i>确认密码</label>
+							<div class="col-sm-7">
+								<input type="password" class="form-control" name="confirmPassword" placeholder="请再次输入密码" required data-bv-notempty-message="确认密码不能为空">
+							</div>
+						</div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-white btn-fw" data-dismiss="modal">取消</button>
@@ -174,7 +242,7 @@
     		<div class="modal-content animated fadeInDown">
     			<div class="modal-header">
     				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h3 class="modal-title">导入考生</h3>
+                    <h4 class="modal-title">导入考生</h4>
     			</div>
     			<div class="modal-body">
     				<div>
@@ -200,7 +268,7 @@
     				</div>
     			</div>
     			<div class="modal-footer">
-                    <button type="button" class="btn btn-primary btn-fw" data-dismiss="modal">关&nbsp;闭</button>
+                    <button type="button" class="btn btn-primary btn-fw" data-dismiss="modal">取消</button>
                 </div>
     		</div>
     	</div>
@@ -211,26 +279,17 @@
         	<div class="modal-content animated fadeInDown">
         		<div class="modal-header">
         			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h3 class="modal-title">请选择分组</h3>
+                    <h4 class="modal-title">请选择分组</h4>
                 </div>
                 <div class="modal-body" style="max-height: 400px; overflow: auto;">
                 	<div class="alert alert-success alert-student-move hide">
                 		 请先选择一项
                 	</div>
-                	<ul class="unstyled">
-                		<c:forEach var="group" items="${groupList}">
-                			<li style="height: 30px;">
-                				<div class="radio radio-success radio-inline">
-                					<input type="radio" name="group" id="${group.id}" value="${group.id}">
-                					<label for="${group.id}">${group.name}</label>
-                				</div>
-                			</li>
-                		</c:forEach>
-                	</ul>
+                	<ul class="unstyled"></ul>
                 </div>
                	<div class="modal-footer">
-               		<button type="button" class="btn btn-white btn-fw" data-dismiss="modal">关&nbsp;闭</button>
-                    <button type="button" class="btn btn-primary btn-fw btn-student-move-confirm">确&nbsp;定</button>
+               		<button type="button" class="btn btn-white btn-fw" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary btn-fw btn-student-move-confirm">确定</button>
                 </div>
             </div>
         </div>
@@ -254,14 +313,12 @@
 		var $page = $('.body-group-list');
 		var $aside = $('.page-aside');
 		
-		var $studentDialog = $page.find('#modal-student-add-dialog');
 		var $importDialog = $page.find('#modal-student-import-dialog');
 		var $moveDialog = $page.find('#modal-student-move-dialog');
 		
 		var $table;
 		var groupId = 0;
-		
-		initTable(0);
+		initTable(groupId);
 		
 		function initTable(groupId) {
 			$page.find('#student-list-table').bootstrapTable('destroy'); 
@@ -285,14 +342,14 @@
 				}, {
 					field: 'username',
 					title: '考号',
-					formatter: function(value, row, index) {
+					/* formatter: function(value, row, index) {
 						return '<a class="btn-student-detail">' + value + '</a>';
 					},
 					events: window.operateEvents = {
 						'click .btn-student-detail': function(e, value, row, index) {
 							e.stopPropagation();
 						}
-					}
+					} */
 				}, {
 					field: 'name',
 					title: '姓名',
@@ -309,32 +366,46 @@
 					formatter: function(value, row, index) {
 						var $start = '<div class="dropdown"><a data-toggle="dropdown" aria-expanded="true">操作<span class="caret"></span></a><ul class="dropdown-menu">';
 						var $edit = '<li><a class="btn-student-edit"><i class="fa fa-edit fa-fw"></i>编辑</a></li>';
+						var $password = '<li><a class="btn-student-password"><i class="fa fa-key fa-fw">修改密码</i></a></li>'
 						var $delete = '<li><a class="btn-student-delete"><i class="fa fa-trash-o fa-fw"></i>删除</a></li>';
 						var $end = '</ul></div>';
-						return $start + $edit + $delete + $end;
+						return $start + $edit + $password + $delete + $end;
 					},
 					events: window.operateEvents = {
 						'click .btn-student-edit': function(e, value, row, index) {
 							e.stopPropagation();
-							$dialog.find('.modal-title strong').text('编辑考生');
 	            			$.each(row, function(key, val) {
-	            				$form.find('input[name="' + key + '"]').val(val);
+	            				$editForm.find('input[name="' + key + '"]').val(val);
 	            			});
-	            			$dialog.data('method', 'edit');
-	            			$dialog.data('studentId', row.id);
-	            			$dialog.modal('show');
+	            			$.ajax({
+	            				url: '${ctx}/api/group/list',
+	            				success: function(ret) {
+	            					if (ret.code == 0) {
+	            						var $select = $editDialog.find('select[name="groupId"]');
+	            						$select .empty();
+	            						$.each(ret.data, function(k, val) {
+	            							var $option = '<option value="' + val.id + '">' + val.name + '</option>';
+	            							$select .append($option);
+	            						});
+	            						$select.val(row.group.id);
+	            					}
+	            				},
+	            				error: function(err) {}
+	            			});
+	            			$editDialog.data('studentId', row.id);
+	            			$editDialog.modal('show');
+						},
+						'click .btn-student-password': function(e, value, row, index) {
+							e.stopPropagation();
+							$passwordDialog.data('studentId', row.id);
+	            			$passwordDialog.modal('show');
 						},
 						'click .btn-student-delete': function(e, value, row, index) {
 							e.stopPropagation();
 							swal({
-	            				title: '',
-	            				text: '您确定要删除所选择的考生吗?',
+	            				title: '您确定要删除所选择的考生吗?',
 	            				type: 'warning',
 	            				showCancelButton: true,
-	                            cancelButtonText: '取消',
-	                            confirmButtonColor: '#DD6B55',
-	                            confirmButtonText: '确定',
-	                            closeOnConfirm: false
 	            			}, function() {
 	            				$.ajax({
 	            					url: '${ctx}/api/student/delete',
@@ -343,11 +414,11 @@
 	            					},
 	            					success: function(ret) {
 	            						if (ret.code == 0) {
-	            							swal('', '删除成功!', 'success');
+	            							toastr['success'](ret.msg);
+	            							$table.bootstrapTable('refresh');
 	            						} else {
-	            							swal('', ret.msg, 'error');
+	            							toastr['error'](ret.msg);
 	            						}
-	            						$table.bootstrapTable('refresh'); 
 	            					},
 	            					error: function(err) {}
 	            				});
@@ -364,7 +435,7 @@
 	        });
 		}
 		
-		// 分组新增/编辑对话框
+		// 分组添加/编辑对话框
 		var $groupDialog = $page.find('#modal-group-dialog');
 		var $groupForm = $groupDialog.find('form');
 		$k.util.bsValidator($groupForm);
@@ -429,16 +500,177 @@
             }
 		});
 		
+		// 考试添加对话框
+		var $addDialog = $page.find('#modal-student-add-dialog');
+		var $addForm = $addDialog.find('form');
+		$k.util.bsValidator($addForm, {
+			fields: {
+				username: {
+					validators: {
+						regexp: {
+							regexp: /^[a-zA-Z0-9_\.]+$/,
+	     	                message: '用户名只能包含英文、数字、下划线等字符'
+						}
+					}
+				},
+				password: {
+	                 validators: {
+	                     identical: {
+	                         field: 'confirmPassword',
+	                         message: '两次输入密码不一致'
+	                     },
+	                 	 stringLength: {
+	                         min: 6,
+	                         max: 16,
+	                         message: '密码长度必须在6到16之间'
+	                     }
+	                 }
+	             },
+	             confirmPassword: {
+	             	validators: {
+	                	identical: {
+	                    	field: 'password',
+	                        message: '两次输入密码不一致'
+	                    },
+	                  	stringLength: {
+							min: 6,
+							max: 16,
+							message: '密码长度必须在6到16之间'
+						}
+	                }
+	            }
+			}
+		});
+		$addDialog.on('click', '.btn-confirm', function() {
+			var validator = $addForm.data('bootstrapValidator');
+			validator.validate();
+			
+			if (validator.isValid()) {
+				var formData = new FormData($addForm[0]);
+				$.ajax({
+					url: '${ctx}/api/student/create',
+					type: 'post',
+					data: formData,
+					processData: false,
+					contentType: false,
+					cache: false,
+					success: function(ret) {
+						if (ret.code == 0) {
+							$addDialog.modal('hide');
+							toastr['success'](ret.msg);
+							initTable(groupId);
+						} else {
+							toastr['error'](ret.msg);
+						}
+					},
+					error: function(err) {}
+				});
+			}
+		});
+		
+		// 考生编辑对话框
+		var $editDialog = $page.find('#modal-student-edit-dialog');
+		var $editForm = $editDialog.find('form');
+		$k.util.bsValidator($editForm);
+		$editDialog.on('click', '.btn-confirm', function() {
+			var validator = $editForm.data('bootstrapValidator');
+			validator.validate();
+			
+			if (validator.isValid()) {
+				var formData = new FormData($editForm[0]);
+				var studentId = $editDialog.data('studentId');
+				formData.append('studentId', studentId);
+				$.ajax({
+					url: '${ctx}/api/student/update',
+					type: 'post',
+					data: formData,
+					processData: false,
+					contentType: false,
+					cache: false,
+					success: function(ret) {
+						if (ret.code == 0) {
+							$editDialog.modal('hide');
+							toastr['success'](ret.msg);
+							initTable(groupId);
+						} else {
+							toastr['error'](ret.msg);
+						}
+					},
+					error: function(err) {}
+				});
+			}
+		});
+		
+		// 考生修改密码对话框
+		var $passwordDialog = $page.find('#modal-student-password-dialog');
+		var $passwordForm = $passwordDialog.find('form');
+		$k.util.bsValidator($passwordForm, {
+			fields: {
+				password: {
+	                 validators: {
+	                     identical: {
+	                         field: 'confirmPassword',
+	                         message: '两次输入密码不一致'
+	                     },
+	                 	 stringLength: {
+	                         min: 6,
+	                         max: 16,
+	                         message: '密码长度必须在6到16之间'
+	                     }
+	                 }
+	             },
+	             confirmPassword: {
+	             	validators: {
+	                	identical: {
+	                    	field: 'password',
+	                        message: '两次输入密码不一致'
+	                    },
+	                  	stringLength: {
+							min: 6,
+							max: 16,
+							message: '密码长度必须在6到16之间'
+						}
+	                }
+	            }
+			}
+		});
+		$passwordDialog.on('click', '.btn-confirm', function() {
+			var validator = $passwordForm.data('bootstrapValidator');
+			validator.validate();
+			if (validator.isValid()) {
+				var studentId = $passwordDialog.data('studentId');
+				$.ajax({
+					url: '${ctx}/api/student/password',
+					type: 'post',
+					data: {
+						studentId: studentId,
+						password: $passwordForm.find('input[name="password"]').val()
+					},
+					success: function(ret) {
+						if (ret.code == 0) {
+							$passwordDialog.modal('hide');
+							toastr['success'](ret.msg);
+							initTable(groupId);
+						} else {
+							toastr['error'](ret.msg);
+						}
+					},
+					error: function(err) {}
+				});
+			}
+		});
+		
 		$page
 		.on('click', '.list-group-item', function(e) {
 			e.stopPropagation();
-			var groupId = $(this).data('id');
+			groupId = $(this).data('id');
 			if (groupId > -1) {
 				$page.find('.list-group-item').removeClass('active');
 				$(this).addClass('active');
 				initTable(groupId);
 			}
 		})
+		// group
 		.on('hidden.bs.modal', '#modal-group-dialog', function() {
             $groupForm.bootstrapValidator('resetForm', true);
             $(this).removeData('bs.modal');
@@ -485,11 +717,38 @@
 				});
 			});
 		})
+		// student
+		.on('hidden.bs.modal', '#modal-student-add-dialog', function() {
+            $addForm.bootstrapValidator('resetForm', true);
+            $(this).removeData('bs.modal');
+        }) 
+        .on('hidden.bs.modal', '#modal-student-edit-dialog', function() {
+            $editForm.bootstrapValidator('resetForm', true);
+            $(this).removeData('bs.modal');
+        }) 
 		.on('click', '.btn-student-add', function() {
-			$studentDialog.find('.modal-title').text('添加考生');
-			$studentDialog.data('method', 'add');
-			$studentDialog.modal('show');
+			$addDialog.modal('show');
+			// 实时更新分组列表
+			$.ajax({
+				url: '${ctx}/api/group/list',
+				success: function(ret) {
+					if (ret.code == 0) {
+						var $select = $addDialog.find('select[name="groupId"]');
+						$select .empty();
+						$.each(ret.data, function(k, val) {
+							var $option = '<option value="' + val.id + '">' + val.name + '</option>';
+							$select .append($option);
+						});
+						// 根据选中的分组初始化添加考生的分组
+						if (groupId != 0) {
+							$select.val(groupId);
+						}
+					}
+				},
+				error: function(err) {}
+			});
 		})
+		// 考生导入
 		.on('click', '.btn-student-template', function() {
 			window.location.href = '${ctx}/api/student/template';
 		})
@@ -523,14 +782,9 @@
 		})
 		.on('click', '.btn-student-delete-batch', function() {
 			swal({
-                title: '',
-                text: '您确定要删除所选择的考生吗?',
+                title: '您确定要删除所选择的考生吗?',
                 type: 'warning',
                 showCancelButton: true,
-                cancelButtonText: '取消',
-                confirmButtonColor: '#DD6B55',
-                confirmButtonText: '确定',
-                closeOnConfirm: false
             }, function() {
                 var rows = $table.bootstrapTable('getSelections');
                 $.ajax({
@@ -540,21 +794,39 @@
                     	studentIdList: $k.util.getIdList(rows) 
                     },
                     success: function(ret) {
-                        if (ret.code == 0) {
-                            swal('', '删除成功!', 'success');
-						} else {
-                            swal('', ret.msg, 'error');
-                        }
-                        $table.bootstrapTable('refresh'); 
+                    	if (ret.code == 0) {
+                    		toastr['success'](ret.msg);
+                    		$table.bootstrapTable('refresh'); 
+                    	} else {
+                    		toastr['error'](ret.msg);
+                    	}
                     },
                     error: function(err) {}
                 });
             });
 		})
+		// 移动分组
 		.on('click', '.btn-student-move', function() {
 			$moveDialog.find('.alert-student-move').addClass('hide');
-			$moveDialog.find('input[name="group"]').removeAttr('checked');
+			$moveDialog.find('ul').empty();
 			$moveDialog.modal('show');
+			$.ajax({
+				url: '${ctx}/api/group/list',
+				success: function(ret) {
+					if (ret.code == 0) {
+						$.each(ret.data, function(k, val) {
+							var $li = '<li style="height: 30px;">'
+									+	'<div class="radio radio-success radio-inline">'
+									+		'<input type="radio" name="group" id="' + val.id + '" value="' + val.id + '">'
+									+ 		'<label for="'+ val.id + '">' + val.name + '</label>'
+									+ 	'</div>'
+									+'</li>';
+							$moveDialog.find('ul').append($li);
+						});
+					}
+				},
+				error: function(err) {}
+			});
 		})
 		.on('click', '.btn-student-move-confirm', function() {
 			var groupId = $moveDialog.find('input[name="group"]:checked').val();
@@ -572,13 +844,13 @@
 					groupId: groupId
 				},
 				success: function(ret) {
-                    $moveDialog.modal('hide');
                     if (ret.code == 0) {
-                    	swal('', '移动成功!', 'success');
-                    } else {
-                    	swal('', ret.msg, 'error');
-                    }
-                    $table.bootstrapTable('refresh');
+                    	$moveDialog.modal('hide');
+                		toastr['success'](ret.msg);
+                		$table.bootstrapTable('refresh'); 
+                	} else {
+                		toastr['error'](ret.msg);
+                	}
                 },
                 error: function(err) {}
 			});

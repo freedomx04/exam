@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -49,11 +50,16 @@ public class StudentController {
 	@RequestMapping(value = "/api/student/create", method = RequestMethod.POST)
 	public Result create(Long groupId, String username, String name, String password) {
 		try {
+			StudentEntity student = studentService.findByUsername(username.trim());
+			if (student != null) {
+				return new Result(Code.EXISTED.value(), "考生已存在");
+			}
+			
 			Date now = new Date();
 			GroupEntity group = groupService.findOne(groupId);
-			StudentEntity student = new StudentEntity(group, username, CiphersUtils.getInstance().MD5Password(password), name, now, now);
+			student = new StudentEntity(group, username, CiphersUtils.getInstance().MD5Password(password), name, now, now);
 			studentService.save(student);
-			return new Result(Code.SUCCESS.value(), "created");
+			return new Result(Code.SUCCESS.value(), "添加成功");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
@@ -69,7 +75,20 @@ public class StudentController {
 			student.setName(name);
 			student.setUpdateTime(new Date());
 			studentService.save(student);
-			return new Result(Code.SUCCESS.value(), "updated");
+			return new Result(Code.SUCCESS.value(), "编辑成功");
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return new Result(Code.ERROR.value(), e.getMessage());
+		}
+	}
+	
+	@RequestMapping(value = "/api/student/password", method = RequestMethod.POST)
+	public Result password2(Long studentId, String password) {
+		try {
+			StudentEntity student = studentService.findOne(studentId);
+			student.setPassword(CiphersUtils.getInstance().MD5Password(password));
+			studentService.save(student);
+			return new Result(Code.SUCCESS.value(), "修改成功");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
@@ -80,7 +99,7 @@ public class StudentController {
 	public Result delete(Long studentId) {
 		try {
 			studentService.delete(studentId);
-			return new Result(Code.SUCCESS.value(), "deleted");
+			return new Result(Code.SUCCESS.value(), "删除成功");
 		} catch (Exception e) {
 			if (e.getCause().toString().indexOf("ConstraintViolationException") != -1) {
 				return new Result(Code.CONSTRAINT.value(), "该数据存在关联，无法删除！");
@@ -94,7 +113,7 @@ public class StudentController {
 	public Result batchDelete(@RequestParam("studentIdList[]") List<Long> studentIdList) {
 		try {
 			studentService.delete(studentIdList);
-			return new Result(Code.SUCCESS.value(), "deleted");
+			return new Result(Code.SUCCESS.value(), "删除成功");
 		} catch (Exception e) {
 			if (e.getCause().toString().indexOf("ConstraintViolationException") != -1) {
 				return new Result(Code.CONSTRAINT.value(), "该数据存在关联，无法删除！");
@@ -166,7 +185,7 @@ public class StudentController {
 				studentService.save(student); 
 			}
 			
-			return new Result(Code.SUCCESS.value(), "moved");
+			return new Result(Code.SUCCESS.value(), "移动成功");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
@@ -216,6 +235,9 @@ public class StudentController {
             	}
             	
             	String groupName = ExcelUtil.getCellValue(row.getCell(0));
+            	if (StringUtils.isEmpty(groupName)) {
+            		continue;
+            	}
             	GroupEntity group = groupService.findByName(groupName);
             	if (group == null) {
             		Date now = new Date();
