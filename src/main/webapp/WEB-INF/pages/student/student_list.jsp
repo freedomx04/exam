@@ -77,11 +77,11 @@
 	 					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-student-import-dialog">
 	 						<i class="fa fa-upload fa-fw"></i>导入考生
 	 					</button>
-	 					<button type="button" class="btn btn-danger btn-student-delete-batch" disabled='disabled'>
-	 						<i class="fa fa-trash-o fa-fw"></i>删除
-	 					</button>
 	 					<button type="button" class="btn btn-white btn-student-move" disabled="disabled">
 	 						 移动到分组
+	 					</button>
+	 					<button type="button" class="btn btn-danger btn-student-delete-batch" disabled='disabled'>
+	 						<i class="fa fa-trash-o fa-fw"></i>删除
 	 					</button>
 					</div>
 					<table id="student-list-table" class="table-hm" data-mobile-responsive="true"></table>

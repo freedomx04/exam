@@ -88,6 +88,12 @@
 	 					<button type="button" class="btn btn-danger btn-question-delete-batch" disabled='disabled'>
 	 						<i class="fa fa-trash-o fa-fw"></i>删除
 	 					</button>
+	 					<select class="form-control" id="question-type" name="type" style="width: 160px; display: inline-block;">
+							<option value="0">所有题型</option>
+							<option value="1">单选题</option>
+							<option value="2">多选题</option>
+							<option value="3">判断题</option>
+						</select>
 					</div>
 					<table id="question-list-table" class="table-hm" data-mobile-responsive="true"></table>
 				</div>
@@ -525,6 +531,7 @@
                 error: function(err) {}
 			});
 		})
+		// 试题删除
 		.on('click', '.btn-question-delete-batch', function() {
 			swal({
                 title: '您确定要删除所选择的试题吗?',
@@ -549,6 +556,11 @@
                     error: function(err) {}
                 });
             });
+		})
+		// 试题类型选择
+		.on('change', '#question-type', function() {
+			type = $(this).val();
+			initTable(libraryId, type);
 		});
 		
 	})( jQuery );

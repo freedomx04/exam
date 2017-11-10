@@ -29,8 +29,8 @@
 				</div>
 				
 				<div id="feedback-list-table-toolbar" role="group">
-					<button type="button" class="btn btn-white btn-feedback-delete-batch" disabled="disabled">
- 						<i class="fa fa-trash-o fa-fw"></i>批量删除
+					<button type="button" class="btn btn-danger btn-feedback-delete-batch" disabled="disabled">
+ 						<i class="fa fa-trash-o fa-fw"></i>删除
  					</button>
 				</div>
  				<table id="feedback-list-table" class="table-hm" data-mobile-responsive="true"></table>
