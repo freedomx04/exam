@@ -10,7 +10,7 @@ public interface LibraryService {
 	
 	LibraryEntity findByName(String name);
 	
-	void save(LibraryEntity library);
+	LibraryEntity save(LibraryEntity library);
 	
 	void delete(Long libraryId);
 	

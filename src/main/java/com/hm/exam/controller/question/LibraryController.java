@@ -40,8 +40,8 @@ public class LibraryController {
 			
 			Date now = new Date();
 			library = new LibraryEntity(name, now, now);
-			libraryService.save(library);
-			return new Result(Code.SUCCESS.value(), "created");
+			library = libraryService.save(library);
+			return new ResultInfo(Code.SUCCESS.value(), "添加成功", library);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
@@ -58,7 +58,7 @@ public class LibraryController {
 				library.setName(name);
 				library.setUpdateTime(new Date());
 				libraryService.save(library);
-				return new Result(Code.SUCCESS.value(), "updated");
+				return new Result(Code.SUCCESS.value(), "编辑成功");
 			} else {
 				return new Result(Code.EXISTED.value(), "题库已存在");
 			}
@@ -79,7 +79,7 @@ public class LibraryController {
 				questionService.save(question);
 			}
 			libraryService.delete(libraryId);
-			return new Result(Code.SUCCESS.value(), "deleted");
+			return new Result(Code.SUCCESS.value(), "删除成功");
 		} catch (Exception e) {
 			if (e.getCause().toString().indexOf("ConstraintViolationException") != -1) {
 				return new Result(Code.CONSTRAINT.value(), "该数据存在关联，无法删除！");
@@ -95,7 +95,7 @@ public class LibraryController {
 			for (Long libraryId: libraryIdList) {
 				delete(libraryId);
 			}
-			return new Result(Code.SUCCESS.value(), "deleted");
+			return new Result(Code.SUCCESS.value(), "删除成功");
 		} catch (Exception e) {
 			if (e.getCause().toString().indexOf("ConstraintViolationException") != -1) {
 				return new Result(Code.CONSTRAINT.value(), "该数据存在关联，无法删除！");

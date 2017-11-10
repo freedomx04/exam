@@ -2,6 +2,8 @@ package com.hm.exam.repository.student;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.hm.exam.entity.student.GroupEntity;
@@ -15,6 +17,10 @@ public interface StudentRepository extends PagingAndSortingRepository<StudentEnt
 	
 	Integer countByGroup(GroupEntity group);
 	
-	List<StudentEntity> findByGroup(GroupEntity group);
+	List<StudentEntity> findByOrderByUpdateTimeDesc();
+	
+	Page<StudentEntity> findByOrderByUpdateTimeDesc(Pageable pageable);
+	
+	List<StudentEntity> findByGroupOrderByUpdateTimeDesc(GroupEntity group);
 
 }

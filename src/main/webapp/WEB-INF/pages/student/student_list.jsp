@@ -39,7 +39,7 @@
 						</div>
 						
 						<div class="page-aside-section">
-							<h4 class="page-aside-title"><i class="fa fa-bars fa-fw"></i>分组</h4>
+							<h4 class="page-aside-title"><i class="fa fa-bars fa-fw"></i>分组列表</h4>
 							<div class="list-group has-actions">
 								<c:forEach var="group" items="${groupList}">
 									<div class="list-group-item" data-id="${group.id}">
@@ -77,8 +77,8 @@
 	 					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-student-import-dialog">
 	 						<i class="fa fa-upload fa-fw"></i>导入考生
 	 					</button>
-	 					<button type="button" class="btn btn-white btn-student-delete-batch" disabled='disabled'>
-	 						<i class="fa fa-trash-o fa-fw"></i>批量删除
+	 					<button type="button" class="btn btn-danger btn-student-delete-batch" disabled='disabled'>
+	 						<i class="fa fa-trash-o fa-fw"></i>删除
 	 					</button>
 	 					<button type="button" class="btn btn-white btn-student-move" disabled="disabled">
 	 						 移动到分组
@@ -446,7 +446,6 @@
             if (validator.isValid()) {
             	var method = $groupDialog.data('method');
             	var name = $groupDialog.find('input[name = "name"]').val();
-            	var groupId = $groupDialog.data('groupId');
             	if (method == 'add') {
             		$.ajax({
  						url: '${ctx}/api/group/create',
@@ -478,6 +477,7 @@
                  		error: function(err) {}
                  	});
             	} else {
+            		var groupId = $groupDialog.data('groupId');
             		$.ajax({
                 		url: '${ctx}/api/group/update',
                 		type: 'POST',
@@ -692,7 +692,6 @@
 		})
 		.on('click', '.btn-group-delete', function(e) {
 			e.stopPropagation();
-			var text = '您确定要删除所选择的分组吗?<br/>assadsad';
 			var groupId = $(this).closest('.list-group-item').data('id');
 			swal({
 				title: '您确定要删除所选择的分组吗?',

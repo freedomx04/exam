@@ -54,7 +54,7 @@ public class QuestionController {
 			QuestionEntity question = new QuestionEntity(library, type, title, imagePath, optionA, optionB, optionC, optionD,
 					optionE, optionF, answer, analysis, score, now, now);
 			questionService.save(question);
-			return new Result(Code.SUCCESS.value(), "created");
+			return new Result(Code.SUCCESS.value(), "添加成功");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
@@ -81,7 +81,7 @@ public class QuestionController {
 			question.setScore(score);
 			question.setUpdateTime(new Date());
 			questionService.save(question);
-			return new Result(Code.SUCCESS.value(), "updated");
+			return new Result(Code.SUCCESS.value(), "编辑成功");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
@@ -92,7 +92,7 @@ public class QuestionController {
 	public Result delete(Long questionId) {
 		try {
 			questionService.delete(questionId);
-			return new Result(Code.SUCCESS.value(), "deleted");
+			return new Result(Code.SUCCESS.value(), "删除成功");
 		} catch (Exception e) {
 			if (e.getCause().toString().indexOf("ConstraintViolationException") != -1) {
 				return new Result(Code.CONSTRAINT.value(), "该数据存在关联，无法删除！");
@@ -106,7 +106,7 @@ public class QuestionController {
 	public Result batchDelete(@RequestParam("questionIdList[]") List<Long> questionIdList) {
 		try {
 			questionService.delete(questionIdList);
-			return new Result(Code.SUCCESS.value(), "deleted");
+			return new Result(Code.SUCCESS.value(), "删除成功");
 		} catch (Exception e) {
 			if (e.getCause().toString().indexOf("ConstraintViolationException") != -1) {
 				return new Result(Code.CONSTRAINT.value(), "该数据存在关联，无法删除！");
@@ -180,11 +180,10 @@ public class QuestionController {
 			for (Long questionId: questionIdList) {
 				QuestionEntity question = questionService.findOne(questionId);
 				question.setLibrary(library);
-				question.setUpdateTime(new Date());
 				questionService.save(question);
 			}
 			
-			return new Result(Code.SUCCESS.value(), "moved");
+			return new Result(Code.SUCCESS.value(), "移动成功");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());

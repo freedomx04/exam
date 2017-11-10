@@ -25,8 +25,8 @@ public class LibraryServiceImpl implements LibraryService {
 	}
 
 	@Override
-	public void save(LibraryEntity library) {
-		libraryRepository.save(library);
+	public LibraryEntity save(LibraryEntity library) {
+		return libraryRepository.save(library);
 	}
 
 	@Override

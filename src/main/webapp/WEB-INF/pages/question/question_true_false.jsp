@@ -117,12 +117,12 @@
                         <div class="col-sm-8 col-sm-offset-2">
                         	<c:if test="${method == 'add'}">
                             	<button type="button" class="btn btn-primary btn-question-add-continue">保存并继续</button>
-                            	<button type="button" class="btn btn-primary btn-question-add">保&nbsp;存</button>
+                            	<button type="button" class="btn btn-primary btn-question-add">保存</button>
                             </c:if>
                             <c:if test="${method == 'edit'}">
-                            	<button type="button" class="btn btn-primary btn-question-edit">保&nbsp;存</button>
+                            	<button type="button" class="btn btn-primary btn-question-edit">保存</button>
                             </c:if>
-                            <button type="button" class="btn btn-white btn-question-cancel">取&nbsp;消</button>
+                            <button type="button" class="btn btn-white btn-question-cancel">取消</button>
                         </div>
                     </div>
 				</form>

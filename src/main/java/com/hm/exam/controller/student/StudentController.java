@@ -181,7 +181,6 @@ public class StudentController {
 			for (Long studentId: studentIdList) {
 				StudentEntity student = studentService.findOne(studentId);
 				student.setGroup(group);
-				student.setUpdateTime(new Date());
 				studentService.save(student); 
 			}
 			

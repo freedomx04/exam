@@ -45,12 +45,12 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public List<StudentEntity> list() {
-		return (List<StudentEntity>) studentRepository.findAll();
+		return (List<StudentEntity>) studentRepository.findByOrderByUpdateTimeDesc();
 	}
 
 	@Override
 	public Page<StudentEntity> list(int page, int size) {
-		return studentRepository.findAll(new PageRequest(page, size));
+		return studentRepository.findByOrderByUpdateTimeDesc(new PageRequest(page, size));
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public List<StudentEntity> listByGroup(GroupEntity group) {
-		return studentRepository.findByGroup(group);
+		return studentRepository.findByGroupOrderByUpdateTimeDesc(group);
 	}
 
 }

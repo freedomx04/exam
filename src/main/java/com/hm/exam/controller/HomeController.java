@@ -127,18 +127,6 @@ public class HomeController {
 	/**
 	 * 题库管理
 	 */
-	@RequestMapping(value = "/libraryList")
-	String libraryList() {
-		return "pages/question/library_list";
-	}
-	
-	@RequestMapping(value = "/questionList")
-	String questionList(ModelMap modelMap) {
-		List<LibraryEntity> libraryList = libraryService.list();
-		modelMap.addAttribute("libraryList", libraryList);
-		return "pages/question/question_list";
-	}
-	
 	@RequestMapping(value = "/questionAdd")
 	String questionAdd(ModelMap modelMap, Integer type, String method, Long questionId) {
 		modelMap.addAttribute("method", method);
@@ -167,6 +155,13 @@ public class HomeController {
 		default:
 			return "pages/404";
 		}
+	}
+	
+	@RequestMapping(value = "/questionList")
+	String questionList2(ModelMap modelMap) {
+		List<LibraryEntity> libraryList = libraryService.list();
+		modelMap.addAttribute("libraryList", libraryList);
+		return "pages/question/question_list";
 	}
 	
 	
