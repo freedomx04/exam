@@ -10,7 +10,7 @@ public interface ClassifyService {
 	
 	ClassifyEntity findByName(String name);
 	
-	void save(ClassifyEntity classify);
+	ClassifyEntity save(ClassifyEntity classify);
 	
 	void delete(Long classifyId);
 	

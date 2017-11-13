@@ -23,7 +23,7 @@
 	
 </head>
 
-<body class="gray-bg body-group-list">
+<body class="gray-bg body-student-list">
 	<div class="wrapper wrapper-content animated fadeInRight height-full">
 		<div class="ibox float-e-margins height-full" style="margin-bottom: 0;">
 			<div class="height-full" style="position: relative;">
@@ -310,7 +310,7 @@
 	<script type="text/javascript">
 	;(function( $ ) {
 		
-		var $page = $('.body-group-list');
+		var $page = $('.body-student-list');
 		var $aside = $('.page-aside');
 		
 		var $importDialog = $page.find('#modal-student-import-dialog');

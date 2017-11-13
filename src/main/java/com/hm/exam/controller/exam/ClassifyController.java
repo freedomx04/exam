@@ -33,15 +33,15 @@ public class ClassifyController {
 	@RequestMapping(value = "/api/classify/create", method = RequestMethod.POST)
 	public Result create(String name) {
 		try {
-			ClassifyEntity classify = classifyService.findByName(name);
+			ClassifyEntity classify = classifyService.findByName(name.trim());
 			if (classify != null) {
 				return new Result(Code.EXISTED.value(), "试题分类已存在");
 			}
 
 			Date now = new Date();
 			classify = new ClassifyEntity(name, now, now);
-			classifyService.save(classify);
-			return new Result(Code.SUCCESS.value(), "created");
+			classify = classifyService.save(classify);
+			return new ResultInfo(Code.SUCCESS.value(), "添加成功", classify);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
@@ -58,7 +58,7 @@ public class ClassifyController {
 				classify.setName(name);
 				classify.setUpdateTime(new Date());
 				classifyService.save(classify);
-				return new Result(Code.SUCCESS.value(), "updated");
+				return new Result(Code.SUCCESS.value(), "编辑成功");
 			} else {
 				return new Result(Code.EXISTED.value(), "试题分类已存在");
 			}
@@ -79,7 +79,7 @@ public class ClassifyController {
 				paperService.save(paper);
 			}
 			classifyService.delete(classifyId);
-			return new Result(Code.SUCCESS.value(), "deleted");
+			return new Result(Code.SUCCESS.value(), "删除成功");
 		} catch (Exception e) {
 			if (e.getCause().toString().indexOf("ConstraintViolationException") != -1) {
 				return new Result(Code.CONSTRAINT.value(), "该数据存在关联，无法删除！");
@@ -95,7 +95,7 @@ public class ClassifyController {
 			for (Long classifyId: classifyIdList) {
 				delete(classifyId);
 			}
-			return new Result(Code.SUCCESS.value(), "deleted");
+			return new Result(Code.SUCCESS.value(), "删除成功");
 		} catch (Exception e) {
 			if (e.getCause().toString().indexOf("ConstraintViolationException") != -1) {
 				return new Result(Code.CONSTRAINT.value(), "该数据存在关联，无法删除！");

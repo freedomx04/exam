@@ -25,8 +25,8 @@ public class ClassifyServiceImpl implements ClassifyService {
 	}
 
 	@Override
-	public void save(ClassifyEntity classify) {
-		classifyRepository.save(classify);
+	public ClassifyEntity save(ClassifyEntity classify) {
+		return classifyRepository.save(classify);
 	}
 
 	@Override

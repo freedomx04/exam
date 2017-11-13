@@ -71,6 +71,11 @@
 						</a>
 					</li>
 					<li>
+						<a class="J_menuItem" href="paperList2">
+							<i class="fa fa-clock-o fa-fw"></i><span class="nav-label">试卷管理</span>
+						</a>
+					</li>
+					<li>
 						<a href="#">
 							<i class="fa fa-clock-o fa-fw"></i><span class="nav-label">考试管理</span><span class="fa arrow"></span>
 						</a>

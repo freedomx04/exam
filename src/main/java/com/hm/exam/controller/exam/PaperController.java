@@ -1,6 +1,7 @@
 package com.hm.exam.controller.exam;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class PaperController {
 			Date now = new Date();
 			PaperEntity paper = new PaperEntity(title, classify, description, now, now);
 			paperService.save(paper);
-			return new ResultInfo(Code.SUCCESS.value(), "created", paper);
+			return new ResultInfo(Code.SUCCESS.value(), "添加成功", paper);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
@@ -70,7 +71,7 @@ public class PaperController {
 			paper.setDescription(description);
 			paper.setUpdateTime(new Date());
 			paperService.save(paper);
-			return new Result(Code.SUCCESS.value(), "updated");
+			return new Result(Code.SUCCESS.value(), "编辑成功");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
@@ -81,7 +82,7 @@ public class PaperController {
 	public Result delete(Long paperId) {
 		try {
 			paperService.delete(paperId);
-			return new Result(Code.SUCCESS.value(), "deleted");
+			return new Result(Code.SUCCESS.value(), "删除成功");
 		} catch (Exception e) {
 			if (e.getCause().toString().indexOf("ConstraintViolationException") != -1) {
 				return new Result(Code.CONSTRAINT.value(), "该数据存在关联，无法删除！");
@@ -103,9 +104,15 @@ public class PaperController {
 	}
 	
 	@RequestMapping(value = "/api/paper/list")
-	public Result list() {
+	public Result list(Long classifyId) {
 		try {
-			List<PaperEntity> list = paperService.list();
+			List<PaperEntity> list = new ArrayList<>();
+			if (classifyId != 0) {
+				ClassifyEntity classify = classifyService.findOne(classifyId);
+				list = paperService.listByClassify(classify);
+			} else {
+				list = paperService.list();
+			}
 			return new ResultInfo(Code.SUCCESS.value(), "ok", list);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -120,11 +127,9 @@ public class PaperController {
 			for (Long paperId: paperIdList) {
 				PaperEntity paper = paperService.findOne(paperId);
 				paper.setClassify(classify);
-				paper.setUpdateTime(new Date());
 				paperService.save(paper);
 			}
-			
-			return new Result(Code.SUCCESS.value(), "moved");
+			return new Result(Code.SUCCESS.value(), "移动成功");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
