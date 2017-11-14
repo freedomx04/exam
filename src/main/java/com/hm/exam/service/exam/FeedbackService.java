@@ -3,7 +3,6 @@ package com.hm.exam.service.exam;
 import java.util.List;
 
 import com.hm.exam.entity.exam.FeedbackEntity;
-import com.hm.exam.entity.exam.PaperEntity;
 
 public interface FeedbackService {
 	
@@ -17,6 +16,6 @@ public interface FeedbackService {
 	
 	List<FeedbackEntity> list();
 	
-	List<FeedbackEntity> listByPaper(PaperEntity paper);
+	List<FeedbackEntity> listByPaperId(Long paperId);
 
 }

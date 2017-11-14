@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -63,6 +64,13 @@ public class PaperEntity extends BaseEntity {
 		joinColumns = {@JoinColumn(name = "paper_id", referencedColumnName = "id") },
 		inverseJoinColumns = {@JoinColumn(name = "student_id", referencedColumnName = "id") })
 	private List<StudentEntity> students = new LinkedList<>();
+	
+	/**
+	 * 反馈
+	 */
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "paper_id")
+	private List<FeedbackEntity> feedbacks = new LinkedList<>();
 
 	/**
 	 * 试卷状态
@@ -135,6 +143,14 @@ public class PaperEntity extends BaseEntity {
 
 	public void setStudents(List<StudentEntity> students) {
 		this.students = students;
+	}
+	
+	public List<FeedbackEntity> getFeedbacks() {
+		return feedbacks;
+	}
+
+	public void setFeedbacks(List<FeedbackEntity> feedbacks) {
+		this.feedbacks = feedbacks;
 	}
 
 	public Integer getStatus() {

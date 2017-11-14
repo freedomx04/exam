@@ -531,7 +531,6 @@
                 error: function(err) {}
 			});
 		})
-		// 试题删除
 		.on('click', '.btn-question-delete-batch', function() {
 			swal({
                 title: '您确定要删除所选择的试题吗?',

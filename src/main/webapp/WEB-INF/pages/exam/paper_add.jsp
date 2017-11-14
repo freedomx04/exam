@@ -105,7 +105,7 @@
 						<div class="form-group btn-operate">
 							<div class="col-sm-5 col-sm-offset-3">
 								<button type="button" class="btn btn-primary btn-paper-add-next">保存并进入下一步</button>
-								<button type="button" class="btn btn-white btn-paper-cancel">取&nbsp;消</button>
+								<button type="button" class="btn btn-white btn-paper-cancel">取消</button>
 							</div>
 						</div>
 					</form>
@@ -113,12 +113,12 @@
 				
 				<div class="pearl-pane hide" id="pearl-2">
 					<h2 style="font-size: 18px;">添加试题到试卷中:<span class="paper-title" style="padding-left: 10px;"></span></h2>
-					<div id="paper-question-table-toolbar" role="group" style="margin-top: 20px;">
+					<div id="paper-question-table-toolbar" role="group">
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-paper-question-dialog">
 							<i class="fa fa-plus fa-fw"></i>添加试题
 						</button>
-						<button type="button" class="btn btn-white btn-paper-question-delete-batch" disabled="disabled">
-	 						<i class="fa fa-trash-o fa-fw"></i>批量删除
+						<button type="button" class="btn btn-danger btn-paper-question-delete-batch" disabled="disabled">
+	 						<i class="fa fa-trash-o fa-fw"></i>删除
 	 					</button>
 					</div>
 					<table id="paper-question-table" class="table-hm" data-mobile-responsive="true"></table>
@@ -129,12 +129,12 @@
 				
 				<div class="pearl-pane hide" id="pearl-3">
 					<h2 style="font-size: 18px;">添加参加该考试的考生:<span class="paper-title" style="padding-left: 10px;"></span></h2>
-					<div id="paper-student-table-toolbar" role="group" style="margin-top: 20px;">
+					<div id="paper-student-table-toolbar" role="group">
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-paper-student-dialog">
 							<i class="fa fa-plus fa-fw"></i>添加考生
 						</button>
-						<button type="button" class="btn btn-white btn-paper-student-delete-batch" disabled="disabled">
-	 						<i class="fa fa-trash-o fa-fw"></i>批量删除
+						<button type="button" class="btn btn-danger btn-paper-student-delete-batch" disabled="disabled">
+	 						<i class="fa fa-trash-o fa-fw"></i>删除
 	 					</button>
 					</div>
 					<table id="paper-student-table" class="table-hm" data-mobile-responsive="true"></table>
@@ -179,14 +179,14 @@
 						<div class="form-group">
 							<label for="duration" class="col-sm-3 control-label">时间限制</label>
 							<div class="col-sm-5">
-								<input type="number" class="form-control" name="duration" min="0" value="30" style="width: 80px; display: inline-block;">&nbsp;&nbsp;分钟
+								<input type="number" class="form-control" name="duration" min="0" value="30" style="width: 80px; display: inline-block; margin-right: 10px;">分钟
 							</div>
 						</div>
 						
 						<div class="hr-line-solid"></div>
 						<div class="form-group">
 							<div class="col-sm-5 col-sm-offset-3">
-								<button type="button" class="btn btn-primary btn-fw btn-paper-setting-next">完&nbsp;成</button>
+								<button type="button" class="btn btn-primary btn-fw btn-paper-setting-next">完成</button>
 							</div>
 						</div>
 					</form>
@@ -219,7 +219,7 @@
     <script type="text/javascript" src="${ctx}/plugins/hplus/content.min.js"></script>
     <script type="text/javascript" src="${ctx}/local/common.js"></script>
     
-    <script type="text/javascript" src="${ctx}/plugins/sweetalert/sweetalert.min.js"></script>
+    <script type="text/javascript" src="${ctx}/plugins/sweetalert/sweetalert.js"></script>
     <script type="text/javascript" src="${ctx}/plugins/toastr/toastr.min.js"></script>
     <script type="text/javascript" src="${ctx}/plugins/bootstrap-table/bootstrap-table.min.js"></script>
     <script type="text/javascript" src="${ctx}/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
@@ -276,14 +276,9 @@
 		})
 		.on('click', '.btn-paper-question-delete-batch', function() {
 			swal({
-                title: '',
-                text: '您确定要删除所选择的试题吗?',
+                title: '您确定要删除所选择的试题吗?',
                 type: 'warning',
                 showCancelButton: true,
-                cancelButtonText: '取消',
-                confirmButtonColor: '#DD6B55',
-                confirmButtonText: '确定',
-                closeOnConfirm: false
             }, function() {
                 var rows = $paperQuestionTable.bootstrapTable('getSelections');
                 $.ajax({
@@ -295,11 +290,11 @@
                     },
                     success: function(ret) {
                         if (ret.code == 0) {
-                            swal('', '删除成功!', 'success');
+							toastr['success'](ret.msg);
+							$paperQuestionTable.bootstrapTable('refresh');
 						} else {
-                            swal('', ret.msg, 'error');
-                        }
-                        $paperQuestionTable.bootstrapTable('refresh'); 
+							toastr['error'](ret.msg);
+						}
                     },
                     error: function(err) {}
                 });
@@ -311,14 +306,9 @@
 		})
 		.on('click', '.btn-paper-student-delete-batch', function() {
 			swal({
-                title: '',
-                text: '您确定要删除所选择的考生吗?',
+                title: '您确定要删除所选择的考生吗?',
                 type: 'warning',
                 showCancelButton: true,
-                cancelButtonText: '取消',
-                confirmButtonColor: '#DD6B55',
-                confirmButtonText: '确定',
-                closeOnConfirm: false
             }, function() {
                 var rows = $paperStudentTable.bootstrapTable('getSelections');
                 $.ajax({
@@ -330,11 +320,11 @@
                     },
                     success: function(ret) {
                         if (ret.code == 0) {
-                            swal('', '删除成功!', 'success');
+							toastr['success'](ret.msg);
+							$paperStudentTable.bootstrapTable('refresh');
 						} else {
-                            swal('', ret.msg, 'error');
-                        }
-                        $paperStudentTable.bootstrapTable('refresh'); 
+							toastr['error'](ret.msg);
+						}
                     },
                     error: function(err) {}
                 });
@@ -368,6 +358,9 @@
                 },
                 error: function(err) {}
 			});
+		})
+		.on('click', '.btn-copy', function() {
+			toastr['success']('复制成功');
 		});
 		
 		function pearl($pearl) {
@@ -403,9 +396,6 @@
 				toolbar: '#paper-question-table-toolbar',
 				idField: 'id',
 				pagination: false,
-				search: false,
-				showRefresh: false,
-				showColumns: false,
 				responseHandler: function(res) {
 					return res.data;
 				},
@@ -464,7 +454,7 @@
 				}, {
 					title: '操作',
 					align: 'center',
-					width: '100',
+					width: '80',
 					formatter: function(value, row, index) {
 						var $delete = '<a class="btn-question-delete a-operate">删除</a>';
 						return $delete;
@@ -473,14 +463,9 @@
 						'click .btn-question-delete': function(e, value, row, index) {
 							e.stopPropagation();
 							swal({
-	            				title: '',
-	            				text: '您确定要删除所选择的试题吗?',
+	            				title: '您确定要删除所选择的试题吗?',
 	            				type: 'warning',
 	            				showCancelButton: true,
-	                            cancelButtonText: '取消',
-	                            confirmButtonColor: '#DD6B55',
-	                            confirmButtonText: '确定',
-	                            closeOnConfirm: false
 	            			}, function() {
 	            				$.ajax({
 	            					url: '${ctx}/api/paper/question/delete',
@@ -490,11 +475,11 @@
 	            					},
 	            					success: function(ret) {
 	            						if (ret.code == 0) {
-	            							swal('', '删除成功!', 'success');
+	            							toastr['success'](ret.msg);
+	            							$paperQuestionTable.bootstrapTable('refresh');
 	            						} else {
-	            							swal('', ret.msg, 'error');
+	            							toastr['error'](ret.msg);
 	            						}
-	            						$paperQuestionTable.bootstrapTable('refresh'); 
 	            					},
 	            					error: function(err) {}
 	            				});
@@ -551,7 +536,7 @@
 				}, {
 					title: '操作',
 					align: 'center',
-					width: '100',
+					width: '80',
 					formatter: function(value, row, index) {
 						var $delete = '<a class="btn-student-delete a-operate">删除</a>';
 						return $delete;
@@ -560,14 +545,9 @@
 						'click .btn-student-delete': function(e, value, row, index) {
 							e.stopPropagation();
 							swal({
-	            				title: '',
-	            				text: '您确定要删除所选择的考生吗?',
+	            				title: '您确定要删除所选择的考生吗?',
 	            				type: 'warning',
 	            				showCancelButton: true,
-	                            cancelButtonText: '取消',
-	                            confirmButtonColor: '#DD6B55',
-	                            confirmButtonText: '确定',
-	                            closeOnConfirm: false
 	            			}, function() {
 	            				$.ajax({
 	            					url: '${ctx}/api/paper/student/delete',
@@ -577,11 +557,11 @@
 	            					},
 	            					success: function(ret) {
 	            						if (ret.code == 0) {
-	            							swal('', '删除成功!', 'success');
+	            							toastr['success'](ret.msg);
+	            							$paperStudentTable.bootstrapTable('refresh');
 	            						} else {
-	            							swal('', ret.msg, 'error');
+	            							toastr['error'](ret.msg);
 	            						}
-	            						$paperStudentTable.bootstrapTable('refresh'); 
 	            					},
 	            					error: function(err) {}
 	            				});

@@ -15,7 +15,6 @@ import com.hm.exam.common.result.Code;
 import com.hm.exam.common.result.Result;
 import com.hm.exam.common.result.ResultInfo;
 import com.hm.exam.entity.exam.FeedbackEntity;
-import com.hm.exam.entity.exam.PaperEntity;
 import com.hm.exam.entity.student.StudentEntity;
 import com.hm.exam.service.exam.FeedbackService;
 import com.hm.exam.service.exam.PaperService;
@@ -38,10 +37,9 @@ public class FeedbackController {
 	@RequestMapping(value = "/api/feedback/create", method = RequestMethod.POST)
 	public Result create(Long paperId, Long studentId, String content) {
 		try {
-			PaperEntity paper = paperService.findOne(paperId);
 			StudentEntity student = studentService.findOne(studentId);
 			Date now = new Date();
-			FeedbackEntity feedback = new FeedbackEntity(paper, student, content, now, now);
+			FeedbackEntity feedback = new FeedbackEntity(paperId, student, content, now, now);
 			feedbackService.save(feedback);
 			return new Result(Code.SUCCESS.value(), "created");
 		} catch (Exception e) {
@@ -103,8 +101,7 @@ public class FeedbackController {
 	@RequestMapping(value = "/api/feedback/listByPaperId")
 	public Result listByPaperId(Long paperId) {
 		try {
-			PaperEntity paper = paperService.findOne(paperId);
-			List<FeedbackEntity> list = feedbackService.listByPaper(paper);
+			List<FeedbackEntity> list = feedbackService.listByPaperId(paperId);
 			return new ResultInfo(Code.SUCCESS.value(), "ok", list);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);

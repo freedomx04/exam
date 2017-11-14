@@ -71,7 +71,7 @@
 						</a>
 					</li>
 					<li>
-						<a class="J_menuItem" href="paperList2">
+						<a class="J_menuItem" href="paperList">
 							<i class="fa fa-clock-o fa-fw"></i><span class="nav-label">试卷管理</span>
 						</a>
 					</li>
@@ -80,8 +80,6 @@
 							<i class="fa fa-clock-o fa-fw"></i><span class="nav-label">考试管理</span><span class="fa arrow"></span>
 						</a>
 						<ul class="nav nav-second-level">
-							<li><a class="J_menuItem" href="classifyList">试卷分类</a></li>
-							<li><a class="J_menuItem" href="paperList">试卷管理</a></li>
 							<li><a class="J_menuItem" href="feedbackList">建议反馈</a></li>
 						</ul>
 					</li>

@@ -9,6 +9,8 @@ import com.hm.exam.entity.exam.PaperEntity;
 
 public interface PaperRepository extends PagingAndSortingRepository<PaperEntity, Long> {
 	
+	Iterable<PaperEntity> findByIdIn(List<Long> paperIdList);
+	
 	List<PaperEntity> findByOrderByUpdateTimeDesc();
 	
 	Integer countByClassify(ClassifyEntity classify);

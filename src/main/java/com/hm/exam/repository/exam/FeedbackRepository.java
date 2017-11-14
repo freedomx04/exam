@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 import com.hm.exam.entity.exam.FeedbackEntity;
-import com.hm.exam.entity.exam.PaperEntity;
 
 public interface FeedbackRepository extends CrudRepository<FeedbackEntity, Long> {
 	
@@ -13,6 +12,6 @@ public interface FeedbackRepository extends CrudRepository<FeedbackEntity, Long>
 	
 	List<FeedbackEntity> findByOrderByUpdateTime();
 	
-	List<FeedbackEntity> findByPaperOrderByUpdateTime(PaperEntity paper);
+	List<FeedbackEntity> findByPaperIdOrderByUpdateTime(Long paperId);
 
 }

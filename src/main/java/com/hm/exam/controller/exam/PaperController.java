@@ -91,6 +91,20 @@ public class PaperController {
 			return new Result(Code.ERROR.value(), e.getMessage());
 		}
 	}
+	
+	@RequestMapping(value = "/api/paper/batchDelete", method = RequestMethod.POST)
+	public Result batchDelete(@RequestParam("paperIdList[]") List<Long> paperIdList) {
+		try {
+			paperService.delete(paperIdList);
+			return new Result(Code.SUCCESS.value(), "删除成功");
+		} catch (Exception e) {
+			if (e.getCause().toString().indexOf("ConstraintViolationException") != -1) {
+				return new Result(Code.CONSTRAINT.value(), "该数据存在关联，无法删除！");
+			}
+			log.error(e.getMessage(), e);
+			return new Result(Code.ERROR.value(), e.getMessage());
+		}
+	}
 
 	@RequestMapping(value = "/api/papert/get")
 	public Result get(Long paperId) {
@@ -148,7 +162,7 @@ public class PaperController {
 			
 			paper.setDuration(duration);
 			paperService.save(paper);
-			return new Result(Code.SUCCESS.value(), "success");
+			return new Result(Code.SUCCESS.value(), "保存成功");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
@@ -185,8 +199,7 @@ public class PaperController {
 				}
 			}
 			paperService.save(paper);
-			
-			return new Result(Code.SUCCESS.value(), "success");
+			return new Result(Code.SUCCESS.value(), "添加成功");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
@@ -202,7 +215,7 @@ public class PaperController {
 				paper.getQuestions().add(question);
 			}
 			paperService.save(paper);
-			return new Result(Code.SUCCESS.value(), "added");
+			return new Result(Code.SUCCESS.value(), "添加成功");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
@@ -216,7 +229,7 @@ public class PaperController {
 			QuestionEntity question = questionService.findOne(questionId);
 			paper.getQuestions().remove(question);
 			paperService.save(paper);
-			return new Result(Code.SUCCESS.value(), "deleted");
+			return new Result(Code.SUCCESS.value(), "删除成功");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
@@ -232,7 +245,7 @@ public class PaperController {
 				paper.getQuestions().remove(question);
 			}
 			paperService.save(paper);
-			return new Result(Code.SUCCESS.value(), "deleted");
+			return new Result(Code.SUCCESS.value(), "删除成功");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
@@ -266,7 +279,7 @@ public class PaperController {
 				}
 			}
 			paperService.save(paper);
-			return new Result(Code.SUCCESS.value(), "added");
+			return new Result(Code.SUCCESS.value(), "添加成功");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
@@ -282,7 +295,7 @@ public class PaperController {
 				paper.getStudents().add(student);
 			}
 			paperService.save(paper);
-			return new Result(Code.SUCCESS.value(), "added");
+			return new Result(Code.SUCCESS.value(), "添加成功");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
@@ -296,7 +309,7 @@ public class PaperController {
 			StudentEntity student = studentService.findOne(studentId);
 			paper.getStudents().remove(student);
 			paperService.save(paper);
-			return new Result(Code.SUCCESS.value(), "deleted");
+			return new Result(Code.SUCCESS.value(), "删除成功");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
@@ -312,7 +325,7 @@ public class PaperController {
 				paper.getStudents().remove(student);
 			}
 			paperService.save(paper);
-			return new Result(Code.SUCCESS.value(), "deleted");
+			return new Result(Code.SUCCESS.value(), "删除成功");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());

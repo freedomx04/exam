@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/include/preload.jsp"%>
 
 <div class="modal" id="modal-paper-question-dialog" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="true">
-	<div class="modal-dialog" style="width: 850px;">
+	<div class="modal-dialog modal-center" style="width: 850px;">
 		<div class="modal-content animated fadeInDown">
 			<div class="modal-body" style="max-height: 700px; overflow: auto;">
 				<div class="tabs-container">
@@ -186,6 +186,7 @@
 							},
 							success: function(ret) {
 								if (ret.code == 0) {
+									toastr['success'](ret.msg);
 									$this.text('已加入').addClass('disabled');
 									$paperQuestionTable.bootstrapTable('refresh');
 								}
@@ -241,6 +242,7 @@
 			},
 			success: function(ret) {
 				if (ret.code == 0) {
+					toastr['success'](ret.msg);
 					$paperQuestionTable.bootstrapTable('refresh');
 				}
 			},

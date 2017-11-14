@@ -29,6 +29,12 @@ public class PaperServiceImpl implements PaperService {
 	public void delete(Long paperId) {
 		paperRepository.delete(paperId);
 	}
+	
+	@Override
+	public void delete(List<Long> paperIdList) {
+		Iterable<PaperEntity> it = paperRepository.findByIdIn(paperIdList);
+		paperRepository.delete(it);
+	}
 
 	@Override
 	public List<PaperEntity> list() {

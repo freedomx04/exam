@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hm.exam.entity.exam.FeedbackEntity;
-import com.hm.exam.entity.exam.PaperEntity;
 import com.hm.exam.repository.exam.FeedbackRepository;
 
 @Service
@@ -42,8 +41,8 @@ public class FeedbackServiceImpl implements FeedbackService {
 	}
 
 	@Override
-	public List<FeedbackEntity> listByPaper(PaperEntity paper) {
-		return feedbackRepository.findByPaperOrderByUpdateTime(paper);
+	public List<FeedbackEntity> listByPaperId(Long paperId) {
+		return feedbackRepository.findByPaperIdOrderByUpdateTime(paperId);
 	}
 
 }

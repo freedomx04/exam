@@ -245,18 +245,6 @@ public class HomeController {
 	/**
 	 * 考试管理
 	 */
-	@RequestMapping(value = "/paperList2")
-	String paperList2(ModelMap modelMap) {
-		List<ClassifyEntity> classifyList = classifyService.list();
-		modelMap.addAttribute("classifyList", classifyList);
-		return "pages/exam/paper_list2";
-	}
-	
-	@RequestMapping(value = "/classifyList")
-	String classifyList() {
-		return "pages/exam/classify_list";
-	}
-	
 	@RequestMapping(value = "/paperList")
 	String paperList(ModelMap modelMap) {
 		List<ClassifyEntity> classifyList = classifyService.list();

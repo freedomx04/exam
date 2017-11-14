@@ -40,8 +40,8 @@
 				<div class="page-title">
 					<h2>试卷编辑
 						<small style="margin-left: 20px;">${paper.title}</small>
-						<a href="${ctx}/paperList" class="a-back">返回试卷管理</a>
 					</h2>
+					<a href="${ctx}/paperList"><i class="fa fa-mail-reply fa-fw"></i>试卷管理</a>
 				</div>
 				
 				<div class="tabs-container">
@@ -99,7 +99,7 @@
 								<div class="hr-line-solid"></div>
 								<div class="form-group btn-operate">
 									<div class="col-sm-5 col-sm-offset-3">
-										<button type="button" class="btn btn-primary btn-fw btn-paper-info-save">保&nbsp;存</button>
+										<button type="button" class="btn btn-primary btn-fw btn-paper-info-save">保存</button>
 									</div>
 								</div>
 							</form>
@@ -186,14 +186,14 @@
 								<div class="hr-line-solid"></div>
 								<div class="form-group btn-operate">
 									<div class="col-sm-5 col-sm-offset-3">
-										<button type="button" class="btn btn-primary btn-fw btn-paper-setting-save">保&nbsp;存</button>
+										<button type="button" class="btn btn-primary btn-fw btn-paper-setting-save">保存</button>
 									</div>
 								</div>
 							</form>
 						</div>
 						
 						<div id="tab-paper-preview" class="tab-pane">
-							<div style="width: 450px; margin: 0 auto;">
+							<div style="width: 450px; margin: 20px auto;">
 								<h2>复制下面的连接并分享给您的考生</h2>
 								<div>
 									<pre class="url-share"></pre>
@@ -215,7 +215,7 @@
 	<script type="text/javascript" src="${ctx}/plugins/hplus/content.min.js"></script>
 	<script type="text/javascript" src="${ctx}/local/common.js"></script>
 	
-	<script type="text/javascript" src="${ctx}/plugins/sweetalert/sweetalert.min.js"></script>
+	<script type="text/javascript" src="${ctx}/plugins/sweetalert/sweetalert.js"></script>
 	<script type="text/javascript" src="${ctx}/plugins/bootstrap-table/bootstrap-table.min.js"></script>
     <script type="text/javascript" src="${ctx}/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
     <script type="text/javascript" src="${ctx}/plugins/toastr/toastr.min.js"></script>
@@ -302,7 +302,7 @@
 			}, {
 				title: '操作',
 				align: 'center',
-				width: '100',
+				width: '80',
 				formatter: function(value, row, index) {
 					var $delete = '<a class="btn-paper-question-delete a-operate">删除</a>';
 					return $delete;
@@ -311,14 +311,9 @@
 					'click .btn-paper-question-delete': function(e, value, row, index) {
 						e.stopPropagation();
 						swal({
-            				title: '',
-            				text: '您确定要删除所选择的试题吗?',
+            				title: '您确定要删除所选择的试题吗?',
             				type: 'warning',
-            				showCancelButton: true,
-                            cancelButtonText: '取消',
-                            confirmButtonColor: '#DD6B55',
-                            confirmButtonText: '确定',
-                            closeOnConfirm: false
+            				showCancelButton: true
             			}, function() {
             				$.ajax({
             					url: '${ctx}/api/paper/question/delete',
@@ -328,11 +323,11 @@
             					},
             					success: function(ret) {
             						if (ret.code == 0) {
-            							swal('', '删除成功!', 'success');
+            							toastr['success'](ret.msg);
+            							$table.bootstrapTable('refresh'); 
             						} else {
-            							swal('', ret.msg, 'error');
+            							toastr['error'](ret.msg);
             						}
-            						$table.bootstrapTable('refresh'); 
             					},
             					error: function(err) {}
             				});
@@ -388,7 +383,7 @@
 			}, {
 				title: '操作',
 				align: 'center',
-				width: '100',
+				width: '80',
 				formatter: function(value, row, index) {
 					var $delete = '<a class="btn-paper-student-delete a-operate">删除</a>';
 					return $delete;
@@ -397,14 +392,9 @@
 					'click .btn-paper-student-delete': function(e, value, row, index) {
 						e.stopPropagation();
 						swal({
-            				title: '',
-            				text: '您确定要删除所选择的考生吗?',
+            				title: '您确定要删除所选择的考生吗?',
             				type: 'warning',
-            				showCancelButton: true,
-                            cancelButtonText: '取消',
-                            confirmButtonColor: '#DD6B55',
-                            confirmButtonText: '确定',
-                            closeOnConfirm: false
+            				showCancelButton: true
             			}, function() {
             				$.ajax({
             					url: '${ctx}/api/paper/student/delete',
@@ -414,11 +404,11 @@
             					},
             					success: function(ret) {
             						if (ret.code == 0) {
-            							swal('', '删除成功!', 'success');
+            							toastr['success'](ret.msg);
+            							$paperStudentTable.bootstrapTable('refresh'); 
             						} else {
-            							swal('', ret.msg, 'error');
+            							toastr['error'](ret.msg);
             						}
-            						$paperStudentTable.bootstrapTable('refresh'); 
             					},
             					error: function(err) {}
             				});
@@ -474,7 +464,7 @@
     			cache: false,
     			success: function(ret) {
     				if (ret.code == 0) {
-    					swal('', '保存成功!', 'success');
+    					toastr['success'](ret.msg);
     				}
     			},
     			error: function(err) {}
@@ -483,14 +473,9 @@
     	// question
     	.on('click', '.btn-paper-question-delete-batch', function() {
 			swal({
-                title: '',
-                text: '您确定要删除所选择的试题吗?',
+                title: '您确定要删除所选择的试题吗?',
                 type: 'warning',
-                showCancelButton: true,
-                cancelButtonText: '取消',
-                confirmButtonColor: '#DD6B55',
-                confirmButtonText: '确定',
-                closeOnConfirm: false
+                showCancelButton: true
             }, function() {
                 var rows = $paperQuestionTable.bootstrapTable('getSelections');
                 $.ajax({
@@ -502,11 +487,11 @@
                     },
                     success: function(ret) {
                         if (ret.code == 0) {
-                            swal('', '删除成功!', 'success');
+                            toastr['success'](ret.msg);
+                            $paperQuestionTable.bootstrapTable('refresh');
 						} else {
-                            swal('', ret.msg, 'error');
+							toastr['error'](ret.msg);
                         }
-                        $paperQuestionTable.bootstrapTable('refresh'); 
                     },
                     error: function(err) {}
                 });
@@ -515,14 +500,9 @@
     	// student
     	.on('click', '.btn-paper-student-delete-batch', function() {
 			swal({
-                title: '',
-                text: '您确定要删除所选择的考生吗?',
+                title: '您确定要删除所选择的考生吗?',
                 type: 'warning',
-                showCancelButton: true,
-                cancelButtonText: '取消',
-                confirmButtonColor: '#DD6B55',
-                confirmButtonText: '确定',
-                closeOnConfirm: false
+                showCancelButton: true
             }, function() {
                 var rows = $paperStudentTable.bootstrapTable('getSelections');
                 $.ajax({
@@ -534,11 +514,11 @@
                     },
                     success: function(ret) {
                         if (ret.code == 0) {
-                            swal('', '删除成功!', 'success');
+                        	toastr['success'](ret.msg);
+                            $paperStudentTable.bootstrapTable('refresh');
 						} else {
-                            swal('', ret.msg, 'error');
+							toastr['error'](ret.msg);
                         }
-                        $paperStudentTable.bootstrapTable('refresh'); 
                     },
                     error: function(err) {}
                 });
@@ -566,12 +546,15 @@
                 cache: false, 
                 success: function(ret) {
                 	if (ret.code == 0) {
-                		swal('', '保存成功!', 'success');
+                		toastr['success'](ret.msg);
                 	}
                 },
                 error: function(err) {}
 			});
-    	});
+    	})
+    	.on('click', '.btn-copy', function() {
+			toastr['success']('复制成功');
+		});;
     	
     
     </script>

@@ -13,6 +13,8 @@ public interface PaperService {
 	
 	void delete(Long paperId);
 	
+	void delete(List<Long> paperIdList);
+	
 	List<PaperEntity> list();
 	
 	Integer countByClassify(ClassifyEntity classify);
