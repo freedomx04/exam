@@ -41,7 +41,7 @@ public class FeedbackController {
 			Date now = new Date();
 			FeedbackEntity feedback = new FeedbackEntity(paperId, student, content, now, now);
 			feedbackService.save(feedback);
-			return new Result(Code.SUCCESS.value(), "created");
+			return new Result(Code.SUCCESS.value(), "添加成功");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
@@ -52,7 +52,7 @@ public class FeedbackController {
 	public Result delete(Long feedbackId) {
 		try {
 			feedbackService.delete(feedbackId);
-			return new Result(Code.SUCCESS.value(), "deleted");
+			return new Result(Code.SUCCESS.value(), "删除成功");
 		} catch (Exception e) {
 			if (e.getCause().toString().indexOf("ConstraintViolationException") != -1) {
 				return new Result(Code.CONSTRAINT.value(), "该数据存在关联，无法删除！");
@@ -66,7 +66,7 @@ public class FeedbackController {
 	public Result batchDelete(@RequestParam("feedbackIdList[]") List<Long> feedbackIdList) {
 		try {
 			feedbackService.delete(feedbackIdList);
-			return new Result(Code.SUCCESS.value(), "deleted");
+			return new Result(Code.SUCCESS.value(), "删除成功");
 		} catch (Exception e) {
 			if (e.getCause().toString().indexOf("ConstraintViolationException") != -1) {
 				return new Result(Code.CONSTRAINT.value(), "该数据存在关联，无法删除！");

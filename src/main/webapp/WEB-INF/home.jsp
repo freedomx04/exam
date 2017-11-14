@@ -77,14 +77,6 @@
 					</li>
 					<li>
 						<a href="#">
-							<i class="fa fa-clock-o fa-fw"></i><span class="nav-label">考试管理</span><span class="fa arrow"></span>
-						</a>
-						<ul class="nav nav-second-level">
-							<li><a class="J_menuItem" href="feedbackList">建议反馈</a></li>
-						</ul>
-					</li>
-					<li>
-						<a href="#">
 							<i class="fa fa-edit fa-fw"></i><span class="nav-label">模拟练习</span><span class="fa arrow"></span>
 						</a>
 						<ul class="nav nav-second-level">

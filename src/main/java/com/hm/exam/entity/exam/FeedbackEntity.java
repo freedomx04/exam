@@ -32,6 +32,7 @@ public class FeedbackEntity extends BaseEntity {
 	/**
 	 * 反馈内容
 	 */
+	@Column(length = 4000)
 	private String content;
 	
 	public FeedbackEntity() {

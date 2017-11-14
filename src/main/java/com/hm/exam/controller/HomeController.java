@@ -304,7 +304,8 @@ public class HomeController {
 	
 	
 	@RequestMapping(value = "/feedbackList")
-	String feedbackList() {
+	String feedbackList(ModelMap modelMap, Long paperId) {
+		modelMap.addAttribute("paperId", paperId);
 		return "pages/exam/feedback_list";
 	}
 	

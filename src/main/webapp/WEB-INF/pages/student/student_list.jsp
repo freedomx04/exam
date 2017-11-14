@@ -84,7 +84,7 @@
 	 						<i class="fa fa-trash-o fa-fw"></i>删除
 	 					</button>
 					</div>
-					<table id="student-list-table" class="table-hm" data-mobile-responsive="true"></table>
+					<table id="student-list-table" class="table-hm table-fixed" data-mobile-responsive="true"></table>
 				</div>
 			</div>
 		</div>
@@ -335,7 +335,7 @@
 					checkbox: true
 				}, {
 					title: '#',
-					width: '20',
+					width: '50',
 					formatter: function(value, row, index) {
 						return index + 1;
 					}
@@ -424,6 +424,9 @@
 	            				});
 	            			});
 						}
+					},
+					cellStyle: function(value, row, index) {
+						return { css: {'overflow': 'visible'} };
 					}
 				}]
 			});

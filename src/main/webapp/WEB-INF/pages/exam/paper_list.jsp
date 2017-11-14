@@ -80,7 +80,7 @@
 	 						<i class="fa fa-trash-o fa-fw"></i>删除
 	 					</button>
 					</div>
-					<table id="paper-list-table" class="table-hm" data-mobile-responsive="true"></table>
+					<table id="paper-list-table" class="table-hm table-fixed" data-mobile-responsive="true"></table>
 				</div>
 			</div>
 		</div>
@@ -171,7 +171,7 @@
 					checkbox: true
 				}, {
 					title: '#',
-					width: '20',
+					width: '50',
 					formatter: function(value, row, index) {
 						return index + 1;
 					}
@@ -181,6 +181,7 @@
 				}, {
 					field: 'classify',
 					title: '试卷分类',
+					width: '200',
 					formatter: function(value, row, index) {
 						return value.name
 					}
@@ -206,7 +207,13 @@
 					align: 'center',
 					width: '50',
 					formatter: function(value, row, index) {
-						return value.length;
+						return '<a class="btn-paper-feedback">' + value.length + '</a>';
+					},
+					events: window.operateEvetns = {
+						'click .btn-paper-feedback': function(e, value, row, index) {
+							e.stopPropagation();
+							window.location.href = '${ctx}/feedbackList?paperId=' + row.id;
+						}
 					}
 				}, {
 					field: 'updateTime',
@@ -266,6 +273,9 @@
 	            				});
 	            			});
 						}
+					},
+					cellStyle: function(value, row, index) {
+						return { css: {'overflow': 'visible'} };
 					}
 				}]
 			});
