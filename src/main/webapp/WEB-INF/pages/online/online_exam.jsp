@@ -37,7 +37,7 @@
 	
 	<main role="main">
 		<div class="exam-container">
-			<div class="exam-ques-list" style="margin-right: 10px; width: 690px;">
+			<div class="exam-ques-list" style="width: 840px;">
 				<c:forEach var="question" items="${paper.questions}" varStatus="status">
 					<c:set var="seq" value="${status.index + 1}"></c:set>
 					<div id="ques-${status.index + 1}" class="card exam-ques" data-index="${seq}" data-question-id="${question.id}" data-question-type="${question.type}">
@@ -178,7 +178,7 @@
 				</c:forEach> 
 			</div>
 			
-			<div class="exam-controller fixed" style="width: 300px; color: #999;">
+			<div class="exam-controller fixed" style="width: 320px; color: #999;">
 				<div class="card card-control">
 					<div style="font-size: 20px; padding: 15px;">
 						<i class="fa fa-clock-o fa-fw fa-lg"></i>考试剩余时间
@@ -303,7 +303,7 @@
 			var $controller = $page.find('.exam-controller');
 			var $corner = $page.find('.corner-buttons');
 			var $width = $(document).width();
-			var left_val = ($width - 1000) / 2 + 690 + 10;
+			var left_val = ($width - 1180) / 2 + 840 + 20;
 			$controller.css('left', left_val);
 			$corner.css('left', left_val);
 		}

@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -12,7 +13,10 @@ import javax.persistence.Table;
 import com.hm.exam.entity.BaseEntity;
 
 @Entity
-@Table(name = "student_student")
+@Table(name = "student_student", indexes = {
+	@Index(name = "index_student_student_updateTime", columnList = "updateTime"),
+	@Index(name = "index_student_student_group_updateTime", columnList = "group_id, updateTime")
+})
 public class StudentEntity extends BaseEntity {
 
 	/**

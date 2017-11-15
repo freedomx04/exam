@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -19,7 +20,10 @@ import com.hm.exam.entity.question.QuestionEntity;
 import com.hm.exam.entity.student.StudentEntity;
 
 @Entity
-@Table(name = "exam_paper")
+@Table(name = "exam_paper", indexes = {
+	@Index(name = "index_exam_paper_updateTime", columnList = "updateTime"),
+	@Index(name = "index_exam_paper_classify_updateTime", columnList = "classify_id, updateTime")
+})
 public class PaperEntity extends BaseEntity {
 
 	/**

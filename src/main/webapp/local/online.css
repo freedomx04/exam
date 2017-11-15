@@ -59,7 +59,7 @@
 .exam-banner-inner {
 	position: relative;
 	display: flex;
-	width: 1000px;
+	width: 1180px;
 	height: 52px;
 	padding: 0 16px;
 	margin: 0 auto;
@@ -79,7 +79,7 @@
 	visibility: hidden;
 }
 .card {
-	margin-bottom: 10px;
+	margin-bottom: 15px;
 	background: #fff;
 	overflow: hidden;
 	border-radius: 2px;
@@ -94,12 +94,13 @@
 	-webkit-box-align: start;
 	align-items: flex-start;
 	position: relative;
-	width: 1000px;
-	margin: 10px auto;
+	width: 1180px;
+	margin: 30px auto;
 }
 .exam-ques {
 	position: relative;
-	padding: 16px 20px;
+	padding: 25px;
+	font-size: 16px;
 }
 .exam-ques .ques-num {
 	font-size: 14px;
@@ -115,16 +116,16 @@
 	color: #aeaeae;
 }
 .exam-controller .ques-list li {
-  	font-size: 12px;
+  	font-size: 14px;
   	text-align: center;
   	display: block;
-  	padding: 4px 0px;
+  	padding: 4px;
   	border: 1px solid #aaa;
   	border-radius: 2px;
   	float: left;
-  	margin-right: 3px;
-  	margin-bottom: 3px;
-  	min-width: 25px;
+  	margin-right: 4px;
+  	margin-bottom: 6px;
+  	min-width: 26px;
   	cursor: pointer;
   }
 .exam-controller .ques-list li.done, 
@@ -145,7 +146,7 @@
 .corner-buttons {
 	position: fixed;
 	width: 100px;
-	bottom: 10px;
+	bottom: 30px;
 	display: flex;
 	flex-direction: column;
 }

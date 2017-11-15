@@ -48,7 +48,7 @@ public class PaperServiceImpl implements PaperService {
 
 	@Override
 	public List<PaperEntity> listByClassify(ClassifyEntity classify) {
-		return paperRepository.findByClassify(classify);
+		return paperRepository.findByClassifyOrderByUpdateTimeDesc(classify);
 	}
 
 }

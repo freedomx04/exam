@@ -15,6 +15,6 @@ public interface PaperRepository extends PagingAndSortingRepository<PaperEntity,
 	
 	Integer countByClassify(ClassifyEntity classify);
 	
-	List<PaperEntity> findByClassify(ClassifyEntity classify);
+	List<PaperEntity> findByClassifyOrderByUpdateTimeDesc(ClassifyEntity classify);
 
 }
