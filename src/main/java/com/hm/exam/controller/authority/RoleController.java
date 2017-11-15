@@ -26,7 +26,7 @@ public class RoleController {
 	RoleService roleService;
 
 	@RequestMapping(value = "/api/role/create", method = RequestMethod.POST)
-	public Result create(String name, String description, String resource) {
+	public Result create(String name, String resource) {
 		try {
 			RoleEntity role = roleService.findByName(name);
 			if (role != null) {
@@ -34,9 +34,9 @@ public class RoleController {
 			}
 			
 			Date now = new Date();
-			role = new RoleEntity(name, description, resource, now, now);
-			roleService.save(role);
-			return new Result(Code.SUCCESS.value(), "created");
+			role = new RoleEntity(name, resource, now, now);
+			role = roleService.save(role);
+			return new ResultInfo(Code.SUCCESS.value(), "添加成功", role);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
@@ -44,21 +44,20 @@ public class RoleController {
 	}
 	
 	@RequestMapping(value = "/api/role/update", method = RequestMethod.POST)
-	public Result update(Long roleId, String name, String description, String resource) {
+	public Result update(Long roleId, String name, String resource) {
 		try {
 			RoleEntity role = roleService.findOne(roleId);
 			
 			RoleEntity updateRole = roleService.findByName(name);
 			if (updateRole == null || role.getId() == updateRole.getId()) {
 				role.setName(name);
-				role.setDescription(description);
 				role.setResource(resource);
 				role.setUpdateTime(new Date());
 				roleService.save(role);
 			} else {
 				return new Result(Code.EXISTED.value(), "角色已存在");
 			}
-			return new Result(Code.SUCCESS.value(), "updated");
+			return new Result(Code.SUCCESS.value(), "编辑成功");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return new Result(Code.ERROR.value(), e.getMessage());
@@ -69,7 +68,7 @@ public class RoleController {
 	public Result delete(Long roleId) {
 		try {
 			roleService.delete(roleId);
-			return new Result(Code.SUCCESS.value(), "deleted");
+			return new Result(Code.SUCCESS.value(), "删除成功");
 		} catch (Exception e) {
 			if(e.getCause().toString().indexOf("ConstraintViolationException") != -1) {
 				return new Result(Code.CONSTRAINT.value(), "该数据存在关联, 无法删除"); 
@@ -83,7 +82,7 @@ public class RoleController {
 	public Result batchDelete(@RequestParam("roleIdList[]") List<Long> roleIdList) {
 		try {
 			roleService.delete(roleIdList);
-			return new Result(Code.SUCCESS.value(), "deleted");
+			return new Result(Code.SUCCESS.value(), "删除成功");
 		} catch (Exception e) {
 			if(e.getCause().toString().indexOf("ConstraintViolationException") != -1) {
 				return new Result(Code.CONSTRAINT.value(), "该数据存在关联, 无法删除"); 

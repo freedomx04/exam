@@ -52,13 +52,9 @@
 						</a>
 					</li>
 					<li>
-						<a href="#">
-							<i class="fa fa-key fa-fw"></i><span class="nav-label">权限管理</span><span class="fa arrow"></span>
+						<a class="J_menuItem" href="userList">
+							<i class="fa fa-street-view fa-fw"></i><span class="nav-label">用户管理</span>
 						</a>
-						<ul class="nav nav-second-level">
-							<li><a class="J_menuItem" href="roleList">角色管理</a></li>
-							<li><a class="J_menuItem" href="userList">用户管理</a></li>
-						</ul>
 					</li>
 					<li>
 						<a class="J_menuItem" href="questionList">

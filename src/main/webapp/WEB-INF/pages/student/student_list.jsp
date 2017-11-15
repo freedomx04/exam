@@ -382,10 +382,10 @@
 	            				success: function(ret) {
 	            					if (ret.code == 0) {
 	            						var $select = $editDialog.find('select[name="groupId"]');
-	            						$select .empty();
+	            						$select.empty();
 	            						$.each(ret.data, function(k, val) {
 	            							var $option = '<option value="' + val.id + '">' + val.name + '</option>';
-	            							$select .append($option);
+	            							$select.append($option);
 	            						});
 	            						$select.val(row.group.id);
 	            					}
@@ -503,7 +503,7 @@
             }
 		});
 		
-		// 考试添加对话框
+		// 考生添加对话框
 		var $addDialog = $page.find('#modal-student-add-dialog');
 		var $addForm = $addDialog.find('form');
 		$k.util.bsValidator($addForm, {
@@ -736,10 +736,10 @@
 				success: function(ret) {
 					if (ret.code == 0) {
 						var $select = $addDialog.find('select[name="groupId"]');
-						$select .empty();
+						$select.empty();
 						$.each(ret.data, function(k, val) {
 							var $option = '<option value="' + val.id + '">' + val.name + '</option>';
-							$select .append($option);
+							$select.append($option);
 						});
 						// 根据选中的分组初始化添加考生的分组
 						if (groupId != 0) {

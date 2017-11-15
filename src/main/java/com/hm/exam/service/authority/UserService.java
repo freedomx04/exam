@@ -2,6 +2,7 @@ package com.hm.exam.service.authority;
 
 import java.util.List;
 
+import com.hm.exam.entity.authority.RoleEntity;
 import com.hm.exam.entity.authority.UserEntity;
 
 public interface UserService {
@@ -14,6 +15,10 @@ public interface UserService {
 	
 	void delete(Long userId);
 	
+	void delete(List<Long> userIdList);
+	
 	List<UserEntity> list();
+	
+	List<UserEntity> listByRole(RoleEntity role);
 
 }

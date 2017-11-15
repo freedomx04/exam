@@ -10,7 +10,7 @@ public interface RoleService {
 
 	RoleEntity findByName(String name);
 
-	void save(RoleEntity role);
+	RoleEntity save(RoleEntity role);
 
 	void delete(Long roleId);
 

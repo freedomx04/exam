@@ -25,7 +25,7 @@
 		<div class="ibox float-e-margins">
 			<div class="ibox-content">
 				<div class="page-title">
-					<h2>建议反馈</h2>
+					<h2>建议反馈<small style="margin-left: 20px;">${title}</small></h2>
 					<a href="${ctx}/paperList"><i class="fa fa-mail-reply fa-fw"></i>试卷管理</a>
 				</div>
 				

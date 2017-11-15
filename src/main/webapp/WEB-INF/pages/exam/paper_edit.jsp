@@ -38,9 +38,7 @@
 		<div class="ibox">
 			<div class="ibox-content">
 				<div class="page-title">
-					<h2>试卷编辑
-						<small style="margin-left: 20px;">${paper.title}</small>
-					</h2>
+					<h2>试卷编辑<small style="margin-left: 20px;">${paper.title}</small></h2>
 					<a href="${ctx}/paperList"><i class="fa fa-mail-reply fa-fw"></i>试卷管理</a>
 				</div>
 				

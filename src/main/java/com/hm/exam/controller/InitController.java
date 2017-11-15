@@ -49,7 +49,7 @@ public class InitController {
 			RoleEntity role = roleService.findByName("管理员");
 			if (role == null) {
 				Date now = new Date();
-				role = new RoleEntity("管理员", "默认管理员", "", now, now);
+				role = new RoleEntity("管理员", "", now, now);
 				role.setEditable(Editable.UNABLE);
 				roleService.save(role);
 			}
@@ -57,7 +57,7 @@ public class InitController {
 			RoleEntity role2 = roleService.findByName("普通用户");
 			if (role2 == null) {
 				Date now = new Date();
-				role2 = new RoleEntity("普通用户", "默认普通用户", "", now, now);
+				role2 = new RoleEntity("普通用户", "", now, now);
 				role2.setEditable(Editable.UNABLE);
 				roleService.save(role2);
 			}

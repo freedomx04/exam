@@ -64,64 +64,13 @@ public class HomeController {
 	}
 	
 	/**
-	 * 系统管理
+	 * 用户管理
 	 */
-	@RequestMapping(value = "/roleList")
-	String roleList() {
-		return "pages/authority/role_list";
-	}
-	
-	@RequestMapping(value = "/roleAdd")
-	String roleAdd(ModelMap modelMap, String method, Long roleId) {
-		String title = "";
-		switch (method) {
-		case "add":
-			title = "角色新增";
-			break;
-		case "edit":
-			title = "角色编辑";
-			break;
-		case "detail":
-			title = "角色详情";
-			break;
-		}
-		modelMap.addAttribute("title", title);
-		modelMap.addAttribute("method", method);
-		
-		if (roleId != null) {
-			RoleEntity role = roleService.findOne(roleId);
-			modelMap.addAttribute("role", role);
-		}
-		return "pages/authority/role_add";
-	}
-	
 	@RequestMapping(value = "/userList")
-	String userList() {
+	String userList(ModelMap modelMap) {
+		List<RoleEntity> roleList = roleService.list();
+		modelMap.addAttribute("roleList", roleList);
 		return "pages/authority/user_list";
-	}
-	
-	@RequestMapping(value = "userAdd")
-	String userAdd(ModelMap modelMap, String method, Long userId) {
-		String title = "";
-		switch (method) {
-		case "add":
-			title = "用户新增";
-			break;
-		case "edit":
-			title = "用户编辑";
-			break;
-		case "detail":
-			title = "用户详情";
-			break;
-		}
-		modelMap.addAttribute("title", title);
-		modelMap.addAttribute("method", method);
-		
-		if (userId != null) {
-			UserEntity user = userService.findOne(userId);
-			modelMap.addAttribute("user", user);
-		}
-		return "pages/authority/user_add";
 	}
 	
 	/**
@@ -163,7 +112,6 @@ public class HomeController {
 		modelMap.addAttribute("libraryList", libraryList);
 		return "pages/question/question_list";
 	}
-	
 	
 	/**
 	 * 考生管理
@@ -305,6 +253,8 @@ public class HomeController {
 	
 	@RequestMapping(value = "/feedbackList")
 	String feedbackList(ModelMap modelMap, Long paperId) {
+		PaperEntity paper = paperService.findOne(paperId);
+		modelMap.addAttribute("title", paper.getTitle());
 		modelMap.addAttribute("paperId", paperId);
 		return "pages/exam/feedback_list";
 	}
