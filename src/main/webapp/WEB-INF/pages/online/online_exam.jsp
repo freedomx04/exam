@@ -20,9 +20,8 @@
     <link rel="stylesheet" type="text/css" href="${ctx}/local/common.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/local/online.css">
     
-    
 </head>
-<body class="gray-bg body-online-exam" style="min-width: 1000px; overflow: auto;">
+<body class="gray-bg body-online-exam" style="min-width: 1180px; overflow: auto;">
 	<div>
 		<header role="banner" class="exam-banner fixed">
 			<div class="exam-banner-inner">

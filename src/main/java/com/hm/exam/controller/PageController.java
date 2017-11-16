@@ -199,4 +199,9 @@ public class PageController {
 		return "pages/online/online_tips";
 	}
 	
+	@RequestMapping(value = "/practice")
+	String practice() {
+		return "pages/practice/practice";
+	}
+	
 }
