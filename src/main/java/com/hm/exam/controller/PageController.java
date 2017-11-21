@@ -1,7 +1,11 @@
 package com.hm.exam.controller;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,12 +19,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hm.exam.common.utils.SessionUtils;
 import com.hm.exam.entity.exam.ExamEntity;
-import com.hm.exam.entity.exam.PaperEntity;
 import com.hm.exam.entity.exam.ExamEntity.ExamStatus;
+import com.hm.exam.entity.exam.PaperEntity;
 import com.hm.exam.entity.exam.PaperEntity.PaperStatus;
+import com.hm.exam.entity.question.LibraryEntity;
+import com.hm.exam.entity.question.TypeEntity;
 import com.hm.exam.entity.student.StudentEntity;
 import com.hm.exam.service.exam.ExamService;
 import com.hm.exam.service.exam.PaperService;
+import com.hm.exam.service.question.LibraryService;
+import com.hm.exam.service.question.QuestionService;
 import com.hm.exam.service.student.StudentService;
 
 @Controller
@@ -36,6 +44,12 @@ public class PageController {
 	
 	@Autowired
 	ExamService examService;
+	
+	@Autowired
+	QuestionService questionService;
+	
+	@Autowired
+	LibraryService libraryService;
 	
 	@Autowired
 	HttpServletRequest request;
@@ -199,9 +213,76 @@ public class PageController {
 		return "pages/online/online_tips";
 	}
 	
+	// 模拟考试
 	@RequestMapping(value = "/practice")
 	String practice() {
 		return "pages/practice/practice";
+	}
+	
+	@RequestMapping(value = "/practice/order")
+	String practiceOrder(ModelMap modelMap, Long libraryId, Integer type) {
+		modelMap.addAttribute("title", "顺序练习");
+		
+		List<BigInteger> idList = new ArrayList<BigInteger>();
+		if (libraryId != null) {
+			idList = questionService.listIdByLibraryId(libraryId);
+			LibraryEntity library = libraryService.findOne(libraryId);
+			modelMap.addAttribute("subTitle", "题库：" + library.getName());
+		} else if (type != null) {
+			idList = questionService.listIdByType(type);
+			String subTitle = questionService.getTitle(type);
+			modelMap.addAttribute("subTitle", "题型：" + subTitle);
+		} else {	
+			idList = questionService.listId();
+		}
+		modelMap.addAttribute("idList", idList);
+		return "pages/practice/practice_question";
+	}
+	
+	@RequestMapping(value = "practice/random")
+	String practiceRandom(ModelMap modelMap, Long libraryId, Integer type) {
+		modelMap.addAttribute("title", "随机练习");
+		
+		List<BigInteger> idList = new ArrayList<>();
+		if (libraryId != null) {
+			idList = questionService.listIdByLibraryId(libraryId);
+			LibraryEntity library = libraryService.findOne(libraryId);
+			modelMap.addAttribute("subTitle", "题库：" + library.getName());
+		} else if (type != null) {
+			idList = questionService.listIdByType(type);
+			String subTitle = questionService.getTitle(type);
+			modelMap.addAttribute("subTitle", "题型：" + subTitle);
+		} else {
+			idList = questionService.listId();
+		}
+		Collections.shuffle(idList);
+		modelMap.addAttribute("idList", idList);
+		return "pages/practice/practice_question";
+	}
+	
+	@RequestMapping(value = "practice/library")
+	String practiceLibrary(ModelMap modelMap) {
+		List<LibraryEntity> libraryList = libraryService.list();
+		for (LibraryEntity library: libraryList) {
+			Integer count = questionService.countByLibrary(library);
+			library.setCount(count);
+		}
+		modelMap.addAttribute("libraryList", libraryList);
+		return "pages/practice/practice_library";
+	}
+	
+	@RequestMapping(value = "practice/type")
+	String practiceType(ModelMap modelMap) {
+		Integer[] types = new Integer[] {1, 2, 3};
+		List<TypeEntity> typeList = new ArrayList<>();
+		for (Integer type: types) {
+			Integer count = questionService.countByType(type);
+			String name = questionService.getTitle(type);
+			TypeEntity typeObj = new TypeEntity(type, name, count);
+			typeList.add(typeObj);
+		}
+		modelMap.addAttribute("typeList", typeList);
+		return "pages/practice/practice_type";
 	}
 	
 }

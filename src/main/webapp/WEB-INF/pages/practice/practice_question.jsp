@@ -4,92 +4,139 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>题库列表</title>
+    <title>题库练习</title>
     
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/plugins/sweetalert/sweetalert.css">
     
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/hplus/style.css">
-    <link rel="stylesheet" type="text/css" href="${ctx}/local/common.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/toastr/toastr.min.css">
-       
-   	<style type="text/css">
-   	.body-practice-question .ques-options li {
-   		height: 30px;
-   	}
-   	.body-practice-question .btn {
-   		width: 100px;
-   	}
-   	</style> 
-        
+    <link rel="stylesheet" type="text/css" href="${ctx}/local/common.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/local/online.css">
+    
+    <style type="text/css">
+    .practice-type a {
+    	display: flex;
+    	-webkit-box-align: center;
+    	align-items: center;
+    	padding: 0 20px;
+    	height: 40px;
+    	overflow: hidden;
+    	color: #8590a6;
+    }
+    .practice-type a:HOVER {
+    	background: #f4f8fb;
+    	text-decoration: none;
+    }
+    .practice-type a span {
+    	margin: 0 10px;
+    }
+    </style>
 </head>
-
 <body class="gray-bg body-practice-question">
-	<div class="wrapper wrapper-content animated fadeInRight">
-		<div class="ibox float-e-margins">
-			<div class="ibox-content">
-				<div class="page-title">
-					<h2>
-						${title}<small style="margin-left: 20px;">${subTitle}</small>
-						<c:if test="${not empty subTitle}">
-							<a href="javascript:;" class="btn-practice-back a-back">重新选择</a>
-						</c:if>
-					</h2>
-				</div>
-				
-				<div class="row">
-					<div class="col-sm-12">
-						<span class="ques-type"></span>
-						<span class="ques-seq" style="margin-left: 10px;"></span>
+	<div>
+		<header role="banner" class="exam-banner fixed">
+			<div class="exam-banner-inner">
+				<div style="font-size: 18px;">${title}</div>
+			</div>
+		</header>
+		<div class="exam-banner-holder"></div>
+	</div>
+	
+	<main role="main">
+		<div class="exam-container">
+			<div class="practice-question" style="width: 840px">
+				<div class="card exam-ques">
+					<div style="line-height: 1.6em;">
+						<span class="ques-num">
+							<span class="ques-seq"></span>/<span class="ques-count"></span>
+						</span>
+						<span class="ques-type" style="margin-left: 5px;"></span>
 						<span class="ques-title"></span>
+						<span class="ques-score"></span>
 					</div>
-				</div>
-				
-				<div class="row">
-					<div class="col-sm-8">
-						<ul class="unstyled ques-options" style="padding-left: 70px; padding-top: 15px;"></ul>
+					
+					<div>
+						<img class="ques-image" style="margin: 10px 20px;"></img>
+						<ul class="unstyled ques-options" style="margin-top: 15px; padding-left: 20px;"></ul>
 					</div>
-					<div class="col-sm-4">
-						<img class="ques-image" src="" style="max-width: 100%; max-height: 100%;">
+					
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="ques-tips alert hide" style="margin-left: 20px; width: fit-content; font-size: 16px;"></div>
+							<div class="ques-analysis hide" style="margin-left: 20px;"></div>
+						</div>
 					</div>
-				</div>
-				
-				<div class="row">
-					<div class="col-sm-12">
-						<div class="ques-tips alert hide" style="margin-left: 70px; width: fit-content; font-size: 16px;"></div>
-						<div class="ques-analysis hide" style="margin-left: 70px;"></div>
-					</div>
-				</div>
-				
-				<div class="hr-line-solid" style="margin-top: 50px;"></div>
-				<div class="row">
-					<div class="col-sm-11 ques-control" style="padding-left: 70px;">
-						<button type="button" class="btn btn-primary btn-question-prev">上一题</button>
-						<button type="button" class="btn btn-primary btn-question-next">下一题</button>
-						
-						<span style="padding-left: 50px;">共</span><span class="question-size" style="padding: 0 10px;">123</span>题,&nbsp;
-						转到
-						<input type="text" class="input-question-jump text-right" style="width: 50px; padding-right: 5px;" onKeyUp="value=value.replace(/[^\d]/g, '1')" value="1">
-						题
-						<button type="button" class="btn btn-primary btn-question-jump" style="width: 60px;">确定</button>
+					
+					<div class="hr-line-solid"></div>
+					<div class="row" style="font-size: 14px;">
+						<div class="col-sm-6 ques-control" style="padding-left: 30px;">
+							<button type="button" class="btn btn-primary btn-sm btn-fw btn-question-prev">上一题</button>
+							<button type="button" class="btn btn-primary btn-sm btn-fw btn-question-next">下一题</button>
+						</div>
+						<div class="col-sm-6">
+							<span>共</span><span class="ques-count" style="padding: 0 5px;"></span>题,&nbsp;
+							转到
+							<input type="text" class="input-question-jump text-right" style="width: 50px; padding-right: 10px;" onKeyUp="value=value.replace(/[^\d]/g, '1')" value="1">
+							题
+							<button type="button" class="btn btn-primary btn-sm btn-fw btn-question-jump">确定</button>
+						</div>
 					</div>
 				</div>
 			</div>
+			
+			<div class="exam-controller fixed" style="width: 320px; color: #999;">
+				<div class="card">
+					<ul class="unstyled practice-type" style="width: 100%; padding: 8px 0;">
+						<li>
+							<a href="${ctx}/practice/order" target="_blank">
+								<i class="fa fa-list-ul"></i>
+								<span>顺序练习</span>
+							</a>
+						</li>
+						<li>
+							<a href="${ctx}/practice/random" target="_blank">
+								<i class="fa fa-random"></i>
+								<span>随机练习</span>
+							</a>
+						</li>
+						<li>
+							<a href="${ctx}/practice/library" target="_blank">
+								<i class="fa fa-tasks"></i>
+								<span>题库练习</span>
+							</a>
+						</li>
+						<li>
+							<a href="${ctx}/practice/type" target="_blank">
+								<i class="fa fa-database"></i>
+								<span>题型练习</span>
+							</a>
+						</li>
+						<li>
+							<a class="practice-exam" href="#">
+								<i class="fa fa-clock-o"></i>
+								<span>模拟考试</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
 		</div>
-	</div>
-
+	</main>
+	
 	<script type="text/javascript" src="${ctx}/plugins/jquery/2.1.4/jquery.min.js"></script>
 	<script type="text/javascript" src="${ctx}/plugins/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="${ctx}/plugins/hplus/content.min.js"></script>
-    <script type="text/javascript" src="${ctx}/local/common.js"></script>
-    
-    <script type="text/javascript" src="${ctx}/plugins/toastr/toastr.min.js"></script>
-
+	<script type="text/javascript" src="${ctx}/plugins/hplus/content.min.js"></script>
+	<script type="text/javascript" src="${ctx}/local/common.js"></script>
+	
+	<script type="text/javascript" src="${ctx}/plugins/toastr/toastr.min.js"></script>
+	
 	<script type="text/javascript">
 	
 		var $page = $('.body-practice-question');
@@ -101,15 +148,12 @@
 		var question;
 		
 		// 试题数目
-		$page.find('.question-size').text(ids.length);
+		$page.find('.ques-count').text(ids.length);
 		// 第一题
 		getQuestion(ids[0]);
 		enableBtn();
 		
 		$page
-		.on('click', '.btn-practice-back', function() {
-			window.history.back();
-		})
 		.on('click', 'input[name="single"]', function() {
 			$page.find('input[name="single"]').attr('disabled', 'disabled');
 			
@@ -198,24 +242,12 @@
 				getQuestion(ids[seq]);
 				enableBtn();
 			}
+		})
+		.on('click', '.practice-exam', function() {
+			alert('开发中');
 		});
 		
-		function enableBtn() {
-			if (seq == 0 && seq == (ids.length - 1)) {
-				$page.find('.btn-question-prev').attr('disabled', 'disabled');
-				$page.find('.btn-question-next').attr('disabled', 'disabled');
-			} else if (seq == 0) {
-				$page.find('.btn-question-prev').attr('disabled', 'disabled');
-				$page.find('.btn-question-next').removeAttr('disabled');
-			} else if (seq == (ids.length - 1)) {
-				$page.find('.btn-question-prev').removeAttr('disabled');
-				$page.find('.btn-question-next').attr('disabled', 'disabled');
-			} else {
-				$page.find('.btn-question-prev').removeAttr('disabled');
-				$page.find('.btn-question-next').removeAttr('disabled');
-			}
-		}
-		
+		// 获取题目
 		function getQuestion(id) {
 			// tips隐藏
 			$page.find('.ques-tips').addClass('hide');
@@ -242,9 +274,11 @@
 						}
 						
 						// 试题序号
-						$page.find('.ques-seq').text(seq + 1 + '.');
+						$page.find('.ques-seq').text(seq + 1);
 						// 试题题干
 						$page.find('.ques-title').text(question.title);
+						// 试题分数
+						$page.find('.ques-score').text('(' + question.score + '分)');
 						// 题干图片
 						if (question.imagePath) {
 							$page.find('.ques-image').attr('src', '${ctx}' + question.imagePath);
@@ -334,7 +368,7 @@
 											'<label for="F">F：' + question.optionF + '</label>' +
 										'</div></li>');
 							}
-							$page.find('.ques-options').append('<li><button type="button" class="btn btn-blue btn-question-submit">提交</button></li>');
+							$page.find('.ques-options').append('<li><button type="button" class="btn btn-blue btn-fw btn-question-submit">提交</button></li>');
 						} 
 						// 判断题
 						else {
@@ -356,8 +390,39 @@
 				error: function(err) {}
 			});
 		}
+		
+		// 设置按钮
+		function enableBtn() {
+			if (seq == 0 && seq == (ids.length - 1)) {
+				$page.find('.btn-question-prev').attr('disabled', 'disabled');
+				$page.find('.btn-question-next').attr('disabled', 'disabled');
+			} else if (seq == 0) {
+				$page.find('.btn-question-prev').attr('disabled', 'disabled');
+				$page.find('.btn-question-next').removeAttr('disabled');
+			} else if (seq == (ids.length - 1)) {
+				$page.find('.btn-question-prev').removeAttr('disabled');
+				$page.find('.btn-question-next').attr('disabled', 'disabled');
+			} else {
+				$page.find('.btn-question-prev').removeAttr('disabled');
+				$page.find('.btn-question-next').removeAttr('disabled');
+			}
+		}
+		
+		
+		// 设置右侧控制器的位置
+		setController();
+		window.onresize = function() {
+			setController();
+		}
+		function setController() {
+			var $controller = $page.find('.exam-controller');
+			var $corner = $page.find('.corner-buttons');
+			var $width = $(document).width();
+			var left_val = ($width - 1180) / 2 + 840 + 20;
+			$controller.css('left', left_val);
+			$corner.css('left', left_val);
+		}
 	
 	</script>
-
 </body>
 </html>

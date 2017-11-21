@@ -1,8 +1,5 @@
 package com.hm.exam.controller;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +14,6 @@ import com.hm.exam.entity.exam.ClassifyEntity;
 import com.hm.exam.entity.exam.PaperEntity;
 import com.hm.exam.entity.question.LibraryEntity;
 import com.hm.exam.entity.question.QuestionEntity;
-import com.hm.exam.entity.question.TypeEntity;
 import com.hm.exam.entity.student.GroupEntity;
 import com.hm.exam.service.authority.RoleService;
 import com.hm.exam.service.authority.UserService;
@@ -121,73 +117,6 @@ public class HomeController {
 		List<GroupEntity> groupList = groupService.list();
 		modelMap.addAttribute("groupList", groupList);
 		return "pages/student/student_list";
-	}
-	
-	// 模拟考试
-	@RequestMapping(value = "practiceOrder")
-	String practiceOrder(ModelMap modelMap, Long libraryId, Integer type) {
-		modelMap.addAttribute("title", "顺序练习");
-		
-		List<BigInteger> idList = new ArrayList<BigInteger>();
-		if (libraryId != null) {
-			idList = questionService.listIdByLibraryId(libraryId);
-			LibraryEntity library = libraryService.findOne(libraryId);
-			modelMap.addAttribute("subTitle", "题库：" + library.getName());
-		} else if (type != null) {
-			idList = questionService.listIdByType(type);
-			String subTitle = questionService.getTitle(type);
-			modelMap.addAttribute("subTitle", "题型：" + subTitle);
-		} else {	
-			idList = questionService.listId();
-		}
-		modelMap.addAttribute("idList", idList);
-		return "pages/practice/practice_question";
-	}
-	
-	@RequestMapping(value = "practiceRandom")
-	String practiceRandom(ModelMap modelMap, Long libraryId, Integer type) {
-		modelMap.addAttribute("title", "随机练习");
-		
-		List<BigInteger> idList = new ArrayList<>();
-		if (libraryId != null) {
-			idList = questionService.listIdByLibraryId(libraryId);
-			LibraryEntity library = libraryService.findOne(libraryId);
-			modelMap.addAttribute("subTitle", "题库：" + library.getName());
-		} else if (type != null) {
-			idList = questionService.listIdByType(type);
-			String subTitle = questionService.getTitle(type);
-			modelMap.addAttribute("subTitle", "题型：" + subTitle);
-		} else {
-			idList = questionService.listId();
-		}
-		Collections.shuffle(idList);
-		modelMap.addAttribute("idList", idList);
-		return "pages/practice/practice_question";
-	}
-	
-	@RequestMapping(value = "practiceLibrary")
-	String practiceLibrary(ModelMap modelMap) {
-		List<LibraryEntity> libraryList = libraryService.list();
-		for (LibraryEntity library: libraryList) {
-			Integer count = questionService.countByLibrary(library);
-			library.setCount(count);
-		}
-		modelMap.addAttribute("libraryList", libraryList);
-		return "pages/practice/practice_library";
-	}
-	
-	@RequestMapping(value = "practiceType")
-	String practiceType(ModelMap modelMap) {
-		Integer[] types = new Integer[] {1, 2, 3};
-		List<TypeEntity> typeList = new ArrayList<>();
-		for (Integer type: types) {
-			Integer count = questionService.countByType(type);
-			String name = questionService.getTitle(type);
-			TypeEntity typeObj = new TypeEntity(type, name, count);
-			typeList.add(typeObj);
-		}
-		modelMap.addAttribute("typeList", typeList);
-		return "pages/practice/practice_type";
 	}
 	
 	/**

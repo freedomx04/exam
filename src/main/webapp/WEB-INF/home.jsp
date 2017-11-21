@@ -72,15 +72,9 @@
 						</a>
 					</li>
 					<li>
-						<a href="#">
-							<i class="fa fa-edit fa-fw"></i><span class="nav-label">模拟练习</span><span class="fa arrow"></span>
+						<a class="J_menuItem" href="practice">
+							<i class="fa fa-pencil fa-fw"></i><span class="nav-label">模拟练习</span>
 						</a>
-						<ul class="nav nav-second-level">
-							<li><a class="J_menuItem" href="practiceOrder">顺序练习</a></li>
-							<li><a class="J_menuItem" href="practiceRandom">随机练习</a></li>
-							<li><a class="J_menuItem" href="practiceLibrary">题库练习</a></li>
-							<li><a class="J_menuItem" href="practiceType">题型练习</a></li>
-						</ul>
 					</li>
 					<!-- <li>
 						<a href="#">
