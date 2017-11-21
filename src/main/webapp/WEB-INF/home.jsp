@@ -86,7 +86,16 @@
 					</li> -->
 					<li>
 						<a href="#">
-							<i class="fa fa-cog fa-fw"></i><span class="nav-label">个人中心</span><span class="fa arrow"></span>
+							<i class="fa fa-cog fa-fw"></i><span class="nav-label">系统设置</span><span class="fa arrow"></span>
+						</a>
+						</a>
+						<ul class="nav nav-second-level">
+							<li><a class="J_menuItem" href="notice">系统公告</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fa fa-user-secret fa-fw"></i><span class="nav-label">个人中心</span><span class="fa arrow"></span>
 						</a>
 						<ul class="nav nav-second-level">
 							<li><a class="J_menuItem" href="modifyPassword">修改密码</a></li>
