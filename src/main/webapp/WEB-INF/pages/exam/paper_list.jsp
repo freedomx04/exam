@@ -212,7 +212,7 @@
 					events: window.operateEvetns = {
 						'click .btn-paper-feedback': function(e, value, row, index) {
 							e.stopPropagation();
-							window.location.href = '${ctx}/feedbackList?paperId=' + row.id;
+							window.location.href = '${ctx}/feedback?paperId=' + row.id;
 						}
 					}
 				}, {

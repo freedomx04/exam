@@ -90,7 +90,7 @@
 						</a>
 						</a>
 						<ul class="nav nav-second-level">
-							<li><a class="J_menuItem" href="notice">系统公告</a></li>
+							<li><a class="J_menuItem" href="system/notice">系统公告</a></li>
 						</ul>
 					</li>
 					<li>

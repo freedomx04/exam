@@ -180,12 +180,17 @@ public class HomeController {
 	}
 	
 	
-	@RequestMapping(value = "/feedbackList")
+	@RequestMapping(value = "/feedback")
 	String feedbackList(ModelMap modelMap, Long paperId) {
 		PaperEntity paper = paperService.findOne(paperId);
 		modelMap.addAttribute("title", paper.getTitle());
 		modelMap.addAttribute("paperId", paperId);
-		return "pages/exam/feedback_list";
+		return "pages/exam/feedback";
+	}
+	
+	@RequestMapping(value = "/system/notice")
+	String system_notice() {
+		return "pages/system/notice";
 	}
 	
 	/**
