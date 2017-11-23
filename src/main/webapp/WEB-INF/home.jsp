@@ -48,7 +48,7 @@
 					</li> 
 					<li>
 						<a class="J_menuItem" href="overview">
-							<i class="fa fa-home fa-fw"></i><span class="nav-label">控制中心</span>
+							<i class="fa fa-home fa-fw"></i><span class="nav-label">系统首页</span>
 						</a>
 					</li>
 					<li>
@@ -126,7 +126,7 @@
 				<!-- tab列表 -->
 				<nav class="page-tabs J_menuTabs">
 					<div class="page-tabs-content">
-						<a href="javascript:;" class="active J_menuTab" data-id="overview">控制中心</a>
+						<a href="javascript:;" class="active J_menuTab" data-id="overview">系统首页</a>
 					</div>
 				</nav>
 				<!-- tab往右 -->

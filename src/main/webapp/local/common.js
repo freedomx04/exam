@@ -35,6 +35,7 @@
 	 */
 	$k.util.bsTable = function($table, param) {
 		var defaultParam = $.extend(jQuery.fn.bootstrapTable.defaults, {
+			//classes: 'table',				// 默认table tabl-hover
 			cache: false,					// 是否禁用ajax数据缓存, 默认为true
 			//height: 500,					// 定义表格的高度
 			//undefinedText: '-',			// 当数据为 undefined 时显示的字符, 默认为 '-'

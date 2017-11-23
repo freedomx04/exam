@@ -189,7 +189,9 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/system/notice")
-	String system_notice() {
+	String system_notice(ModelMap modelMap) {
+		UserEntity user = CurrentUserUtils.getInstance().getUser();
+		modelMap.addAttribute("user", user);
 		return "pages/system/notice";
 	}
 	

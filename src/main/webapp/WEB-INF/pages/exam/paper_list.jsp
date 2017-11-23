@@ -18,6 +18,7 @@
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/bootstrapValidator/css/bootstrapValidator.min.css">
 	
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/hplus/style.css">
+	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/web-icons/css/web-icons.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/toastr/toastr.min.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/local/common.css">
 	
@@ -47,8 +48,8 @@
 											<span class="item-text">${classify.name}</span>
 											<c:if test="${classify.editable == 0}">
 												<div class="item-actions">
-													<span class="btn btn-pure btn-classify-edit"><i class="fa fa-edit"></i></span>
-													<span class="btn btn-pure btn-classify-delete"><i class="fa fa-remove"></i></span>
+													<span class="btn btn-pure btn-classify-edit"><i class="wb-edit"></i></span>
+													<span class="btn btn-pure btn-classify-delete"><i class="wb-close"></i></span>
 												</div>
 											</c:if>
 										</div>
@@ -238,11 +239,9 @@
 					align: 'center',
 					width: '80',
 					formatter: function(value, row, index) {
-						var $start = '<div class="dropdown"><a data-toggle="dropdown" aria-expanded="true">操作<span class="caret"></span></a><ul class="dropdown-menu">';
-						var $edit = '<li><a class="btn-paper-edit"><i class="fa fa-edit fa-fw"></i>编辑</a></li>';
-						var $delete = '<li><a class="btn-paper-delete"><i class="fa fa-trash-o fa-fw"></i>删除</a></li>';
-						var $end = '</ul></div>';
-						return $start + $edit + $delete + $end;
+						var $edit = '<span class="btn-operate btn-paper-edit" data-toggle="tooltip" title="编辑"><i class="wb-edit"></i></span>';
+						var $delete = '<span class="btn-operate btn-paper-delete" data-toggle="tooltip" title="删除"><i class="wb-close"></i></span>';
+						return $edit + $delete; 
 					},
 					events: window.operateEvents = {
 						'click .btn-paper-edit': function(e, value, row, index) {
@@ -273,14 +272,16 @@
 	            				});
 	            			});
 						}
-					},
-					cellStyle: function(value, row, index) {
-						return { css: {'overflow': 'visible'} };
 					}
 				}]
 			});
 		}
-		$table.on('all.bs.table', function(e, row) {
+		
+		$table
+		.on('load-success.bs.table',function(data){
+			$page.find('[data-toggle="tooltip"]').tooltip();
+		})
+		.on('all.bs.table', function(e, row) {
             var selNum = $table.bootstrapTable('getSelections').length;
             selNum > 0 ? $page.find('.btn-paper-delete-batch').removeAttr('disabled') : $page.find('.btn-paper-delete-batch').attr('disabled', 'disabled');
             selNum > 0 ? $page.find('.btn-paper-move').removeAttr('disabled') : $page.find('.btn-paper-move').attr('disabled', 'disabled');
@@ -316,8 +317,8 @@
 	               							+ 	'<div class="list-content">'
 	               							+		'<span class="item-text">' + classify.name + '</span>'
 	               							+ 		'<div class="item-actions">'
-	               							+			'<span class="btn btn-pure btn-classify-edit"><i class="fa fa-edit"></i></span>'
-	               							+			'<span class="btn btn-pure btn-classify-delete"><i class="fa fa-remove"></i></span>'
+	               							+			'<span class="btn btn-pure btn-classify-edit"><i class="wb-edit"></i></span>'
+	               							+			'<span class="btn btn-pure btn-classify-delete"><i class="wb-close"></i></span>'
 	               							+		'</div>'
 	               							+ 	'</div>'
 	               							+ '</div>';

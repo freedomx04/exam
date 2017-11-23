@@ -205,6 +205,15 @@ a:HOVER {
 	border-color: #2977f7;
 }
 
+/** btn-operate */
+.btn-operate {
+	cursor: pointer;
+	padding: 6px;
+}
+.btn-operate:HOVER {
+	color: #459ae9;
+}
+
 /** number spinner */
 .spinner {  
   width: 100px;  

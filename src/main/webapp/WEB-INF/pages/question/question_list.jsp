@@ -18,6 +18,7 @@
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/bootstrapValidator/css/bootstrapValidator.min.css">
 	
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/hplus/style.css">
+	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/web-icons/css/web-icons.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/toastr/toastr.min.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/local/common.css">
 	
@@ -46,8 +47,8 @@
 											<span class="item-text">${library.name}</span>
 											<c:if test="${library.editable == 0}">
 												<div class="item-actions">
-													<span class="btn btn-pure btn-library-edit"><i class="fa fa-edit"></i></span>
-													<span class="btn btn-pure btn-library-delete"><i class="fa fa-remove"></i></span>
+													<span class="btn btn-pure btn-library-edit"><i class="wb-edit"></i></span>
+													<span class="btn btn-pure btn-library-delete"><i class="wb-close"></i></span>
 												</div>
 											</c:if>
 										</div>
@@ -283,11 +284,9 @@
 					width: '80',
 					formatter: function(value, row, index) {
 						if (row.editable == 0) {
-							var $start = '<div class="dropdown"><a data-toggle="dropdown" aria-expanded="true">操作<span class="caret"></span></a><ul class="dropdown-menu">';
-							var $edit = '<li><a class="btn-question-edit"><i class="fa fa-edit fa-fw"></i>编辑</a></li>';
-							var $delete = '<li><a class="btn-question-delete"><i class="fa fa-trash-o fa-fw"></i>删除</a></li>';
-							var $end = '</ul></div>';
-							return $start + $edit + $delete + $end;
+							var $edit = '<span class="btn-operate btn-question-edit" data-toggle="tooltip" title="编辑"><i class="wb-edit"></i></span>';
+							var $delete = '<span class="btn-operate btn-question-delete" data-toggle="tooltip" title="删除"><i class="wb-close"></i></span>';
+							return $edit + $delete; 
 						} 
 					},
 					events: window.operateEvents = {
@@ -319,14 +318,15 @@
 	            				});
 	            			});
 						}
-					},
-					cellStyle: function(value, row, index) {
-						return { css: {'overflow': 'visible'} };
 					}
 				}]
 			});
 			
-			$table.on('all.bs.table', function(e, row) {
+			$table
+			.on('load-success.bs.table',function(data){
+				$page.find('[data-toggle="tooltip"]').tooltip();
+			})
+			.on('all.bs.table', function(e, row) {
 	            var selNum = $table.bootstrapTable('getSelections').length;
 	            selNum > 0 ? $page.find('.btn-question-delete-batch').removeAttr('disabled') : $page.find('.btn-question-delete-batch').attr('disabled', 'disabled');
 	            selNum > 0 ? $page.find('.btn-question-move').removeAttr('disabled') : $page.find('.btn-question-move').attr('disabled', 'disabled');
@@ -362,8 +362,8 @@
 	               							+ 	'<div class="list-content">'
 	               							+		'<span class="item-text">' + library.name + '</span>'
 	               							+ 		'<div class="item-actions">'
-	               							+			'<span class="btn btn-pure btn-library-edit"><i class="fa fa-edit"></i></span>'
-	               							+			'<span class="btn btn-pure btn-library-delete"><i class="fa fa-remove"></i></span>'
+	               							+			'<span class="btn btn-pure btn-library-edit"><i class="wb-edit"></i></span>'
+	               							+			'<span class="btn btn-pure btn-library-delete"><i class="wb-close"></i></span>'
 	               							+		'</div>'
 	               							+ 	'</div>'
 	               							+ '</div>';

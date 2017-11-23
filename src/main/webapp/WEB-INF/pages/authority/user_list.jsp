@@ -18,6 +18,7 @@
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/bootstrapValidator/css/bootstrapValidator.min.css">
 	
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/hplus/style.css">
+	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/web-icons/css/web-icons.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/plugins/toastr/toastr.min.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/local/common.css">
 	
@@ -47,8 +48,8 @@
 											<span class="item-text">${role.name}</span>
 											<c:if test="${role.editable == 0}">
 												<div class="item-actions">
-													<span class="btn btn-pure btn-role-edit"><i class="fa fa-edit"></i></span>
-													<span class="btn btn-pure btn-role-delete"><i class="fa fa-remove"></i></span>
+													<span class="btn btn-pure btn-role-edit"><i class="wb-edit"></i></span>
+													<span class="btn btn-pure btn-role-delete"><i class="wb-close"></i></span>
 												</div>
 											</c:if>
 										</div>
@@ -311,20 +312,18 @@
 				}, {
 					title: '操作',
 	            	align: 'center',
-	            	width: '80',
+	            	width: '120',
 	            	formatter: function(value, row, index) {
 	            		if (row.editable == 0) {
-		            		var $start = '<div class="dropdown"><a data-toggle="dropdown" aria-expanded="true">操作<span class="caret"></span></a><ul class="dropdown-menu">';
-							var $edit = '<li><a class="btn-user-edit"><i class="fa fa-edit fa-fw"></i>编辑</a></li>';
-							var $password = '<li><a class="btn-user-password"><i class="fa fa-key fa-fw"></i>修改密码</a></li>';
+							var $edit = '<span class="btn-operate btn-user-edit" data-toggle="tooltip" title="编辑"><i class="wb-edit"></i></span>';
+							var $password = '<span class="btn-operate btn-user-edit" data-toggle="tooltip" title="修改密码"><i class="wb-lock"></i></span>';
 							if (row.status == 0) {
-								$status = '<li><a class="btn-user-disable"><i class="fa fa-ban fa-fw"></i>禁用</a></li>';
+								$status = '<span class="btn-operate btn-user-disable" data-toggle="tooltip" title="禁用"><i class="wb-eye-close"></i></span>';
 							} else {
-								$status = '<li><a class="btn-user-enable"><i class="fa fa-circle-o fa-fw"></i>启用</a></li>';
+								$status = '<span class="btn-operate btn-user-enable" data-toggle="tooltip" title="启用"><i class="wb-eye"></i></span>';
 							}
-							var $delete = '<li><a class="btn-user-delete"><i class="fa fa-trash-o fa-fw"></i>删除</a></li>';
-							var $end = '</ul></div>';
-							return $start + $edit + $password + $status + $delete + $end;
+							var $delete = '<span class="btn-operate btn-user-delete" data-toggle="tooltip" title="删除"><i class="wb-close"></i></span>';
+							return $edit + $password + $status + $delete; 
 	            		}
 	            	},
 	            	events: window.operateEvents = {
@@ -430,13 +429,15 @@
 	            				});
 	            			});
 						}
-	            	},
-	            	cellStyle: function(value, row, index) {
-						return { css: {'overflow': 'visible'} };
-					}
+	            	}
 				}]
 			});
-			$table.on('all.bs.table', function(e, row) {
+			
+			$table
+			.on('load-success.bs.table',function(data){
+				$page.find('[data-toggle="tooltip"]').tooltip();
+			})
+			.on('all.bs.table', function(e, row) {
 	            var selNum = $table.bootstrapTable('getSelections').length;
 	            selNum > 0 ? $page.find('.btn-user-delete-batch').removeAttr('disabled') : $page.find('.btn-user-delete-batch').attr('disabled', 'disabled');
 	            selNum > 0 ? $page.find('.btn-user-move').removeAttr('disabled') : $page.find('.btn-user-move').attr('disabled', 'disabled');
@@ -472,8 +473,8 @@
 	               							+ 	'<div class="list-content">'
 	               							+		'<span class="item-text">' + role.name + '</span>'
 	               							+ 		'<div class="item-actions">'
-	               							+			'<span class="btn btn-pure btn-role-edit"><i class="fa fa-edit"></i></span>'
-	               							+			'<span class="btn btn-pure btn-role-delete"><i class="fa fa-remove"></i></span>'
+	               							+			'<span class="btn btn-pure btn-role-edit"><i class="wb-edit"></i></span>'
+	               							+			'<span class="btn btn-pure btn-role-delete"><i class="wb-close"></i></span>'
 	               							+		'</div>'
 	               							+ 	'</div>'
 	               							+ '</div>';
