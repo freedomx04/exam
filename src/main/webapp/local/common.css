@@ -389,6 +389,7 @@ a:HOVER {
 	height: 100%;
 	margin-left: 220px;
 	overflow-y: auto;
+	padding: 20px;
 }
 
 /** modal */

@@ -25,7 +25,7 @@
 </head>
 
 <body class="gray-bg body-student-list">
-	<div class="wrapper wrapper-content animated fadeInRight height-full">
+	<div class="animated fadeInRight height-full">
 		<div class="ibox float-e-margins height-full" style="margin-bottom: 0;">
 			<div class="height-full" style="position: relative;">
 				<div class="page-aside">
@@ -67,25 +67,27 @@
 					</div>
 				</div>
 				
-				<div class="page-main ibox-content">
-					<div class="page-title">
-						<h2>考生列表</h2>
+				<div class="page-main">
+					<div class="ibox-content">
+						<div class="page-title">
+							<h2>考生列表</h2>
+						</div>
+						<div id="student-list-table-toolbar" role="group">
+							<button type="button" class="btn btn-primary btn-student-add" data-toggle="modal" data-target="#modal-student-dialog">
+		 						<i class="fa fa-user-plus fa-fw"></i>新增考生
+		 					</button>
+		 					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-student-import-dialog">
+		 						<i class="fa fa-upload fa-fw"></i>导入考生
+		 					</button>
+		 					<button type="button" class="btn btn-white btn-student-move" disabled="disabled">
+		 						 移动到分组
+		 					</button>
+		 					<button type="button" class="btn btn-danger btn-student-delete-batch" disabled='disabled'>
+		 						<i class="fa fa-trash-o fa-fw"></i>删除
+		 					</button>
+						</div>
+						<table id="student-list-table" class="table-hm table-fixed" data-mobile-responsive="true"></table>
 					</div>
-					<div id="student-list-table-toolbar" role="group">
-						<button type="button" class="btn btn-primary btn-student-add" data-toggle="modal" data-target="#modal-student-dialog">
-	 						<i class="fa fa-user-plus fa-fw"></i>新增考生
-	 					</button>
-	 					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-student-import-dialog">
-	 						<i class="fa fa-upload fa-fw"></i>导入考生
-	 					</button>
-	 					<button type="button" class="btn btn-white btn-student-move" disabled="disabled">
-	 						 移动到分组
-	 					</button>
-	 					<button type="button" class="btn btn-danger btn-student-delete-batch" disabled='disabled'>
-	 						<i class="fa fa-trash-o fa-fw"></i>删除
-	 					</button>
-					</div>
-					<table id="student-list-table" class="table-hm table-fixed" data-mobile-responsive="true"></table>
 				</div>
 			</div>
 		</div>

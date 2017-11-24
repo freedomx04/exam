@@ -113,16 +113,16 @@
 					</div>
 				
 					<div class="hr-line-solid"></div>
-					<div class="form-group btn-operate">
+					<div class="form-group">
                         <div class="col-sm-8 col-sm-offset-2">
                         	<c:if test="${method == 'add'}">
-                            	<button type="button" class="btn btn-primary btn-question-add-continue">保存并继续</button>
-                            	<button type="button" class="btn btn-primary btn-question-add">保存</button>
+                            	<button type="button" class="btn btn-primary btn-fw btn-question-add-continue">保存并继续</button>
+                            	<button type="button" class="btn btn-primary btn-fw btn-question-add">保存</button>
                             </c:if>
                             <c:if test="${method == 'edit'}">
-                            	<button type="button" class="btn btn-primary btn-question-edit">保存</button>
+                            	<button type="button" class="btn btn-primary btn-fw btn-question-edit">保存</button>
                             </c:if>
-                            <button type="button" class="btn btn-white btn-question-cancel">取消</button>
+                            <button type="button" class="btn btn-white btn-fw btn-question-cancel">取消</button>
                         </div>
                     </div>
 				</form>

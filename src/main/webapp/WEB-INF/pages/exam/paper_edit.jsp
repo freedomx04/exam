@@ -95,7 +95,7 @@
 								</div>
 								
 								<div class="hr-line-solid"></div>
-								<div class="form-group btn-operate">
+								<div class="form-group">
 									<div class="col-sm-5 col-sm-offset-3">
 										<button type="button" class="btn btn-primary btn-fw btn-paper-info-save">保存</button>
 									</div>
@@ -182,7 +182,7 @@
 								</div>
 							
 								<div class="hr-line-solid"></div>
-								<div class="form-group btn-operate">
+								<div class="form-group">
 									<div class="col-sm-5 col-sm-offset-3">
 										<button type="button" class="btn btn-primary btn-fw btn-paper-setting-save">保存</button>
 									</div>

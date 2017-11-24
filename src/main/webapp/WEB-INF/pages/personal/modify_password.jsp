@@ -66,9 +66,9 @@
                      </div>
                        
                      <div class="hr-line-solid"></div>
-                     <div class="form-group btn-operate">
+                     <div class="form-group">
                      	<div class="col-sm-4 col-sm-offset-3">
-                     		<button type="button" class="btn btn-primary btn-password">确定</button>
+                     		<button type="button" class="btn btn-primary btn-fw btn-password">确定</button>
                  		</div>
              		</div>                                        
               	</form>

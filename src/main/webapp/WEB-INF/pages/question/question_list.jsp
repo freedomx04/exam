@@ -25,7 +25,7 @@
 </head>
 
 <body class="gray-bg body-question-list">
-	<div class="wrapper wrapper-content animated fadeInRight height-full">
+	<div class="animated fadeInRight height-full">
 		<div class="ibox float-e-margins height-full" style="margin-bottom: 0;">
 			<div class="height-full" style="position: relative;">
 				<div class="page-aside">
@@ -65,38 +65,40 @@
 					</div>
 				</div>
 				
-				<div class="page-main ibox-content">
-					<div class="page-title">
-						<h2>试题列表</h2>
-					</div>
-					<div id="question-list-table-toolbar" role="group">
-						<div class="btn-group">
-							<button data-toggle="dropdown" type="button" class="btn btn-primary dropdown-toggle" aria-expanded=false>
-		 						<i class="fa fa-plus fa-fw"></i>新增试题&nbsp;<span class="caret"></span>
-		 					</button>
-		 					<ul class="dropdown-menu" style="left: 0;">
-		 						<li><a href="${ctx}/questionAdd?type=1&method=add">单选题</a></li>
-		 						<li><a href="${ctx}/questionAdd?type=2&method=add">多选题</a></li>
-		 						<li><a href="${ctx}/questionAdd?type=3&method=add">判断题</a></li>
-		 					</ul>
+				<div class="page-main">
+					<div class="ibox-content">
+						<div class="page-title">
+							<h2>试题列表</h2>
 						</div>
-	 					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-question-import-dialog">
-	 						<i class="fa fa-upload fa-fw"></i>导入试题
-	 					</button>
-	 					<button type="button" class="btn btn-white btn-question-move" disabled="disabled">
-	 						 移动到分组
-	 					</button>
-	 					<button type="button" class="btn btn-danger btn-question-delete-batch" disabled='disabled'>
-	 						<i class="fa fa-trash-o fa-fw"></i>删除
-	 					</button>
-	 					<select class="form-control" id="question-type" name="type" style="width: 160px; display: inline-block;">
-							<option value="0">所有题型</option>
-							<option value="1">单选题</option>
-							<option value="2">多选题</option>
-							<option value="3">判断题</option>
-						</select>
+						<div id="question-list-table-toolbar" role="group">
+							<div class="btn-group">
+								<button data-toggle="dropdown" type="button" class="btn btn-primary dropdown-toggle" aria-expanded=false>
+			 						<i class="fa fa-plus fa-fw"></i>新增试题&nbsp;<span class="caret"></span>
+			 					</button>
+			 					<ul class="dropdown-menu" style="left: 0;">
+			 						<li><a href="${ctx}/questionAdd?type=1&method=add">单选题</a></li>
+			 						<li><a href="${ctx}/questionAdd?type=2&method=add">多选题</a></li>
+			 						<li><a href="${ctx}/questionAdd?type=3&method=add">判断题</a></li>
+			 					</ul>
+							</div>
+		 					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-question-import-dialog">
+		 						<i class="fa fa-upload fa-fw"></i>导入试题
+		 					</button>
+		 					<button type="button" class="btn btn-white btn-question-move" disabled="disabled">
+		 						 移动到分组
+		 					</button>
+		 					<button type="button" class="btn btn-danger btn-question-delete-batch" disabled='disabled'>
+		 						<i class="fa fa-trash-o fa-fw"></i>删除
+		 					</button>
+		 					<select class="form-control" id="question-type" name="type" style="width: 160px; display: inline-block;">
+								<option value="0">所有题型</option>
+								<option value="1">单选题</option>
+								<option value="2">多选题</option>
+								<option value="3">判断题</option>
+							</select>
+						</div>
+						<table id="question-list-table" class="table-hm table-fixed" data-mobile-responsive="true"></table>
 					</div>
-					<table id="question-list-table" class="table-hm table-fixed" data-mobile-responsive="true"></table>
 				</div>
 			</div>
 		</div>

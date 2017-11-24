@@ -18,9 +18,9 @@
     
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/hplus/style.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/local/pearls.css">
-    <link rel="stylesheet" type="text/css" href="${ctx}/local/common.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/toastr/toastr.min.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/bootstrap-datepicker/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/local/common.css">
     
     <style type="text/css">
     .pearl-pane {
@@ -102,10 +102,10 @@
 						</div>
 						
 						<div class="hr-line-solid"></div>
-						<div class="form-group btn-operate">
+						<div class="form-group">
 							<div class="col-sm-5 col-sm-offset-3">
-								<button type="button" class="btn btn-primary btn-paper-add-next">保存并进入下一步</button>
-								<button type="button" class="btn btn-white btn-paper-cancel">取消</button>
+								<button type="button" class="btn btn-primary btn-fw btn-paper-add-next">保存并进入下一步</button>
+								<button type="button" class="btn btn-white btn-fw btn-paper-cancel">取消</button>
 							</div>
 						</div>
 					</form>
