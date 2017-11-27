@@ -21,9 +21,32 @@
 
 <body class="gray-bg body-classify-list">
 	<div class="wrapper wrapper-content animated fadeInRight">
-		<div class="ibox float-e-margins">
-			<div class="ibox-content">
-				
+		<div class="row">
+			<div class="col-lg-9 col-sm-8">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						b
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-lg-3 col-sm-4">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<div class="page-title">
+							<h2>系统公告</h2>
+						</div>
+						<c:if test="${empty notice}">
+							<div>暂未有公告发布！</div>
+						</c:if>
+						<c:if test="${not empty notice}">
+							<div>
+								<h3>${notice.title}</h3>
+								<p class="text-justify text-muted">${notice.content}</p>
+							</div>
+						</c:if>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

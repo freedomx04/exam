@@ -18,6 +18,16 @@ public class NoticeServiceImpl implements NoticeService {
 	public NoticeEntity findOne(Long noticeId) {
 		return noticeRepository.findOne(noticeId);
 	}
+	
+	@Override
+	public NoticeEntity findLastest() {
+		List<NoticeEntity> list = noticeRepository.findByOrderByUpdateTimeDesc();
+		if (list.size() > 0) {
+			return list.get(0);
+		}
+		return null;
+	}
+	
 
 	@Override
 	public void save(NoticeEntity notice) {

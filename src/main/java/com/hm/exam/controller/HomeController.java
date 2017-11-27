@@ -15,6 +15,7 @@ import com.hm.exam.entity.exam.PaperEntity;
 import com.hm.exam.entity.question.LibraryEntity;
 import com.hm.exam.entity.question.QuestionEntity;
 import com.hm.exam.entity.student.GroupEntity;
+import com.hm.exam.entity.system.NoticeEntity;
 import com.hm.exam.service.authority.RoleService;
 import com.hm.exam.service.authority.UserService;
 import com.hm.exam.service.exam.ClassifyService;
@@ -23,6 +24,7 @@ import com.hm.exam.service.question.LibraryService;
 import com.hm.exam.service.question.QuestionService;
 import com.hm.exam.service.student.GroupService;
 import com.hm.exam.service.student.StudentService;
+import com.hm.exam.service.system.NoticeService;
 
 @Controller
 public class HomeController {
@@ -51,11 +53,16 @@ public class HomeController {
 	@Autowired
 	PaperService paperService;
 	
+	@Autowired
+	NoticeService noticeService;
+	
 	/**
 	 * 控制中心
 	 */
 	@RequestMapping(value = "/overview")
-	String overview() {
+	String overview(ModelMap modelMap) {
+		NoticeEntity notice = noticeService.findLastest();
+		modelMap.addAttribute("notice", notice);
 		return "pages/overview";
 	}
 	

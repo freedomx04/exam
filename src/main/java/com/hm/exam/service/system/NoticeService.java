@@ -8,6 +8,8 @@ public interface NoticeService {
 	
 	NoticeEntity findOne(Long noticeId);
 	
+	NoticeEntity findLastest();
+	
 	void save(NoticeEntity notice);
 	
 	void delete(Long noticeId);
