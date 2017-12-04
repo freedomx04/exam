@@ -18,7 +18,7 @@
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/toastr/toastr.min.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/local/common.css">
     
-    <style type="text/css">
+  <style type="text/css">
     .practice-container {
     	width: 1000px;
     	display: flex;
