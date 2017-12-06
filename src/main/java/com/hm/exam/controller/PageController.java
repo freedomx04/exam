@@ -285,32 +285,4 @@ public class PageController {
 		return "pages/practice/practice_type";
 	}
 	
-	/**
-	 * 移动端
-	 */
-	@RequestMapping(value = "m/practice")
-	String m_practice() {
-		return "pages/m/practice";
-	}
-	
-	@RequestMapping(value = "m/practice/order")
-	String m_practice_order(ModelMap modelMap, Long libraryId, Integer type) {
-		modelMap.addAttribute("title", "顺序练习");
-		
-		List<BigInteger> idList = new ArrayList<BigInteger>();
-		if (libraryId != null) {
-			idList = questionService.listIdByLibraryId(libraryId);
-			LibraryEntity library = libraryService.findOne(libraryId);
-			modelMap.addAttribute("subTitle", "题库：" + library.getName());
-		} else if (type != null) {
-			idList = questionService.listIdByType(type);
-			String subTitle = questionService.getTitle(type);
-			modelMap.addAttribute("subTitle", "题型：" + subTitle);
-		} else {	
-			idList = questionService.listId();
-		}
-		modelMap.addAttribute("idList", idList);
-		return "pages/m/practice_question";
-	}
-	
 }
