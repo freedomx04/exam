@@ -5,16 +5,15 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
     
-    <title>题库练习</title>
+    <title>${title}</title>
     
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/animate/animate.min.css">
     
-    <link rel="stylesheet" type="text/css" href="${ctx}/plugins/toastr/toastr.min.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/local/common.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/local/online2.css">
     
@@ -30,29 +29,29 @@
 					<span class="icon-bar"></span>
         			<span class="icon-bar"></span>
 				</button>
-				<a href="#" class="navbar-brand">模拟练习</a>
+				<a href="${ctx}/practice" class="navbar-brand">模拟练习</a>
 			</div>
 			<nav id="bs-navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
 					<li>
-						<a href="#">顺序练习</a>
+						<a href="${ctx}/practice/order">顺序练习</a>
 					</li>
 					<li>
-						<a href="#">随机练习</a>
+						<a href="${ctx}/practice/random">随机练习</a>
 					</li>
 					<li>
-						<a href="#">题库练习</a>
+						<a href="${ctx}/practice/library">题库练习</a>
 					</li>
 					<li>
-						<a href="#">题型练习</a>
+						<a href="${ctx}/practice/type">题型练习</a>
 					</li>
 				</ul>
 			</nav>
 		</div>
 	</header>
 	
-	<div class="container" style="padding: 0;">
-		<div class="card" style="">
+	<div class="container animated fadeInRight" style="padding: 0;">
+		<div class="card">
 			<p class="ques-info"></p>
 			<p class="ques-title"></p>
 			<p class="ques-image"></p>
@@ -73,9 +72,7 @@
 
 	<script type="text/javascript" src="${ctx}/plugins/jquery/2.1.4/jquery.min.js"></script>
 	<script type="text/javascript" src="${ctx}/plugins/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="${ctx}/plugins/hplus/content.min.js"></script>
 	<script type="text/javascript" src="${ctx}/local/common.js"></script>
-	<script type="text/javascript" src="${ctx}/plugins/toastr/toastr.min.js"></script>
 	
 	<script type="text/javascript">
 	;(function ( $ ) {

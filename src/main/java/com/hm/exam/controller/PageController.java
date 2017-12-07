@@ -239,7 +239,7 @@ public class PageController {
 		return "pages/practice/practice_question";
 	}
 	
-	@RequestMapping(value = "practice/random")
+	@RequestMapping(value = "/practice/random")
 	String practiceRandom(ModelMap modelMap, Long libraryId, Integer type) {
 		modelMap.addAttribute("title", "随机练习");
 		
@@ -260,7 +260,7 @@ public class PageController {
 		return "pages/practice/practice_question";
 	}
 	
-	@RequestMapping(value = "practice/library")
+	@RequestMapping(value = "/practice/library")
 	String practiceLibrary(ModelMap modelMap) {
 		List<LibraryEntity> libraryList = libraryService.list();
 		for (LibraryEntity library: libraryList) {
@@ -271,7 +271,7 @@ public class PageController {
 		return "pages/practice/practice_library";
 	}
 	
-	@RequestMapping(value = "practice/type")
+	@RequestMapping(value = "/practice/type")
 	String practiceType(ModelMap modelMap) {
 		Integer[] types = new Integer[] {1, 2, 3};
 		List<TypeEntity> typeList = new ArrayList<>();

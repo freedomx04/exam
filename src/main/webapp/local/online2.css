@@ -1,0 +1,59 @@
+.gray-bg {
+   	background-color: #f3f3f4;
+}
+
+.nav-exam {
+	background: #fff;
+}
+.nav-exam .navbar-brand, 
+.nav-exam .navbar-nav>li>a {
+	font-weight: 500;
+	color: #000;
+}
+.nav-exam .navbar-header .navbar-toggle {
+   	background-color: #1ab394;
+   	border-color: #1ab394;
+   	color: #fff;
+}
+.nav-exam .navbar-toggle .icon-bar {
+   	background-color: #fff;
+}
+
+.ques-info {
+	color: #4395ff;
+}
+.ques-image img {
+   	max-width: 100%;
+}
+
+ul.unstyled {
+   	list-style: none outside none;
+   	margin-left: 0;
+   	padding-left: 0;
+}
+.ques-options li {
+   	height: 30px;
+}
+
+.color-success {
+   	color: #1ab394;
+}
+.color-danger {
+   	color: #ed5565;
+}
+.card {
+   	padding: 15px;
+	margin-bottom: 15px;
+	background: #fff;
+	overflow: hidden;
+	border-radius: 2px;
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,.1);
+	box-shadow: 0 1px 3px rgba(0,0,0,.1);
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+@media (min-width: 768px) {
+   	.card {
+   		padding: 25px 30px;
+	}
+}
