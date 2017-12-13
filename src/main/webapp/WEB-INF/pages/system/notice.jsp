@@ -24,7 +24,7 @@
 
 <body class="gray-bg body-notice-list">
 	<div class="wrapper wrapper-content animated fadeInRight">
-		<div class="ibox float-e-margins22">
+		<div class="ibox float-e-margins">
 			<div class="ibox-content">
 				<div class="page-title">
 					<h2>系统公告</h2>

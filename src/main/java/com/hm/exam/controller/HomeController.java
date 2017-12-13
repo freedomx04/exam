@@ -195,11 +195,19 @@ public class HomeController {
 		return "pages/exam/feedback";
 	}
 	
+	/**
+	 * 系统设置
+	 */
 	@RequestMapping(value = "/system/notice")
 	String system_notice(ModelMap modelMap) {
 		UserEntity user = CurrentUserUtils.getInstance().getUser();
 		modelMap.addAttribute("user", user);
 		return "pages/system/notice";
+	}
+	
+	@RequestMapping(value = "/system/setting")
+	String system_setting() {
+		return "pages/system/setting";
 	}
 	
 	/**

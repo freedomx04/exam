@@ -42,8 +42,8 @@ ul.unstyled {
    	color: #ed5565;
 }
 .card {
+	width: 100%;
    	padding: 15px;
-	margin-bottom: 15px;
 	background: #fff;
 	overflow: hidden;
 	border-radius: 2px;
@@ -55,5 +55,6 @@ ul.unstyled {
 @media (min-width: 768px) {
    	.card {
    		padding: 25px 30px;
+   		width: auto;
 	}
 }

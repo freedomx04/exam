@@ -11,31 +11,12 @@
     
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="${ctx}/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/animate/animate.min.css">
     
-    <link rel="stylesheet" type="text/css" href="${ctx}/plugins/hplus/style.css">
-    <link rel="stylesheet" type="text/css" href="${ctx}/plugins/toastr/toastr.min.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/local/common.css">
-    
-  <style type="text/css">
-    .practice-container {
-    	width: 1000px;
-    	display: flex;
-    	display: -webkit-flex;
-    	-webkit-align-items: center;
-    	align-items: center;
-    	-webkit-justify-content: center;
-    	justify-content: center;
-    	margin: 0px auto;
-    	height: 100%;
-    }
-    .practice-main {
-    	width: 100%;
-    	background: #fff;
-    	border-radius: 2px;
-    	padding: 60px;
-    }
+	<link rel="stylesheet" type="text/css" href="${ctx}/local/online2.css">  
+	  
+  	<style type="text/css">
     .item-logo {
     	width: 228px;
     	height: 120px;
@@ -60,19 +41,24 @@
     	background-repeat: no-repeat;
     }
     .item-text {
-    	height: 74px;
+    	height: 58px;
     	text-align: center;
     	line-height: 58px;
     }
     .item-text a {
     	color: #8c8c8c;
     }
+    @media (min-width: 768px) {
+   		.container {
+   			margin-top: 100px;
+		}
+	}
     </style>
     
 </head>
 <body class="gray-bg body-practice">
-	<div class="practice-container">
-		<div class="practice-main">
+	<div class="container" style="padding: 0;">
+		<div class="card">
 			<div class="row">
 				<div class="col-sm-4 item">
 					<div class="item-logo">
@@ -112,16 +98,6 @@
 					</div>
 					<div class="item-text">
 						<a href="#">题型练习</a>
-					</div>
-				</div>
-				<div class="col-sm-4 item">
-					<div class="item-logo">
-						<a class="fill-color practice-exam" href="#" style="background-color: #f76f93;">
-							<div class="lg" style="background-position: -89px -1066px;"></div>
-						</a>
-					</div>
-					<div class="item-text">
-						<a href="#">模拟考试</a>
 					</div>
 				</div>
 			</div>

@@ -88,9 +88,9 @@
 						<a href="#">
 							<i class="fa fa-cog fa-fw"></i><span class="nav-label">系统设置</span><span class="fa arrow"></span>
 						</a>
-						</a>
 						<ul class="nav nav-second-level">
 							<li><a class="J_menuItem" href="system/notice">系统公告</a></li>
+							<li><a class="J_menuItem" href="system/setting">系统设置</a></li>
 						</ul>
 					</li>
 					<li>
