@@ -48,16 +48,11 @@
     .item-text a {
     	color: #8c8c8c;
     }
-    @media (min-width: 768px) {
-   		.container {
-   			margin-top: 100px;
-		}
-	}
     </style>
     
 </head>
 <body class="gray-bg body-practice">
-	<div class="container" style="padding: 0;">
+	<div class="container flex-center" style="padding: 0;">
 		<div class="card">
 			<div class="row">
 				<div class="col-sm-4 item">

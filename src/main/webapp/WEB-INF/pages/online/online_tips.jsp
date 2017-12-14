@@ -16,18 +16,15 @@
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/hplus/style.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/local/common.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/toastr/toastr.min.css">
-    <link rel="stylesheet" type="text/css" href="${ctx}/local/online.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/local/online2.css">
    
 </head>
-<body class="gray-bg body-online-tips" style="min-width: 1000px; overflow: auto;">
-	<div>
-		<header role="banner" class="exam-banner fixed">
-			<div class="exam-banner-inner">
-				<div style="font-size: 18px;">${paper.title}</div>
-			</div>
-		</header>
-		<div class="exam-banner-holder"></div>
-	</div>
+<body class="gray-bg body-online-tips">
+	<header class="navbar navbar-static-top nav-exam" id="top">
+		<div class="container">
+			<div class="navbar-brand">${paper.title}</div>
+		</div>
+	</header>
 	
 	<c:set var="now" value="<%=new java.util.Date()%>"/>
 	<c:choose>
@@ -92,7 +89,7 @@
 				
 				<h3>考生登录</h3>
 				<div class="hr-line-solid"></div>
-				<form class="form-login form-horizontal" role="form" autocomplete="off" style="padding: 20px 40px;">
+				<form class="form-login form-horizontal" role="form" autocomplete="off">
 					<div class="form-group">
 						<div class="col-sm-12">
 							<div class="input-group">

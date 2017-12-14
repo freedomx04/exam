@@ -3,47 +3,9 @@
    	z-index: 2;
    	-webkit-font-smoothing: subpixel-antialiased;
  }
-.tips-card {
- 	position: absolute;
- 	background: #fff;
- 	padding: 20px;
- 	width: 600px;
- 	height: 400px;
- 	top: 50%;
- 	left: 50%;
- 	margin-top: -200px;
- 	margin-left: -300px;
- 	border-radius: 2px;
-	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,.1);
-	box-shadow: 0 1px 3px rgba(0,0,0,.1);
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-}
-.tips-card h3,
-.tips-card .tips-button {
-	padding: 0 20px;
-}
-.tips-info .tips-error {
-	color: #ec6149;
-}
-.tips-info .tips-info-header {
-	margin-bottom: 30px;
-}
-.tips-info .tips-info-other {
-	margin-top: 30px;
-}
-.tips-info h3 {
-	color: #888;
-	font-weight: 400;
-}
 
-.form-login .form-control,
-.form-login .btn {
-	height: 42px;
-}
-.form-login .input-group-addon {
-	background-color: #eee;
-}
+
+
 
 .exam-banner {
 	top: 0; 
@@ -115,25 +77,7 @@
 .exam-ques .ques-score {
 	color: #aeaeae;
 }
-.exam-controller .ques-list li {
-  	font-size: 14px;
-  	text-align: center;
-  	display: block;
-  	padding: 4px;
-  	border: 1px solid #aaa;
-  	border-radius: 2px;
-  	float: left;
-  	margin-right: 4px;
-  	margin-bottom: 6px;
-  	min-width: 26px;
-  	cursor: pointer;
-  }
-.exam-controller .ques-list li.done, 
-.exam-controller .ques-list li:HOVER {
-	background-color: #FF7B29;
-	color: #fff;
-	border: 1px solid #FF7B29;
-}
+
 .card-control {
 	display: flex; 
 	flex-direction: column; 
@@ -142,30 +86,4 @@
 .card-title {
 	color: #676a6c;
 	margin-bottom: 15px;
-}
-.corner-buttons {
-	position: fixed;
-	width: 100px;
-	bottom: 30px;
-	display: flex;
-	flex-direction: column;
-}
-.corner-container {
-	width: 40px;
-}
-.corner-btn {
-	margin-top: 10px;
-	padding: 0px;
-	color: #999;
-	background: #fff;
-	border-radius: 4px;
-	width: 40px;
-	height: 40px;
-	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,.1);
-	box-shadow: 0 1px 3px rgba(0,0,0,.1);
-}
-.corner-btn:HOVER,
-.corner-btn:FOCUS {
-	color: #999;
-	background: #d5dbe7;
 }

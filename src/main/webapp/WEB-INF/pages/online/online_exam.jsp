@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
     
     <title>${paper.title}</title>
     
@@ -18,11 +18,37 @@
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/hplus/style.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/toastr/toastr.min.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/local/common.css">
-    <link rel="stylesheet" type="text/css" href="${ctx}/local/online.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/local/online2.css">
+    
+    <style type="text/css">
+    .exam-controller .card {
+    	padding: 15px;
+    }
+    .exam-controller .ques-list li {
+	  	font-size: 14px;
+	  	text-align: center;
+	  	display: block;
+	  	padding: 4px;
+	  	border: 1px solid #aaa;
+	  	border-radius: 2px;
+	  	float: left;
+	  	margin-right: 4px;
+	  	margin-bottom: 6px;
+	  	min-width: 26px;
+	  	cursor: pointer;
+	  }
+	.exam-controller .ques-list li.done, 
+	.exam-controller .ques-list li:HOVER {
+		background-color: #FF7B29;
+		color: #fff;
+		border: 1px solid #FF7B29;
+	}
+	
+    </style>
     
 </head>
-<body class="gray-bg body-online-exam" style="min-width: 1180px; overflow: auto;">
-	<div>
+<body class="gray-bg body-online-exam">
+	<%-- <div>
 		<header role="banner" class="exam-banner fixed">
 			<div class="exam-banner-inner">
 				<div style="font-size: 18px;">${paper.title}</div>
@@ -32,37 +58,44 @@
 			</div>
 		</header>
 		<div class="exam-banner-holder"></div>
-	</div>
+	</div> --%>
 	
-	<main role="main">
-		<div class="exam-container">
-			<div class="exam-ques-list" style="width: 840px;">
-				<c:forEach var="question" items="${paper.questions}" varStatus="status">
-					<c:set var="seq" value="${status.index + 1}"></c:set>
-					<div id="ques-${status.index + 1}" class="card exam-ques" data-index="${seq}" data-question-id="${question.id}" data-question-type="${question.type}">
-						<div style="line-height: 1.6em;">
-							<span class="ques-num">${seq}/${fn:length(paper.questions)}</span>
-							<c:if test="${question.type == 1}">
-								<span class="ques-type ques-single">单选题</span>
-							</c:if>
-							
-							<c:if test="${question.type == 2}">
-								<span class="ques-type ques-multiple">多选题</span>
-							</c:if>
-							
-							<c:if test="${question.type == 3}">
-								<span class="ques-type ques-boolean">判断题</span>
-							</c:if>
-							<span>${question.title}</span>
-							<span class="ques-score">(${question.score}分)</span>
-						</div>
-						<div>
+	<header class="navbar navbar-static-top nav-exam" id="top">
+		<div class="container">
+			<div class="navbar-brand">${paper.title}</div>
+		</div>
+	</header>
+	
+	<div class="container" style="padding: 0;">
+		<div class="row">
+			<div class="col-sm-8">
+				<div class="card">
+					<c:forEach var="question" items="${paper.questions}" varStatus="status">
+						<c:set var="seq" value="${status.index + 1}"></c:set>
+						<div id="ques-${status.index + 1}" class="" data-index="${seq}" data-question-id="${question.id}" 
+							data-question-type="${question.type}">
+							<c:choose>
+								<c:when test="${question.type == 1}">
+									<c:set var="type" value="单选题"></c:set>
+								</c:when>
+								<c:when test="${question.type == 2}">
+									<c:set var="type" value="多选题"></c:set>
+								</c:when>
+								<c:when test="${question.type == 3}">
+									<c:set var="type" value="判断题"></c:set>
+								</c:when>
+							</c:choose>
+							<p class="ques-info">
+								第 ${seq} 题【共25题】【${type}】【${question.score}分】
+							</p>
+							<p>${question.title}</p>
 							<c:if test="${not empty question.imagePath}">
-								<div style="margin: 10px 20px;">
+								<p class="ques-image">
 									<img alt="图片" src="${ctx}${question.imagePath}">
-								</div>
+								</p>
 							</c:if>
-							<ul class="unstyled" style="margin-top: 15px; padding-left: 20px;">
+							
+							<ul class="unstyled ques-options">
 								<c:choose>
 									<c:when test="${question.type == 1}">
 										<li>
@@ -173,23 +206,24 @@
 								</c:choose>
 							</ul>
 						</div>
-					</div>
-				</c:forEach> 
+						<div class="hr-line-solid"></div>
+					</c:forEach>
+				</div>
 			</div>
 			
-			<div class="exam-controller fixed" style="width: 320px; color: #999;">
-				<div class="card card-control">
-					<div style="font-size: 20px; padding: 15px;">
-						<i class="fa fa-clock-o fa-fw fa-lg"></i>考试剩余时间
+			<div class="col-sm-4 hidden-xs exam-controller">
+				<div class="card">
+					<div style="font-size: 20px; text-align: center;">
+						<i class="fa fa-clock-o fa-fw fa-lg"></i>剩余时间
 						<span id="time" style="color: #ed5565; padding-left: 5px;"></span>
 					</div>
 					<div style="padding: 10px;">
 						<button type="button" class="btn btn-primary btn-submit" style="width: 100%;">提交试卷</button>
 					</div>
 				</div>
-			
-				<div class="card card-control">
-					<label class="card-title">答题卡</label>
+				
+				<div class="card" style="margin-top: 15px;">
+					<label>答题卡</label>
 					<div>
 						<ul class="unstyled ques-list" style="padding: 0;">
 							<c:forEach var="question" items="${paper.questions}" varStatus="status">
@@ -203,7 +237,7 @@
 					</div>
 				</div>
 				
-				<div class="card card-control">
+				<div class="card" style="margin-top: 15px;">
 					<label class="card-title">考试描述</label>
 					<c:if test="${not empty paper.description}">
 						<div>${paper.description}</div>
@@ -212,18 +246,18 @@
 						<div>无</div>
 					</c:if>
 				</div>
-			</div> 
+			</div>
 		</div>
-	</main>
+	</div>
 	
 	<div class="corner-buttons">
-		<div class="corner-container btn-feedback" data-toggle="tooltip" data-placement="top" title="建议反馈">
+		<div class="corner-container btn-feedback" data-toggle="tooltip" data-placement="left" data-container="body" title="建议反馈">
 			<button type="button" class="btn corner-btn">
 				<i class="fa fa-edit fa-lg"></i>
 			</button>
 		</div>
 	
-		<div class="corner-container btn-top hide" data-toggle="tooltip" data-placement="top" title="回到顶部">
+		<div class="corner-container btn-top hide" data-toggle="tooltip" data-placement="left" data-container="body" title="回到顶部">
 			<button type="button" class="btn corner-btn">
 				<i class="fa fa-chevron-up fa-lg"></i>
 			</button>
@@ -283,11 +317,6 @@
 		
 		// tooltip
 		$page.find('[data-toggle="tooltip"]').tooltip();
-		// 设置右侧控制器的位置
-		setController();
-		window.onresize = function() {
-			setController();
-		}
 		// 回到顶部按钮
 		var $top = $page.find('.btn-top');
 		$(window).scroll(function() {
@@ -297,15 +326,6 @@
 				$top.addClass('hide');
 			}
 		});
-		
-		function setController() {
-			var $controller = $page.find('.exam-controller');
-			var $corner = $page.find('.corner-buttons');
-			var $width = $(document).width();
-			var left_val = ($width - 1180) / 2 + 840 + 20;
-			$controller.css('left', left_val);
-			$corner.css('left', left_val);
-		}
 		
 		$page
 		.on('change', '.exam-ques input', function() {
