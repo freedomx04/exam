@@ -398,8 +398,8 @@ a:HOVER {
 
 /** modal */
 .modal-center {
-	display: flex;
 	display: -webkit-flex;
+	display: flex;
 	-webkit-align-items: center;
 	align-items: center;
 	-webkit-justify-content: center;

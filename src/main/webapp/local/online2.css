@@ -86,6 +86,13 @@ ul.unstyled {
 	}
 }
 
+/** navbar */
+.navbar-brand {
+   	overflow: hidden;
+   	text-overflow: ellipsis;
+   	white-space: nowrap;
+}
+
 /** 考试登录提示 */
 .tips-card {
  	position: absolute;

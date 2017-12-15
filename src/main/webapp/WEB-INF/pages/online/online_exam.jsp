@@ -43,7 +43,25 @@
 		color: #fff;
 		border: 1px solid #FF7B29;
 	}
-	
+	.affix {
+		position: fixed;
+		top: 70px;
+	}
+	@media (min-width: 768px) {
+		.affix {
+			width: 229.98px;
+		}
+	}
+	@media (min-width: 992px) {
+		.affix {
+			width: 303.33px;
+		}
+	}
+	@media (min-width: 1200px) {
+		.affix {
+			width: 370px;
+		}
+	}
     </style>
     
 </head>
@@ -60,14 +78,14 @@
 		<div class="exam-banner-holder"></div>
 	</div> --%>
 	
-	<header class="navbar navbar-static-top nav-exam" id="top">
+	<header class="navbar navbar-static-top nav-exam" id="top" style="position: fixed; width: 100%; border-bottom: 1px solid #e7eaec;">
 		<div class="container">
 			<div class="navbar-brand">${paper.title}</div>
 		</div>
 	</header>
 	
 	<div class="container" style="padding: 0;">
-		<div class="row">
+		<div class="row" style="margin-top: 70px;">
 			<div class="col-sm-8">
 				<div class="card">
 					<c:forEach var="question" items="${paper.questions}" varStatus="status">
@@ -211,40 +229,42 @@
 				</div>
 			</div>
 			
-			<div class="col-sm-4 hidden-xs exam-controller">
-				<div class="card">
-					<div style="font-size: 20px; text-align: center;">
-						<i class="fa fa-clock-o fa-fw fa-lg"></i>剩余时间
-						<span id="time" style="color: #ed5565; padding-left: 5px;"></span>
+			<div class="col-sm-4 hidden-xs">
+				<div class="exam-controller">
+					<div class="card">
+						<div style="font-size: 20px; text-align: center;">
+							<i class="fa fa-clock-o fa-fw fa-lg"></i>剩余时间
+							<span id="time" style="color: #ed5565; padding-left: 5px;"></span>
+						</div>
+						<div style="padding: 10px;">
+							<button type="button" class="btn btn-primary btn-submit" style="width: 100%;">提交试卷</button>
+						</div>
 					</div>
-					<div style="padding: 10px;">
-						<button type="button" class="btn btn-primary btn-submit" style="width: 100%;">提交试卷</button>
+					
+					<div class="card" style="margin-top: 15px;">
+						<label>答题卡</label>
+						<div class="col-sm-12" style="padding: 0; margin-top: 10px;">
+							<ul class="unstyled ques-list" style="padding: 0;">
+								<c:forEach var="question" items="${paper.questions}" varStatus="status">
+									<li class="ques-link" data-index="${status.index + 1}">${status.index + 1}</li>
+								</c:forEach>
+							</ul>
+						</div>
+						<div class="ques-list-tips text-center" style="margin-top: 10px;">
+							<span>已做&nbsp;<i class="fa fa-square tips-done" style="color: #FF7B29; margin-right: 10px;"></i></span>
+							<span>未做&nbsp;<i class="fa fa-square-o tips-undone"></i></span>
+						</div>
 					</div>
-				</div>
-				
-				<div class="card" style="margin-top: 15px;">
-					<label>答题卡</label>
-					<div>
-						<ul class="unstyled ques-list" style="padding: 0;">
-							<c:forEach var="question" items="${paper.questions}" varStatus="status">
-								<li class="ques-link" data-index="${status.index + 1}">${status.index + 1}</li>
-							</c:forEach>
-						</ul>
+					
+					<div class="card" style="margin-top: 15px;">
+						<label class="card-title">考试描述</label>
+						<c:if test="${not empty paper.description}">
+							<div>${paper.description}</div>
+						</c:if>
+						<c:if test="${empty paper.description}">
+							<div>无</div>
+						</c:if>
 					</div>
-					<div class="ques-list-tips text-center" style="margin-top: 10px;">
-						<span>已做&nbsp;<i class="fa fa-square tips-done" style="color: #FF7B29; margin-right: 10px;"></i></span>
-						<span>未做&nbsp;<i class="fa fa-square-o tips-undone"></i></span>
-					</div>
-				</div>
-				
-				<div class="card" style="margin-top: 15px;">
-					<label class="card-title">考试描述</label>
-					<c:if test="${not empty paper.description}">
-						<div>${paper.description}</div>
-					</c:if>
-					<c:if test="${empty paper.description}">
-						<div>无</div>
-					</c:if>
 				</div>
 			</div>
 		</div>
@@ -264,8 +284,8 @@
 		</div>
 	</div>
 	
-	<div class="modal" id="modal-submit-dialog" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" style="top: 200px;">
-		<div class="modal-dialog">
+	<div class="modal" id="modal-submit-dialog" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+		<div class="modal-dialog modal-center">
 			<div class="modal-content animated fadeInDown">
 				<div class="modal-header">
 					<h4 class="modal-title">确认交卷</h4>
@@ -281,8 +301,8 @@
 		</div>
 	</div>
 	
-	<div class="modal" id="modal-feedback-dialog" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" style="top: 200px;">
-		<div class="modal-dialog">
+	<div class="modal" id="modal-feedback-dialog" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+		<div class="modal-dialog modal-center">
 			<div class="modal-content animated fadeInDown">
 				<div class="modal-body text-center">
 					<button type="button" class="close" data-dismiss="modal">
@@ -314,6 +334,7 @@
 		var $page = $('.body-online-exam');
 		var $submitDialog = $page.find('#modal-submit-dialog');
 		var $feedbackDialog = $page.find('#modal-feedback-dialog');
+		var $controller = $page.find('.exam-controller');
 		
 		// tooltip
 		$page.find('[data-toggle="tooltip"]').tooltip();
@@ -326,6 +347,15 @@
 				$top.addClass('hide');
 			}
 		});
+		
+		// 右侧固定
+		$(window).scroll(function() {
+			if ($(window).scrollTop() > 100) {
+				$controller.addClass('affix');
+			} else {
+				$controller.removeClass('affix');
+			}
+		}); 
 		
 		$page
 		.on('change', '.exam-ques input', function() {
@@ -353,7 +383,7 @@
 		})
 		.on('click', '.ques-link', function() {
 			var index = $(this).text();
-			var offset = $page.find('#ques-' + index).offset().top - 62;
+			var offset = $page.find('#ques-' + index).offset().top - 70;
 			$('html,body').animate({
 				scrollTop: offset
 			}, 1000);
