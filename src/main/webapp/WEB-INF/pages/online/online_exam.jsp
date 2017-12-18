@@ -66,21 +66,13 @@
     
 </head>
 <body class="gray-bg body-online-exam">
-	<%-- <div>
-		<header role="banner" class="exam-banner fixed">
-			<div class="exam-banner-inner">
-				<div style="font-size: 18px;">${paper.title}</div>
-				<div style="flex: 1; justify-content: flex-end; display: flex; align-items: center;">
-					<i class="fa fa-user fa-fw"></i>${student.username}
-				</div>
-			</div>
-		</header>
-		<div class="exam-banner-holder"></div>
-	</div> --%>
-	
 	<header class="navbar navbar-static-top nav-exam" id="top" style="position: fixed; width: 100%; border-bottom: 1px solid #e7eaec;">
-		<div class="container">
+		<div class="container" style="padding: 0;">
 			<div class="navbar-brand">${paper.title}</div>
+			<div class="navbar-brand pull-right visible-xs">
+				<i class="fa fa-clock-o"></i>
+				<span class="countdown" style="color: #ed5565;"></span>
+			</div>
 		</div>
 	</header>
 	
@@ -90,7 +82,7 @@
 				<div class="card">
 					<c:forEach var="question" items="${paper.questions}" varStatus="status">
 						<c:set var="seq" value="${status.index + 1}"></c:set>
-						<div id="ques-${status.index + 1}" class="" data-index="${seq}" data-question-id="${question.id}" 
+						<div id="ques-${status.index + 1}" class="exam-ques" data-index="${seq}" data-question-id="${question.id}" 
 							data-question-type="${question.type}">
 							<c:choose>
 								<c:when test="${question.type == 1}">
@@ -234,7 +226,7 @@
 					<div class="card">
 						<div style="font-size: 20px; text-align: center;">
 							<i class="fa fa-clock-o fa-fw fa-lg"></i>剩余时间
-							<span id="time" style="color: #ed5565; padding-left: 5px;"></span>
+							<span class="countdown" style="color: #ed5565; padding-left: 5px;"></span>
 						</div>
 						<div style="padding: 10px;">
 							<button type="button" class="btn btn-primary btn-submit" style="width: 100%;">提交试卷</button>
@@ -271,6 +263,10 @@
 	</div>
 	
 	<div class="corner-buttons">
+		<div class="corner-container btn-submit visible-xs" data-toggle="tooltip" data-placement="left" data-container="body" title="提交试卷">
+			<button type="button" class="btn corner-btn" style="background-color: #43bc60; color: #fff;">交卷</button>
+		</div>
+	
 		<div class="corner-container btn-feedback" data-toggle="tooltip" data-placement="left" data-container="body" title="建议反馈">
 			<button type="button" class="btn corner-btn">
 				<i class="fa fa-edit fa-lg"></i>
@@ -350,7 +346,7 @@
 		
 		// 右侧固定
 		$(window).scroll(function() {
-			if ($(window).scrollTop() > 100) {
+			if ($(window).scrollTop() > 70) {
 				$controller.addClass('affix');
 			} else {
 				$controller.removeClass('affix');
@@ -488,11 +484,13 @@
 		}
 		// 开始倒计时
 		function startTime(totleSecond) {
-			$page.find('#time').text(formatTime(totleSecond));
+			//$page.find('#time').text(formatTime(totleSecond));
+			$page.find('.countdown').text(formatTime(totleSecond));
 			var timer = setInterval(function() {
 				totleSecond -= 1;
 				if (totleSecond >= 0) {
-					$page.find('#time').text(formatTime(totleSecond));
+					//$page.find('#time').text(formatTime(totleSecond));
+					$page.find('.countdown').text(formatTime(totleSecond));
 					
 					// 距离考试结束提示
 					if (totleSecond == 300) {
