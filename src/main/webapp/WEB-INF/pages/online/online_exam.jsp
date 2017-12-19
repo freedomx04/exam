@@ -18,7 +18,7 @@
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/hplus/style.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/toastr/toastr.min.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/local/common.css">
-    <link rel="stylesheet" type="text/css" href="${ctx}/local/online2.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/local/online.css">
     
     <style type="text/css">
     .exam-controller .card {

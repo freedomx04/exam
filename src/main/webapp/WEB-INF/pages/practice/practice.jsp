@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="${ctx}/plugins/animate/animate.min.css">
     
     <link rel="stylesheet" type="text/css" href="${ctx}/local/common.css">
-	<link rel="stylesheet" type="text/css" href="${ctx}/local/online2.css">  
+	<link rel="stylesheet" type="text/css" href="${ctx}/local/online.css">  
 	  
   	<style type="text/css">
     .item-logo {

@@ -1,45 +1,53 @@
- .fixed {
-   	position: fixed;
-   	z-index: 2;
-   	-webkit-font-smoothing: subpixel-antialiased;
- }
+body, html {
+	height: 100%;
+}
 
+.gray-bg {
+   	background-color: #f3f3f4;
+}
 
-.exam-banner {
-	top: 0; 
-	left: 0; 
-	width: 100%; 
-	z-index: 100;
+.nav-exam {
 	background: #fff;
-	border-bottom: 1px solid rgba(30,35,42,.06);
-	-webkit-box-shadow: 0 1px 3px 0 rgba(0,34,77,.05);
-	box-shadow: 0 1px 3px 0 rgba(0,34,77,.05);
-	background-clip: content-box;
 }
-.exam-banner-inner {
-	position: relative;
-	display: flex;
-	width: 1180px;
-	height: 52px;
-	padding: 0 16px;
-	margin: 0 auto;
-	-webkit-box-align: center;
-	align-items: center;
+.nav-exam .navbar-brand, 
+.nav-exam .navbar-nav>li>a {
+	font-weight: 500;
+	color: #000;
 }
-.exam-banner-holder {
-	position: relative;
-	top: 0px;
-	right: 0px;
-	bottom: 0px;
-	left: 0px;
-	display: block;
-	float: none;
-	margin: 0;
-	height: 53px;
-	visibility: hidden;
+.nav-exam .navbar-header .navbar-toggle {
+   	background-color: #1ab394;
+   	border-color: #1ab394;
+   	color: #fff;
+}
+.nav-exam .navbar-toggle .icon-bar {
+   	background-color: #fff;
+}
+
+.ques-info {
+	color: #4395ff;
+}
+.ques-image img {
+   	max-width: 100%;
+}
+
+ul.unstyled {
+   	list-style: none outside none;
+   	margin-left: 0;
+   	padding-left: 0;
+}
+.ques-options li {
+   	height: 30px;
+}
+
+.color-success {
+   	color: #1ab394;
+}
+.color-danger {
+   	color: #ed5565;
 }
 .card {
-	margin-bottom: 15px;
+	width: 100%;
+   	padding: 15px;
 	background: #fff;
 	overflow: hidden;
 	border-radius: 2px;
@@ -48,40 +56,116 @@
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
-.exam-container {
-	display: -webkit-box;
+.flex-center {
+	display: -ms-flexbox;
+	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: start;
-	align-items: flex-start;
-	position: relative;
-	width: 1180px;
-	margin: 30px auto;
-}
-.exam-ques {
-	position: relative;
-	padding: 25px;
-	font-size: 16px;
-}
-.exam-ques .ques-num {
-	font-size: 14px;
-	background-color: #36aafd;
-	color: #fff;
-	border-radius: 10px;
-	padding: 2px 8px;
-}
-.exam-ques ul li {
-	height: 30px;
-}
-.exam-ques .ques-score {
-	color: #aeaeae;
+	
+	/** 垂直居中 */
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+	
+	/** 水平居中 */
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	
+	height: 100%;
 }
 
-.card-control {
-	display: flex; 
-	flex-direction: column; 
-	padding: 10px;
+@media (max-width: 768px) {
+	.flex-center {
+		display: block;
+	}
 }
-.card-title {
-	color: #676a6c;
-	margin-bottom: 15px;
+@media (min-width: 768px) {
+   	.card {
+   		padding: 25px 30px;
+   		width: auto;
+	}
+}
+
+/** navbar */
+.navbar-brand {
+   	overflow: hidden;
+   	text-overflow: ellipsis;
+   	white-space: nowrap;
+}
+
+/** 考试登录提示 */
+.tips-card {
+ 	position: absolute;
+ 	background: #fff;
+ 	padding: 20px;
+ 	width: 600px;
+ 	height: 400px;
+ 	top: 50%;
+ 	left: 50%;
+ 	margin-top: -200px;
+ 	margin-left: -300px;
+ 	border-radius: 2px;
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,.1);
+	box-shadow: 0 1px 3px rgba(0,0,0,.1);
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.tips-info h3 {
+	color: #888;
+	font-weight: 400;
+}
+.tips-info .tips-error {
+	color: #ec6149;
+}
+.tips-info .tips-info-header {
+	margin-bottom: 30px;
+}
+.tips-info .tips-info-other {
+	margin-top: 30px;
+}
+
+@media (max-width: 768px) {
+	.tips-card {
+		position: relative;
+		width: 100%;
+		top: 0;
+		left: 0;
+		margin: 70px 0 0;
+	}
+}
+.form-login .form-control,
+.form-login .btn {
+	height: 42px;
+}
+.form-login .input-group-addon {
+	background-color: #eee;
+}
+
+/** 固定按钮 */
+.corner-buttons {
+	position: fixed;
+	width: 50px;
+	right: 0;
+	bottom: 30px;
+	display: flex;
+	flex-direction: column;
+}
+.corner-container {
+	width: 40px;
+}
+.corner-btn {
+	margin-top: 10px;
+	padding: 0px;
+	color: #999;
+	background: #fff;
+	border-radius: 40px;
+	width: 40px;
+	height: 40px;
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,.1);
+	box-shadow: 0 1px 3px rgba(0,0,0,.1);
+}
+.corner-btn:HOVER,
+.corner-btn:FOCUS {
+	color: #999;
+	background: #d5dbe7;
 }

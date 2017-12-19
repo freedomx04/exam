@@ -150,20 +150,14 @@
 				field: 'type',
 				title: '题型',
 				align: 'center',
-				width: '100',
+				width: '80',
 				formatter: function(value, row, index) {
 					var quesType;
 					switch (value) {
-					case 1:		
-						quesType = '<span class="ques-type ques-single">单选题</span>';
-						break;
-					case 2:		
-						quesType = '<span class="ques-type ques-multiple">多选题</span>';
-						break;
-					case 3:		
-						quesType = '<span class="ques-type ques-boolean">判断题</span>';
-						break;
-					 }
+					case 1:		quesType = '单选题';	break;
+					case 2:		quesType = '多选题';	break;
+					case 3:		quesType = '判断题';	break;
+					}
 					return quesType;
 				}
 			}, {

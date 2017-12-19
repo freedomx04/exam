@@ -259,19 +259,13 @@
 					field: 'type',
 					title: '题型',
 					align: 'center',
-					width: '100',
+					width: '80',
 					formatter: function(value, row, index) {
 						var type;
 						switch (value) {
-						case 1:		
-							type = '<span class="ques-type ques-single">单选题</span>';
-							break;
-						case 2:		
-							type = '<span class="ques-type ques-multiple">多选题</span>';
-							break;
-						case 3:		
-							type = '<span class="ques-type ques-boolean">判断题</span>';
-							break;
+						case 1:		type = '单选题';	break;
+						case 2:		type = '多选题';	break;
+						case 3:		type = '判断题';	break;
 						}
 						return type;
 					}
