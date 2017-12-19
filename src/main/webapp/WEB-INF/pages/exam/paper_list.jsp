@@ -228,7 +228,7 @@
 					field: 'status',
 					title: '状态',
 					align: 'center',
-					width: '100',
+					width: '80',
 					formatter: function(value, row, index) {
 						if (value == 0) {
 	            			return '<span class="label label-primary">可用</span>';

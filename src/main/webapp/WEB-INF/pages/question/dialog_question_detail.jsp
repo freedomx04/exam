@@ -3,7 +3,7 @@
 <link rel="stylesheet" type="text/css" href="${ctx}/local/online.css">
 
 <div class="modal" id="modal-question-dialog" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-center" style="width: 800px;">
+    <div class="modal-dialog modal-center">
         <div class="modal-content animated fadeInDown">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
